@@ -8,6 +8,7 @@ TagManager:
   - Ground
   - Slime
   - Checkpoint
+  - PlayerBody
   layers:
   - Default
   - TransparentFX

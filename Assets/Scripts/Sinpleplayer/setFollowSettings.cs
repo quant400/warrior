@@ -27,12 +27,20 @@ public class setFollowSettings : MonoBehaviour
        
         if (followCameraSettings != null)
         {
-            followCameraSettings.LookAt = followCameraSettings.Follow;
+            //followCameraSettings.LookAt = followCameraSettings.Follow;
             //thirdperson = followCameraSettings.GetCinemachineComponent<Cinemachine3rdPersonFollow>();
             thirdperson = followCameraSettings.GetCinemachineComponent<CinemachineTransposer>();
-            followCameraSettings.AddCinemachineComponent<CinemachineHardLookAt>();
+            followCameraSettings.AddCinemachineComponent<CinemachineComposer>();
             thirdperson.m_XDamping = 0;
-            thirdperson.m_YDamping = 0;
+            thirdperson.m_YDamping = 10;
+
+            followCameraSettings.GetCinemachineComponent<CinemachineComposer>().m_HorizontalDamping = 0;
+            followCameraSettings.GetCinemachineComponent<CinemachineComposer>().m_VerticalDamping = 20;
+            followCameraSettings.GetCinemachineComponent<CinemachineComposer>().m_DeadZoneHeight = 2;
+            followCameraSettings.GetCinemachineComponent<CinemachineComposer>().m_SoftZoneHeight = 2;
+
+
+
         }
         
     }

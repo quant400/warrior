@@ -87,18 +87,25 @@ namespace StarterAssets
 		//private CharacterController _controller;
 		private StarterAssetsInputs _input;
 		private GameObject _mainCamera;
+		[Tooltip("Parent's Rigidbody")]
 		public Rigidbody2D rbody2D;
-		public PhysicsMaterial2D playerPhysicsMaterial;
 
 		private const float _threshold = 0.01f;
 
 		private bool _hasAnimator;
+
+		float targetSpeed;
+		Vector3 inputDirection;
+		float inputMagnitude;
 
 
 		//AddedForGame
 		bool started=false;
 		bool ended=false;
 		bool cursorUnlocked=false;
+
+		bool canMove;
+		bool canJump;
 		
 		private void Awake()
 		{
@@ -115,6 +122,9 @@ namespace StarterAssets
 			//_controller = GetComponent<CharacterController>();
 			_input = GetComponent<StarterAssetsInputs>();
 			//rbody2D = GetComponent<Rigidbody2D>();
+			canMove = false;
+			canJump = false;
+
 
 			AssignAnimationIDs();
 
@@ -137,20 +147,6 @@ namespace StarterAssets
 		private void Update()
 		{
 			_hasAnimator = TryGetComponent(out _animator);
-			
-			/*
-			if(_input.move.x == 0)
-            {
-				playerPhysicsMaterial.friction = 0.1f;
-
-			}
-            else
-            {
-				playerPhysicsMaterial.friction = 0.0f;
-			}
-			*/
-			
-			
 
 			JumpAndGravity();
 			GroundedCheck();
@@ -169,15 +165,76 @@ namespace StarterAssets
 			}
 
 			//Debug.Log(grounded);
+
+			//Debug.Log("canMove = " + canMove);
+			//Debug.Log("canJump = " + canJump);
 		}
 
         private void FixedUpdate()
         {
+			Vector2 origVelocity;
+			float currentHorizontalSpeed = new Vector3(rbody2D.velocity.x, 0.0f, 0.0f).magnitude;
+
+			float speedOffset = 0.1f;
+			
+			// move the player
+			//_controller.Move(targetDirection.normalized * (_speed * Time.deltaTime) + new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
+
+			if (currentHorizontalSpeed < targetSpeed - speedOffset || currentHorizontalSpeed > targetSpeed + speedOffset)
+			{
+				// creates curved result rather than a linear one giving a more organic speed change
+				// note T in Lerp is clamped, so we don't need to clamp our speed
+				_speed = Mathf.Lerp(currentHorizontalSpeed, targetSpeed * inputMagnitude, Time.deltaTime * SpeedChangeRate);
+
+				// round speed to 3 decimal places
+				_speed = Mathf.Round(_speed * 1000f) / 1000f;
+			}
+			else
+			{
+				_speed = targetSpeed;
+			}
+
+			if (canMove)
+            {
+				rbody2D.AddForce(inputDirection * _speed, ForceMode2D.Force);
+
+				origVelocity = rbody2D.velocity;
+
+
+				if(canJump)
+                {
+					origVelocity.y = _verticalVelocity;
+				}
+			}
+            else
+            {
+				origVelocity = rbody2D.velocity;
+
+				if (canJump)
+				{
+					origVelocity.y = _verticalVelocity;
+				}
+			}
+
+			origVelocity.x = Vector2.ClampMagnitude(rbody2D.velocity, targetSpeed).x;
+
+			rbody2D.velocity = origVelocity;
+
+
+			//rbody2D.velocity = new Vector2(rbody2D.velocity.x, _verticalVelocity);
+
+			/*
+			if(nowJump)
+            {
+				JumpAndGravity();
+			}
+			*/
+
 
 		}
 
 
-        private void LateUpdate()
+		private void LateUpdate()
 		{
 
 			CameraRotation();
@@ -231,6 +288,10 @@ namespace StarterAssets
 
 			CinemachineCameraTarget.transform.rotation = Quaternion.Euler(_cinemachineTargetPitch + CameraAngleOverride, 0.0f, 0.0f);
 
+			//deformationSystem.transform.rotation = Quaternion.Euler(_cinemachineTargetPitch + CameraAngleOverride, deformationSystem.transform.rotation.y, deformationSystem.transform.rotation.z);
+
+
+
 
 			//CinemachineCameraTarget.transform.rotation = Quaternion.Euler(0.0f, _cinemachineTargetYaw, 0.0f);
 		}
@@ -238,7 +299,7 @@ namespace StarterAssets
 		private void Move()
 		{
 			// set target speed based on move speed, sprint speed and if sprint is pressed
-			float targetSpeed = _input.sprint ? SprintSpeed : MoveSpeed;
+			targetSpeed = _input.sprint ? SprintSpeed : MoveSpeed;
 
 			// a simplistic acceleration and deceleration designed to be easy to remove, replace, or iterate upon
 
@@ -248,11 +309,18 @@ namespace StarterAssets
 
 			// a reference to the players current horizontal velocity
 			//float currentHorizontalSpeed = new Vector3(_controller.velocity.x, 0.0f, _controller.velocity.z).magnitude;
-			float currentHorizontalSpeed = new Vector3(rbody2D.velocity.x, 0.0f, 0.0f).magnitude;
 
-			float speedOffset = 0.1f;
-			float inputMagnitude = _input.analogMovement ? _input.move.magnitude : 1f;
+			
+			//float currentHorizontalSpeed = new Vector3(rbody2D.velocity.x, 0.0f, 0.0f).magnitude;
 
+			//float speedOffset = 0.1f;
+
+
+			inputMagnitude = _input.analogMovement ? _input.move.magnitude : 1f;
+
+			/*
+
+			
 			// accelerate or decelerate to target speed
 			if (currentHorizontalSpeed < targetSpeed - speedOffset || currentHorizontalSpeed > targetSpeed + speedOffset)
 			{
@@ -267,10 +335,13 @@ namespace StarterAssets
 			{
 				_speed = targetSpeed;
 			}
+			*/
+
+
 			_animationBlend = Mathf.Lerp(_animationBlend, targetSpeed, Time.deltaTime * SpeedChangeRate);
 
 			// normalise input direction
-			Vector3 inputDirection = new Vector3(_input.move.x, 0.0f, _input.move.y).normalized;
+			inputDirection = new Vector3(_input.move.x, 0.0f, _input.move.y).normalized;
 
 			// note: Vector2's != operator uses approximation so is not floating point error prone, and is cheaper than magnitude
 			// if there is a move input rotate player when the player is moving
@@ -281,17 +352,30 @@ namespace StarterAssets
 
 				// rotate to face input direction relative to camera position
 				transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
-				
 			}
 
 
-			Vector3 targetDirection = Quaternion.Euler(0.0f, _targetRotation, 0.0f) * Vector3.forward;
+			//Vector3 targetDirection = Quaternion.Euler(0.0f, _targetRotation, 0.0f) * Vector3.forward;
 
+
+			//inputDirection = new Vector3(_input.move.x, 0.0f, 0.0f).normalized;
+
+			if(_input.move.x != 0)
+            {
+				canMove = true;
+            }
+            else
+            {
+				canMove = false;
+			}
+
+			/*
 			Vector2 origVelocity;
-
+			
 			// move the player
 			//_controller.Move(targetDirection.normalized * (_speed * Time.deltaTime) + new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
 
+			
 			inputDirection = new Vector3(_input.move.x, 0.0f, 0.0f).normalized;
 
 			rbody2D.AddForce(inputDirection * _speed, ForceMode2D.Force);
@@ -301,6 +385,7 @@ namespace StarterAssets
 			origVelocity.x = Vector2.ClampMagnitude(rbody2D.velocity, targetSpeed).x;
 
 			rbody2D.velocity = origVelocity;
+			*/
 
 
 			// update animator if using character
@@ -336,10 +421,12 @@ namespace StarterAssets
 				// Jump
 				if (_input.jump && _jumpTimeoutDelta <= 0.0f)
 				{
+					canJump = true;
+
 					// the square root of H * -2 * G = how much velocity needed to reach desired height
 					_verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
 
-					rbody2D.velocity = new Vector2(rbody2D.velocity.x, _verticalVelocity);
+					//rbody2D.velocity = new Vector2(rbody2D.velocity.x, _verticalVelocity);
 
 					// update animator if using character
 					if (_hasAnimator)
@@ -348,6 +435,10 @@ namespace StarterAssets
 					}
 
 				}
+                else
+                {
+					canJump = false;
+                }
 
 				// jump timeout
 				if (_jumpTimeoutDelta >= 0.0f)
@@ -381,9 +472,15 @@ namespace StarterAssets
 			// apply gravity over time if under terminal (multiply by delta time twice to linearly speed up over time)
 			if (_verticalVelocity < _terminalVelocity)
 			{
+				//canJump = true;
+
 				_verticalVelocity += Gravity * Time.deltaTime;
 
-				rbody2D.velocity = new Vector2(rbody2D.velocity.x, _verticalVelocity);
+				//rbody2D.velocity = new Vector2(rbody2D.velocity.x, _verticalVelocity);
+			}
+            else
+            {
+				//canJump = false;
 			}
 		}
 

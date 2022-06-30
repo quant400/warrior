@@ -26,7 +26,7 @@ public class SlimeChecker : MonoBehaviour
 
             //rBody.angularDrag = 5.0f;
 
-            rBody.gravityScale = 3.0f;
+            rBody.gravityScale = 10.0f;
 
             //Debug.Log("Entered Slime");
         }
@@ -41,7 +41,7 @@ public class SlimeChecker : MonoBehaviour
 
             //rBody.angularDrag = 5.0f;
 
-            rBody.gravityScale = 3.0f;
+            rBody.gravityScale = 10.0f;
 
             //Debug.Log("Entered Slime");
         }

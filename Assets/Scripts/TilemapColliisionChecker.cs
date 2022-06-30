@@ -25,7 +25,7 @@ public class TilemapColliisionChecker : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.transform.CompareTag("Player"))
+        if (collision.transform.CompareTag("PlayerBody"))
         {
             isColliding = true;
         }
@@ -34,7 +34,7 @@ public class TilemapColliisionChecker : MonoBehaviour
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        if (collision.transform.CompareTag("Player"))
+        if (collision.transform.CompareTag("PlayerBody"))
         {
             isColliding = false;
         }
@@ -42,7 +42,7 @@ public class TilemapColliisionChecker : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.transform.CompareTag("Player"))
+        if (collision.transform.CompareTag("PlayerBody"))
         {
             isColliding = true;
         }
@@ -50,7 +50,7 @@ public class TilemapColliisionChecker : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.transform.CompareTag("Player"))
+        if (collision.transform.CompareTag("PlayerBody"))
         {
             isColliding = false;
         }

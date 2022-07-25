@@ -3,27 +3,84 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
-public class VerticalMovingObstacleScript : MonoBehaviour
+
+namespace StarterAssets
 {
-    public float distance;
-    public float duration;
-
-    // Start is called before the first frame update
-    void Start()
+    public class VerticalMovingObstacleScript : MonoBehaviour
     {
+        public float distance;
+        public float duration;
 
-        transform.DOMoveY(gameObject.transform.position.y + distance, duration).SetLoops(-1, LoopType.Yoyo);
+        public bool isFollowingPlayerPlatform = false;
 
-    }
+        private StarterAssetsInputs _input;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+        // Start is called before the first frame update
+        void Start()
+        {
+            _input = GameObject.FindGameObjectWithTag("Player").GetComponent<StarterAssetsInputs>();
 
-    void OnDestroy()
-    {
-        DOTween.Kill(gameObject.transform);
+            transform.DOMoveY(gameObject.transform.position.y + distance, duration).SetLoops(-1, LoopType.Yoyo);
+
+        }
+
+        // Update is called once per frame
+        void Update()
+        {
+
+        }
+
+        void OnDestroy()
+        {
+            DOTween.Kill(gameObject.transform);
+        }
+
+        private void OnCollisionEnter2D(Collision2D collision)
+        {
+            if(_input.move.x == 0)
+            {
+                if (collision.transform.CompareTag("PlayerBody") && isFollowingPlayerPlatform)
+                {
+                    collision.transform.SetParent(gameObject.transform);
+                }
+            }
+            else
+            {
+                if (collision.transform.CompareTag("PlayerBody") && isFollowingPlayerPlatform)
+                {
+                    collision.transform.SetParent(null);
+                }
+            }
+
+        }
+
+        private void OnCollisionStay2D(Collision2D collision)
+        {
+            if(_input.move.x == 0)
+            {
+                if (collision.transform.CompareTag("PlayerBody") && isFollowingPlayerPlatform)
+                {
+                    collision.transform.SetParent(gameObject.transform);
+                }
+            }
+            else
+            {
+                if (collision.transform.CompareTag("PlayerBody") && isFollowingPlayerPlatform)
+                {
+                    collision.transform.SetParent(null);
+                }
+            }
+
+        }
+
+        private void OnCollisionExit2D(Collision2D collision)
+        {
+            if (collision.transform.CompareTag("PlayerBody") && isFollowingPlayerPlatform)
+            {
+                collision.transform.SetParent(null);
+            }
+        }
+
+
     }
 }

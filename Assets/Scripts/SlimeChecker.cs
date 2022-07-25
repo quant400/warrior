@@ -6,58 +6,111 @@ public class SlimeChecker : MonoBehaviour
 {
     private Rigidbody2D rBody;
 
+    private new Collider2D collider;
+
+    public PhysicsMaterial2D frictionlessPhysicsMaterial;
+
+    public PhysicsMaterial2D playerPhysicsMaterial;
+
+    private bool isInSlime;
+
+    private bool isInSlimeDrop;
+
+    public float slowDownAmount = 15.0f;
+
+    private float originalDragValue;
+
+    private float originalGravityValue;
+
     // Start is called before the first frame update
     void Start()
     {
         rBody = gameObject.GetComponent<Rigidbody2D>();
+
+        collider = gameObject.GetComponent<Collider2D>();
+
+        isInSlime = false;
+
+        originalDragValue = rBody.drag;
+
+        originalGravityValue = rBody.gravityScale;
+
     }
 
     // Update is called once per frame
     void Update()
     {
+        //Debug.Log("isInSlime = " + isInSlime);
+
+        //Debug.Log("gravityScale = " + rBody.gravityScale);
+    }
+
+    private void FixedUpdate()
+    {
         
+        if(isInSlime)
+        {
+            rBody.drag = slowDownAmount;
+
+            //rBody.angularDrag = 5.0f;
+
+            rBody.gravityScale = slowDownAmount + 2;
+
+            collider.sharedMaterial = frictionlessPhysicsMaterial;
+        }
+        else if(isInSlimeDrop)
+        {
+            rBody.drag = slowDownAmount + 10;
+
+            rBody.gravityScale = slowDownAmount + 10;
+        }
+        else
+        {
+            rBody.drag = originalDragValue;
+
+            rBody.gravityScale = originalGravityValue;
+
+            collider.sharedMaterial = playerPhysicsMaterial;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.CompareTag("Slime"))
+        if(collision.CompareTag("Slime") && !isInSlime)
         {
-            rBody.drag = 10.0f;
-
-            //rBody.angularDrag = 5.0f;
-
-            rBody.gravityScale = 10.0f;
-
-            //Debug.Log("Entered Slime");
+            isInSlime = true;
+        }
+        else if (collision.CompareTag("SlimeDrop"))
+        {
+            isInSlimeDrop = true;
         }
 
     }
 
+    
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.CompareTag("Slime"))
         {
-            rBody.drag = 10.0f;
-
-            //rBody.angularDrag = 5.0f;
-
-            rBody.gravityScale = 10.0f;
-
-            //Debug.Log("Entered Slime");
+            isInSlime = true;
+        }
+        else if (collision.CompareTag("SlimeDrop"))
+        {
+            isInSlimeDrop = true;
         }
     }
+    
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("Slime"))
+        if (collision.CompareTag("Slime") && isInSlime)
         {
-            rBody.drag = 0.0f;
+            isInSlime = false;
+        }
+        else if (collision.CompareTag("SlimeDrop"))
+        {
 
-            rBody.angularDrag = 0.05f;
-
-            rBody.gravityScale = 1.0f;
-
-            //Debug.Log("Exited Slime");
+            isInSlimeDrop = false;
         }
     }
 }

@@ -1,0 +1,339 @@
+fileFormatVersion: 2
+guid: ee6d8d4aaefce6a4a9482697d9eecb86
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 11
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 0
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 1024
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: chicken-sprite_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 768
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: 45, y: -43}
+        - {x: 70, y: -31}
+        - {x: 90, y: -40}
+        - {x: 114, y: -11}
+        - {x: 121, y: -2}
+        - {x: 121, y: 10}
+        - {x: 112, y: 25}
+        - {x: 101, y: 30}
+        - {x: 121, y: 73}
+        - {x: 121, y: 86}
+        - {x: 90, y: 102}
+        - {x: 59, y: 102}
+        - {x: 39, y: 88}
+        - {x: 35, y: 47}
+        - {x: -3, y: 19}
+        - {x: -39, y: 59}
+        - {x: -52, y: 55}
+        - {x: -51, y: 29}
+        - {x: -67, y: 36}
+        - {x: -87, y: 82}
+        - {x: -99, y: 77}
+        - {x: -99, y: 70}
+        - {x: -74, y: 1}
+        - {x: -82, y: -27}
+        - {x: -88, y: -57}
+        - {x: -71, y: -100}
+        - {x: -60, y: -107}
+        - {x: -51, y: -85}
+        - {x: -29, y: -119}
+        - {x: -14, y: -119}
+        - {x: 15, y: -103}
+        - {x: 10, y: -91}
+        - {x: 6, y: -92}
+      tessellationDetail: 0.1
+      bones: []
+      spriteID: a1ff2ebdb794f8747819b0124e90d9b7
+      internalID: 1460353550
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chicken-sprite_1
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 768
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: 11, y: -118}
+        - {x: 32, y: -102}
+        - {x: 26, y: -85}
+        - {x: 22, y: -86}
+        - {x: 38, y: -80}
+        - {x: 52, y: -69}
+        - {x: 74, y: -30}
+        - {x: 119, y: -8}
+        - {x: 119, y: 62}
+        - {x: 94, y: 80}
+        - {x: 90, y: 111}
+        - {x: 28, y: 111}
+        - {x: 7, y: 94}
+        - {x: 20, y: 73}
+        - {x: 8, y: 9}
+        - {x: -107, y: 17}
+        - {x: -128, y: 14}
+        - {x: -128, y: 1}
+        - {x: -119, y: -3}
+        - {x: -60, y: -15}
+        - {x: -80, y: -59}
+        - {x: -40, y: -118}
+        - {x: -28, y: -118}
+        - {x: -23, y: -106}
+        - {x: -20, y: -111}
+        - {x: -3, y: -118}
+      tessellationDetail: 0.1
+      bones: []
+      spriteID: ac8979371e10b114bbb2cb0493bab9f3
+      internalID: 1959735413
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chicken-sprite_2
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 768
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: 111, y: 38}
+        - {x: 108, y: 39}
+        - {x: 106, y: 39}
+        - {x: 111, y: 44}
+        - {x: 111, y: 57}
+        - {x: 109, y: 59}
+        - {x: 79, y: 125}
+        - {x: 15, y: 125}
+        - {x: -2, y: 104}
+        - {x: 8, y: 82}
+        - {x: 5, y: 16}
+        - {x: -40, y: 51}
+        - {x: -50, y: 40}
+        - {x: -48, y: 35}
+        - {x: -84, y: 54}
+        - {x: -101, y: 66}
+        - {x: -107, y: 59}
+        - {x: -107, y: 51}
+        - {x: -65, y: -10}
+        - {x: -67, y: -42}
+        - {x: -44, y: -66}
+        - {x: -35, y: -118}
+        - {x: 30, y: -118}
+        - {x: 83, y: 3}
+        - {x: 104, y: 0}
+        - {x: 111, y: 27}
+      - - {x: 2, y: -101}
+        - {x: 5, y: -102}
+        - {x: 10, y: -102}
+        - {x: 2, y: -100}
+      tessellationDetail: 0.1
+      bones: []
+      spriteID: 52c86ac88f6414f418ae24507aa38316
+      internalID: 1846239059
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chicken-sprite_3
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 768
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: 15, y: -77}
+        - {x: 2, y: -91}
+        - {x: 15, y: -74}
+        - {x: 23, y: -73}
+        - {x: 102, y: -35}
+        - {x: 111, y: -24}
+        - {x: 113, y: -19}
+        - {x: 118, y: -6}
+        - {x: 117, y: -2}
+        - {x: 128, y: 55}
+        - {x: 128, y: 74}
+        - {x: 95, y: 97}
+        - {x: 75, y: 97}
+        - {x: 57, y: 92}
+        - {x: 51, y: 82}
+        - {x: 7, y: 19}
+        - {x: -46, y: 15}
+        - {x: -118, y: 65}
+        - {x: -128, y: 61}
+        - {x: -128, y: 49}
+        - {x: -99, y: 11}
+        - {x: -103, y: -26}
+        - {x: -82, y: -102}
+        - {x: -13, y: -118}
+        - {x: 1, y: -118}
+        - {x: 22, y: -98}
+        - {x: 27, y: -84}
+        - {x: 17, y: -77}
+      tessellationDetail: 0.1
+      bones: []
+      spriteID: e4af337dd63c03041bec2cae9f68d328
+      internalID: -691697937
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: e0206bed363e58146afcfb4cf2c03a74
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      chicken-sprite_1: 1959735413
+      chicken-sprite_2: 1846239059
+      chicken-sprite_3: -691697937
+      chicken-sprite_0: 1460353550
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

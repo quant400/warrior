@@ -151,7 +151,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7116174289412708132}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -3}
+  m_LocalPosition: {x: 0, y: -0.25, z: -3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1326,7 +1326,7 @@ TilemapCollider2D:
   m_GameObject: {fileID: 7116174289412708132}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: deda1eff278122848a066d8c26aa4c33, type: 2}
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 1
@@ -1363,7 +1363,7 @@ CompositeCollider2D:
   m_GameObject: {fileID: 7116174289412708132}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: deda1eff278122848a066d8c26aa4c33, type: 2}
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -9790,6 +9790,10 @@ PrefabInstance:
       propertyPath: duration
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 295911235548572532, guid: a7acb085397438a489db5e9d725f473d, type: 3}
+      propertyPath: isFollowingPlayerPlatform
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4634275117491860080, guid: a7acb085397438a489db5e9d725f473d, type: 3}
       propertyPath: m_Name
       value: HorizontalMovingObstacle
@@ -9855,6 +9859,10 @@ PrefabInstance:
     - target: {fileID: 2106710910508879210, guid: 4bf83898802f2404abf878f1771d51df, type: 3}
       propertyPath: duration
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2106710910508879210, guid: 4bf83898802f2404abf878f1771d51df, type: 3}
+      propertyPath: isFollowingPlayerPlatform
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5930240565321549712, guid: 4bf83898802f2404abf878f1771d51df, type: 3}
       propertyPath: m_Name
@@ -9925,6 +9933,10 @@ PrefabInstance:
     - target: {fileID: 295911235548572532, guid: a7acb085397438a489db5e9d725f473d, type: 3}
       propertyPath: duration
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 295911235548572532, guid: a7acb085397438a489db5e9d725f473d, type: 3}
+      propertyPath: isFollowingPlayerPlatform
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4634275117491860080, guid: a7acb085397438a489db5e9d725f473d, type: 3}
       propertyPath: m_Name

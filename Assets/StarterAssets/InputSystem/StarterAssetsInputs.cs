@@ -12,6 +12,7 @@ namespace StarterAssets
 		public Vector2 look;
 		public bool jump;
 		public bool sprint;
+		public bool ropeAttach = false;
 
 		[Header("Movement Settings")]
 		public bool analogMovement;
@@ -45,6 +46,11 @@ namespace StarterAssets
 		{
 			SprintInput(value.isPressed);
 		}
+
+		public void OnRopeAttach(InputValue value)
+		{
+			RopeAttachInput(value.isPressed);
+		}
 #else
 	// old input sys if we do decide to have it (most likely wont)...
 #endif
@@ -68,6 +74,11 @@ namespace StarterAssets
 		public void SprintInput(bool newSprintState)
 		{
 			sprint = newSprintState;
+		}
+
+		public void RopeAttachInput(bool newRopeAttachState)
+		{
+			ropeAttach = !ropeAttach;
 		}
 
 #if !UNITY_IOS || !UNITY_ANDROID

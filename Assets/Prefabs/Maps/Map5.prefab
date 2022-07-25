@@ -9799,7 +9799,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8635802985119576059}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -3}
+  m_LocalPosition: {x: 0, y: -0.25, z: -3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -10179,7 +10179,7 @@ Tilemap:
       - {fileID: 21300000, guid: 94f50ba0351c67440a493a41651cb834, type: 3}
       - {fileID: 21300000, guid: c8db2ccc4e419ea4aac7a6d44fefcf39, type: 3}
       - {fileID: 21300000, guid: 3329571b1b8c0d34b83f9175eec19727, type: 3}
-      m_AnimationSpeed: 10
+      m_AnimationSpeed: 10.000001
       m_AnimationTimeOffset: 0
       m_IsLooping: 1
   - first: {x: 36, y: -1, z: 0}
@@ -10641,7 +10641,7 @@ Tilemap:
       - {fileID: 21300000, guid: 94f50ba0351c67440a493a41651cb834, type: 3}
       - {fileID: 21300000, guid: c8db2ccc4e419ea4aac7a6d44fefcf39, type: 3}
       - {fileID: 21300000, guid: 3329571b1b8c0d34b83f9175eec19727, type: 3}
-      m_AnimationSpeed: 10.000001
+      m_AnimationSpeed: 10
       m_AnimationTimeOffset: 0
       m_IsLooping: 1
   - first: {x: 67, y: -1, z: 0}
@@ -10947,7 +10947,7 @@ CompositeCollider2D:
   m_GameObject: {fileID: 8635802985119576059}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: deda1eff278122848a066d8c26aa4c33, type: 2}
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -11269,6 +11269,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8635802984400007317}
     m_Modifications:
+    - target: {fileID: 928669570334203544, guid: cb47a6950cc957347ad5cea0b49c9d38, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3234236253778150459, guid: cb47a6950cc957347ad5cea0b49c9d38, type: 3}
       propertyPath: m_SortingOrder
       value: -2
@@ -11288,6 +11292,10 @@ PrefabInstance:
     - target: {fileID: 3234236254975088917, guid: cb47a6950cc957347ad5cea0b49c9d38, type: 3}
       propertyPath: m_SortingOrder
       value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3310933986961408166, guid: cb47a6950cc957347ad5cea0b49c9d38, type: 3}
+      propertyPath: duration
+      value: 0.75
       objectReference: {fileID: 0}
     - target: {fileID: 3746912097090934025, guid: cb47a6950cc957347ad5cea0b49c9d38, type: 3}
       propertyPath: m_Name
@@ -11337,6 +11345,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4377374560839837790, guid: cb47a6950cc957347ad5cea0b49c9d38, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4644665459997164610, guid: cb47a6950cc957347ad5cea0b49c9d38, type: 3}
       propertyPath: m_SortingOrder
       value: -2
@@ -11356,6 +11368,14 @@ PrefabInstance:
     - target: {fileID: 4644665461420665196, guid: cb47a6950cc957347ad5cea0b49c9d38, type: 3}
       propertyPath: m_SortingOrder
       value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4841999306607371824, guid: cb47a6950cc957347ad5cea0b49c9d38, type: 3}
+      propertyPath: duration
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 4869433789169013858, guid: cb47a6950cc957347ad5cea0b49c9d38, type: 3}
+      propertyPath: duration
+      value: 0.75
       objectReference: {fileID: 0}
     - target: {fileID: 5891031191183610848, guid: cb47a6950cc957347ad5cea0b49c9d38, type: 3}
       propertyPath: m_SortingOrder
@@ -11377,6 +11397,10 @@ PrefabInstance:
       propertyPath: m_SortingOrder
       value: -2
       objectReference: {fileID: 0}
+    - target: {fileID: 6292240270114486947, guid: cb47a6950cc957347ad5cea0b49c9d38, type: 3}
+      propertyPath: duration
+      value: 0.75
+      objectReference: {fileID: 0}
     - target: {fileID: 7040189361890124877, guid: cb47a6950cc957347ad5cea0b49c9d38, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -11384,6 +11408,10 @@ PrefabInstance:
     - target: {fileID: 7040189362316141957, guid: cb47a6950cc957347ad5cea0b49c9d38, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9015752965204308362, guid: cb47a6950cc957347ad5cea0b49c9d38, type: 3}
+      propertyPath: duration
+      value: 0.75
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cb47a6950cc957347ad5cea0b49c9d38, type: 3}
@@ -11406,6 +11434,10 @@ PrefabInstance:
     - target: {fileID: 2106710910508879210, guid: 4bf83898802f2404abf878f1771d51df, type: 3}
       propertyPath: duration
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2106710910508879210, guid: 4bf83898802f2404abf878f1771d51df, type: 3}
+      propertyPath: isFollowingPlayerPlatform
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5930240565321549712, guid: 4bf83898802f2404abf878f1771d51df, type: 3}
       propertyPath: m_Name
@@ -11476,6 +11508,10 @@ PrefabInstance:
     - target: {fileID: 295911235548572532, guid: a7acb085397438a489db5e9d725f473d, type: 3}
       propertyPath: duration
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 295911235548572532, guid: a7acb085397438a489db5e9d725f473d, type: 3}
+      propertyPath: isFollowingPlayerPlatform
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4634275115787224859, guid: a7acb085397438a489db5e9d725f473d, type: 3}
       propertyPath: m_SortingOrder
@@ -11566,6 +11602,10 @@ PrefabInstance:
     - target: {fileID: 2106710910508879210, guid: 4bf83898802f2404abf878f1771d51df, type: 3}
       propertyPath: duration
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2106710910508879210, guid: 4bf83898802f2404abf878f1771d51df, type: 3}
+      propertyPath: isFollowingPlayerPlatform
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5930240565321549712, guid: 4bf83898802f2404abf878f1771d51df, type: 3}
       propertyPath: m_Name

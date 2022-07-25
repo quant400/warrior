@@ -41,10 +41,12 @@ namespace StarterAssets
 
 		[Header("Player Grounded")]
 		public GroundCheck groundCheck = null;
+		/*
 		[Tooltip("Useful for rough ground")]
 		public float GroundedOffset = -0.14f;
 		[Tooltip("The radius of the grounded check. Should match the radius of the CharacterController")]
 		public float GroundedRadius = 0.28f;
+		*/
 		[Tooltip("What layers the character uses as ground")]
 		public LayerMask GroundLayers;
 
@@ -89,6 +91,8 @@ namespace StarterAssets
 		private GameObject _mainCamera;
 		[Tooltip("Parent's Rigidbody")]
 		public Rigidbody2D rbody2D;
+		[Tooltip("Ground Check")]
+		public Collider2D groundCheckCollider;
 
 		private const float _threshold = 0.01f;
 
@@ -97,7 +101,7 @@ namespace StarterAssets
 		float targetSpeed;
 		Vector3 inputDirection;
 		float inputMagnitude;
-
+		Vector2 origVelocity;
 
 		//AddedForGame
 		bool started=false;
@@ -106,6 +110,10 @@ namespace StarterAssets
 
 		bool canMove;
 		bool canJump;
+		bool groundCheckColliderCouroutine;
+		bool canClampVelocity;
+
+		public static bool canApplyGravity;
 		
 		private void Awake()
 		{
@@ -124,7 +132,10 @@ namespace StarterAssets
 			//rbody2D = GetComponent<Rigidbody2D>();
 			canMove = false;
 			canJump = false;
+			groundCheckColliderCouroutine = false;
+			canClampVelocity = false;
 
+			canApplyGravity = true;
 
 			AssignAnimationIDs();
 
@@ -146,6 +157,7 @@ namespace StarterAssets
 
 		private void Update()
 		{
+
 			_hasAnimator = TryGetComponent(out _animator);
 
 			JumpAndGravity();
@@ -164,15 +176,18 @@ namespace StarterAssets
 				StartCoroutine(LockCursorAfter(1));
 			}
 
-			//Debug.Log(grounded);
+			//collisionChecker("Links", LayerMask.GetMask("Default"));
 
-			//Debug.Log("canMove = " + canMove);
-			//Debug.Log("canJump = " + canJump);
+			//Debug.Log("Links = " + collisionChecker("Links", LayerMask.GetMask("Default")));
+
+			//Debug.Log("Handle = " + collisionChecker("Handle", LayerMask.GetMask("Default")));
+
+			//Debug.Log("_verticalVelocity = " + _verticalVelocity);
 		}
 
-        private void FixedUpdate()
+		private void FixedUpdate()
         {
-			Vector2 origVelocity;
+			
 			float currentHorizontalSpeed = new Vector3(rbody2D.velocity.x, 0.0f, 0.0f).magnitude;
 
 			float speedOffset = 0.1f;
@@ -198,27 +213,62 @@ namespace StarterAssets
             {
 				rbody2D.AddForce(inputDirection * _speed, ForceMode2D.Force);
 
-				origVelocity = rbody2D.velocity;
+				//rbody2D.AddForce(inputDirection * (_speed * Time.deltaTime) * 50, ForceMode2D.Force);
+
+				canClampVelocity = false;
+			}
+ 
+			origVelocity = rbody2D.velocity;
+
+			if (canJump)
+			{
+				origVelocity.y = _verticalVelocity;
+			}
 
 
-				if(canJump)
-                {
-					origVelocity.y = _verticalVelocity;
-				}
+			if(canClampVelocity)
+            {
+				origVelocity.x = Vector2.ClampMagnitude(rbody2D.velocity, targetSpeed).x;
+
+				canClampVelocity = false;
+			}
+			else if (_input.move.x != 0)
+			{
+				origVelocity.x = Vector2.ClampMagnitude(rbody2D.velocity, targetSpeed).x;
+			}
+			
+
+
+			/*
+			if(_input.sprint && _input.move.x != 0)
+            {
+				origVelocity.x = Vector2.ClampMagnitude(rbody2D.velocity, SprintSpeed).x;
+			}
+            else if(_input.move.x != 0)
+            {
+				origVelocity.x = Vector2.ClampMagnitude(rbody2D.velocity, MoveSpeed).x;
 			}
             else
             {
-				origVelocity = rbody2D.velocity;
-
-				if (canJump)
-				{
-					origVelocity.y = _verticalVelocity;
-				}
+				origVelocity.x = Vector2.ClampMagnitude(rbody2D.velocity, MoveSpeed/4).x;
 			}
-
-			origVelocity.x = Vector2.ClampMagnitude(rbody2D.velocity, targetSpeed).x;
+			*/
+			
 
 			rbody2D.velocity = origVelocity;
+
+			//Debug.Log("targetSpeed = " + (targetSpeed));
+
+
+			//Debug.Log("_speed = " + _speed);
+
+
+			//Debug.Log("speed  = " + (inputDirection * (_speed * Time.deltaTime) * 50));
+
+
+			//Debug.Log("velocity = " + rbody2D.velocity);
+
+			//Debug.Log("targetSpeed = " + targetSpeed);
 
 
 			//rbody2D.velocity = new Vector2(rbody2D.velocity.x, _verticalVelocity);
@@ -250,6 +300,45 @@ namespace StarterAssets
 			_animIDFreeFall = Animator.StringToHash("FreeFall");
 			_animIDMotionSpeed = Animator.StringToHash("MotionSpeed");
 		}
+
+		private bool collisionChecker(string objectTag, LayerMask layermask)
+        {
+			Collider2D parentCollider = gameObject.transform.parent.transform.gameObject.GetComponent<Collider2D>();
+
+			// Find the colliders that overlap this one
+			Collider2D[] overlaps = new Collider2D[5];
+			ContactFilter2D contactFilter = new ContactFilter2D();
+			contactFilter.layerMask = layermask;
+			parentCollider.OverlapCollider(contactFilter, overlaps);
+
+			// Check if one of the overlapping colliders is on the "ground" layer
+			foreach (Collider2D overlapCollider in overlaps)
+			{
+				if (overlapCollider != null)
+				{
+					// This line determines if the collider found is on a layer in the ground layer mask
+					// sorry it is so math-heavy
+					int match = contactFilter.layerMask.value & (int)Mathf.Pow(2, overlapCollider.gameObject.layer);
+					if (match > 0)
+					{
+						//Debug.Log("match");
+
+						if(overlapCollider.gameObject.CompareTag(objectTag))
+                        {
+							if (overlapCollider)
+							{
+								Debug.Log(overlapCollider.transform.name);
+							}
+
+							return true;
+						}
+						
+					}
+				}
+			}
+
+			return false;
+        }
 
 		private void GroundedCheck()
 		{
@@ -305,7 +394,7 @@ namespace StarterAssets
 
 			// note: Vector2's == operator uses approximation so is not floating point error prone, and is cheaper than magnitude
 			// if there is no input, set the target speed to 0
-			if (_input.move == Vector2.zero) targetSpeed = 0.0f;
+			if (_input.move.x == 0) targetSpeed = 0.0f;
 
 			// a reference to the players current horizontal velocity
 			//float currentHorizontalSpeed = new Vector3(_controller.velocity.x, 0.0f, _controller.velocity.z).magnitude;
@@ -314,7 +403,7 @@ namespace StarterAssets
 			//float currentHorizontalSpeed = new Vector3(rbody2D.velocity.x, 0.0f, 0.0f).magnitude;
 
 			//float speedOffset = 0.1f;
-
+			
 
 			inputMagnitude = _input.analogMovement ? _input.move.magnitude : 1f;
 
@@ -337,22 +426,27 @@ namespace StarterAssets
 			}
 			*/
 
-
 			_animationBlend = Mathf.Lerp(_animationBlend, targetSpeed, Time.deltaTime * SpeedChangeRate);
 
+
 			// normalise input direction
-			inputDirection = new Vector3(_input.move.x, 0.0f, _input.move.y).normalized;
+			//inputDirection = new Vector3(_input.move.x, 0.0f, _input.move.y).normalized;
+			inputDirection = new Vector3(_input.move.x, 0.0f, 0.0f).normalized;
 
 			// note: Vector2's != operator uses approximation so is not floating point error prone, and is cheaper than magnitude
 			// if there is a move input rotate player when the player is moving
-			if (_input.move != Vector2.zero)
+			if (_input.move.x != 0)
 			{
-				_targetRotation = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg + _mainCamera.transform.eulerAngles.y;
+				_targetRotation = Mathf.Atan2(inputDirection.x, 0) * Mathf.Rad2Deg + _mainCamera.transform.eulerAngles.y;
 				float rotation = Mathf.SmoothDampAngle(transform.eulerAngles.y, _targetRotation, ref _rotationVelocity, RotationSmoothTime);
+
 
 				// rotate to face input direction relative to camera position
 				transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
+
+
 			}
+
 
 
 			//Vector3 targetDirection = Quaternion.Euler(0.0f, _targetRotation, 0.0f) * Vector3.forward;
@@ -366,6 +460,11 @@ namespace StarterAssets
             }
             else
             {
+				if (canMove)
+				{
+					canClampVelocity = true;
+				}
+
 				canMove = false;
 			}
 
@@ -402,6 +501,8 @@ namespace StarterAssets
 		{
 			if (grounded)
 			{
+				//Debug.Log("grounded");
+
 				// reset the fall timeout timer
 				_fallTimeoutDelta = FallTimeout;
 
@@ -421,6 +522,8 @@ namespace StarterAssets
 				// Jump
 				if (_input.jump && _jumpTimeoutDelta <= 0.0f)
 				{
+					//Debug.Log("_jumpTimeoutDelta <= 0.0f");
+
 					canJump = true;
 
 					// the square root of H * -2 * G = how much velocity needed to reach desired height
@@ -434,6 +537,10 @@ namespace StarterAssets
 						_animator.SetBool(_animIDJump, true);
 					}
 
+					if(!groundCheckColliderCouroutine)
+                    {
+						StartCoroutine(groundCheckColliderDeactivate(0.2f));
+					}
 				}
                 else
                 {
@@ -448,6 +555,9 @@ namespace StarterAssets
 			}
 			else
 			{
+
+				//Debug.Log("not grounded");
+
 				// reset the jump timeout timer
 				_jumpTimeoutDelta = JumpTimeout;
 
@@ -465,8 +575,23 @@ namespace StarterAssets
 					}
 				}
 
+				/*
+				if (!jumpWaitCoroutine)
+				{
+					// if we are not grounded, do not jump
+					_input.jump = false;
+				}
+				else
+                {
+					_input.jump = true;
+				}
+				*/
+				
+
+				
 				// if we are not grounded, do not jump
 				_input.jump = false;
+				
 			}
 
 			// apply gravity over time if under terminal (multiply by delta time twice to linearly speed up over time)
@@ -474,7 +599,18 @@ namespace StarterAssets
 			{
 				//canJump = true;
 
-				_verticalVelocity += Gravity * Time.deltaTime;
+				if(canApplyGravity)
+                {
+					_verticalVelocity += Gravity * Time.deltaTime;
+				}
+                else
+                {
+					//_verticalVelocity = 5.0f;
+
+					_verticalVelocity = rbody2D.velocity.y;
+				}
+				
+				
 
 				//rbody2D.velocity = new Vector2(rbody2D.velocity.x, _verticalVelocity);
 			}
@@ -491,6 +627,7 @@ namespace StarterAssets
 			return Mathf.Clamp(lfAngle, lfMin, lfMax);
 		}
 
+		/*
 		private void OnDrawGizmosSelected()
 		{
 			Color transparentGreen = new Color(0.0f, 1.0f, 0.0f, 0.35f);
@@ -502,7 +639,7 @@ namespace StarterAssets
 			// when selected, draw a gizmo in the position of, and matching radius of, the grounded collider
 			Gizmos.DrawSphere(new Vector3(transform.position.x, transform.position.y - GroundedOffset, transform.position.z), GroundedRadius);
 		}
-
+		*/
 
 
 		//Added ForGame
@@ -543,6 +680,22 @@ namespace StarterAssets
 			}
 		}
 
+		IEnumerator groundCheckColliderDeactivate(float secs)
+		{
+			groundCheckColliderCouroutine = true;
+
+			groundCheckCollider.GetComponent<Collider2D>().enabled = false;
+
+			//Debug.Log("Deactivated");
+
+			yield return new WaitForSeconds(secs);
+
+			//Debug.Log("Activated");
+
+			groundCheckCollider.GetComponent<Collider2D>().enabled = true;
+
+			groundCheckColliderCouroutine = false;
+		}
 
 	}
 }

@@ -9,6 +9,10 @@ TagManager:
   - Slime
   - Checkpoint
   - PlayerBody
+  - SlimeDrop
+  - Links
+  - Handle
+  - Chicken
   layers:
   - Default
   - TransparentFX
@@ -19,7 +23,7 @@ TagManager:
   - 
   - Foreground
   - SlowDown
-  - 
+  - GroundCheck
   - 
   - 
   - 

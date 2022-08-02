@@ -350,7 +350,7 @@ GameObject:
   - component: {fileID: 8887344841633894432}
   m_Layer: 7
   m_Name: SeeSawObstacle
-  m_TagString: Untagged
+  m_TagString: SlipperySurface
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

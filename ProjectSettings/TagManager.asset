@@ -13,6 +13,9 @@ TagManager:
   - Links
   - Handle
   - Chicken
+  - Climable
+  - GroundCheck
+  - SlipperySurface
   layers:
   - Default
   - TransparentFX

@@ -27,8 +27,10 @@ public class TilemapProceduralGeneration : MonoBehaviour
     [SerializeField] Text timerText;
     [Tooltip("Text in canvas for player Score")]
     [SerializeField] Text playerScoreText;
+    /*
     [Tooltip("Enter starting time")]
     [SerializeField] float timeLeft;
+    */
     [Tooltip("Enter value of time that will be added every time a checkpoint is crossed")]
     [SerializeField] float timeCheckpointAddition;
     [Tooltip("Player Gameobject")]
@@ -60,7 +62,7 @@ public class TilemapProceduralGeneration : MonoBehaviour
 
     private int checkpointDistanceUpdate;
 
-    private float checkpointDistance;
+    //private float checkpointDistance;
 
     private float checkpointLastDistance;
 
@@ -74,7 +76,7 @@ public class TilemapProceduralGeneration : MonoBehaviour
 
     
 
-    private float playerScore;
+    //private float playerScore;
 
     /*
     void Awake()
@@ -104,9 +106,9 @@ public class TilemapProceduralGeneration : MonoBehaviour
 
         checkpointCrossed = false;
 
-        playerScore = 0.0f;
+        //playerScore = 0.0f;
 
-        checkpointDistance = 0.0f;
+        //checkpointDistance = 0.0f;
 
         checkpointLastDistance = width;
 
@@ -368,16 +370,16 @@ public class TilemapProceduralGeneration : MonoBehaviour
 
     private void timeCountDown()
     {
-        if(timeLeft > 0)
+        if (PlayerStats.Instance.timeLeft > 0)
         {
-            timeLeft -= Time.deltaTime;
+            PlayerStats.Instance.timeLeft -= Time.deltaTime;
         }
-        else if(timeLeft < 0)
+        else if(PlayerStats.Instance.timeLeft < 0)
         {
-            timeLeft = 0;
+            PlayerStats.Instance.timeLeft = 0;
         }
 
-        timerText.text = MathF.Round(timeLeft).ToString();
+        timerText.text = MathF.Round(PlayerStats.Instance.timeLeft).ToString();
     }
 
     private void tilemapSwapping()
@@ -492,7 +494,7 @@ public class TilemapProceduralGeneration : MonoBehaviour
 
                     checkpointCrossed = true;
 
-                    playerScore++;
+                    PlayerStats.Instance.playerScore++;
 
                     checkpointLastDistance = startingWidth;
                 }
@@ -517,7 +519,7 @@ public class TilemapProceduralGeneration : MonoBehaviour
 
                     checkpointCrossed = true;
 
-                    playerScore++;
+                    PlayerStats.Instance.playerScore++;
 
                     checkpointLastDistance = startingWidth;
                 }
@@ -542,7 +544,7 @@ public class TilemapProceduralGeneration : MonoBehaviour
 
                     checkpointCrossed = true;
 
-                    playerScore++;
+                    PlayerStats.Instance.playerScore++;
 
                     checkpointLastDistance = startingWidth;
                 }
@@ -559,9 +561,9 @@ public class TilemapProceduralGeneration : MonoBehaviour
 
             if (!((checkpoints[0].transform.position.x - startingPosition.x) <= 0))
             {
-                checkpointDistance = Mathf.RoundToInt(((checkpoints[0].transform.position.x - player.transform.position.x) / (checkpoints[0].transform.position.x - startingPosition.x)) * startingWidth);
+                PlayerStats.Instance.checkpointDistance = Mathf.RoundToInt(((checkpoints[0].transform.position.x - player.transform.position.x) / (checkpoints[0].transform.position.x - startingPosition.x)) * startingWidth);
 
-                checkpointText.text = checkpointDistance.ToString() + "m";
+                checkpointText.text = PlayerStats.Instance.checkpointDistance.ToString() + "m";
             }
             else
             {
@@ -573,9 +575,9 @@ public class TilemapProceduralGeneration : MonoBehaviour
         {
             if (!((checkpoints[1].transform.position.x - startingPosition.x) <= 0))
             {
-                checkpointDistance = Mathf.RoundToInt(((checkpoints[1].transform.position.x - player.transform.position.x) / (checkpoints[1].transform.position.x - startingPosition.x)) * startingWidth);
+                PlayerStats.Instance.checkpointDistance = Mathf.RoundToInt(((checkpoints[1].transform.position.x - player.transform.position.x) / (checkpoints[1].transform.position.x - startingPosition.x)) * startingWidth);
 
-                checkpointText.text = checkpointDistance.ToString() + "m";
+                checkpointText.text = PlayerStats.Instance.checkpointDistance.ToString() + "m";
             }
             else
             {
@@ -586,9 +588,9 @@ public class TilemapProceduralGeneration : MonoBehaviour
         {
             if (!((checkpoints[2].transform.position.x - startingPosition.x) <= 0))
             {
-                checkpointDistance = Mathf.RoundToInt(((checkpoints[2].transform.position.x - player.transform.position.x) / (checkpoints[2].transform.position.x - startingPosition.x)) * startingWidth);
+                PlayerStats.Instance.checkpointDistance = Mathf.RoundToInt(((checkpoints[2].transform.position.x - player.transform.position.x) / (checkpoints[2].transform.position.x - startingPosition.x)) * startingWidth);
 
-                checkpointText.text = checkpointDistance.ToString() + "m";
+                checkpointText.text = PlayerStats.Instance.checkpointDistance.ToString() + "m";
             }
             else
             {
@@ -602,19 +604,19 @@ public class TilemapProceduralGeneration : MonoBehaviour
 
             checkpointCrossed = false;
 
-            timeLeft += timeCheckpointAddition;
+            PlayerStats.Instance.timeLeft += timeCheckpointAddition;
         }
     }
 
     private void scoreCalculator()
     {
-        if((checkpointDistance - checkpointLastDistance) < 0)
+        if((PlayerStats.Instance.checkpointDistance - checkpointLastDistance) < 0)
         {
-            playerScore += Mathf.Abs(checkpointDistance - checkpointLastDistance);
+            PlayerStats.Instance.playerScore += Mathf.Abs(PlayerStats.Instance.checkpointDistance - checkpointLastDistance);
 
-            checkpointLastDistance = checkpointDistance;
+            checkpointLastDistance = PlayerStats.Instance.checkpointDistance;
 
-            playerScoreText.text = Mathf.RoundToInt(playerScore).ToString();
+            playerScoreText.text = Mathf.RoundToInt(PlayerStats.Instance.playerScore).ToString();
         }
 
 

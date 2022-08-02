@@ -26,6 +26,8 @@ namespace StarterAssets
 		public float RotationSmoothTime = 0.12f;
 		[Tooltip("Acceleration and deceleration")]
 		public float SpeedChangeRate = 10.0f;
+		[Tooltip("Frictiion when player not moving")]
+		public float maxFriction = 10.0f;
 
 		[Space(10)]
 		[Tooltip("The height the player can jump")]
@@ -93,6 +95,11 @@ namespace StarterAssets
 		public Rigidbody2D rbody2D;
 		[Tooltip("Ground Check")]
 		public Collider2D groundCheckCollider;
+		[Tooltip("Player Physics Material")]
+		public PhysicsMaterial2D playerPhysicsMaterial;
+
+		private LayerMask slipperyObstacleColliderMask;
+
 
 		private const float _threshold = 0.01f;
 
@@ -114,7 +121,8 @@ namespace StarterAssets
 		bool canClampVelocity;
 
 		public static bool canApplyGravity;
-		
+		public static bool movementAllowed;
+
 		private void Awake()
 		{
 			// get a reference to our main camera
@@ -130,12 +138,16 @@ namespace StarterAssets
 			//_controller = GetComponent<CharacterController>();
 			_input = GetComponent<StarterAssetsInputs>();
 			//rbody2D = GetComponent<Rigidbody2D>();
+
+			slipperyObstacleColliderMask = LayerMask.GetMask("Foreground");
+
 			canMove = false;
 			canJump = false;
 			groundCheckColliderCouroutine = false;
 			canClampVelocity = false;
 
 			canApplyGravity = true;
+			movementAllowed = true;
 
 			AssignAnimationIDs();
 
@@ -144,6 +156,10 @@ namespace StarterAssets
 			_fallTimeoutDelta = FallTimeout;
 
 			fixFollowCamera();
+
+			gameObject.transform.rotation = Quaternion.Euler(gameObject.transform.rotation.eulerAngles.x, 180, gameObject.transform.rotation.eulerAngles.z);
+
+			//gameObject.transform.rotation.eulerAngles = new Vector3(gameObject.transform.rotation.eulerAngles.x, 180, gameObject.transform.rotation.eulerAngles.z);
 		}
 		public void fixFollowCamera()
 		{
@@ -211,17 +227,45 @@ namespace StarterAssets
 
 			if (canMove)
             {
-				rbody2D.AddForce(inputDirection * _speed, ForceMode2D.Force);
+				if (movementAllowed)
+                {
+					playerPhysicsMaterial.friction = 0.1f;
 
+					rbody2D.AddForce(inputDirection * _speed, ForceMode2D.Force);
+				}
+					
 				//rbody2D.AddForce(inputDirection * (_speed * Time.deltaTime) * 50, ForceMode2D.Force);
 
 				canClampVelocity = false;
+			}
+            else
+            {
+				if(collisionChecker("SlipperySurface", slipperyObstacleColliderMask))
+                {
+					playerPhysicsMaterial.friction = 0.1f;
+				}
+                else
+                {
+					if (playerPhysicsMaterial.friction < maxFriction)
+					{
+						playerPhysicsMaterial.friction = playerPhysicsMaterial.friction + Time.deltaTime * 5;
+					}
+				}
+
+				
 			}
  
 			origVelocity = rbody2D.velocity;
 
 			if (canJump)
 			{
+				
+				if (movementAllowed)
+				{
+					rbody2D.velocity = new Vector2(rbody2D.velocity.x, 0.0f);
+				}
+				
+
 				origVelocity.y = _verticalVelocity;
 			}
 
@@ -236,7 +280,7 @@ namespace StarterAssets
 			{
 				origVelocity.x = Vector2.ClampMagnitude(rbody2D.velocity, targetSpeed).x;
 			}
-			
+
 
 
 			/*
@@ -253,9 +297,12 @@ namespace StarterAssets
 				origVelocity.x = Vector2.ClampMagnitude(rbody2D.velocity, MoveSpeed/4).x;
 			}
 			*/
-			
 
-			rbody2D.velocity = origVelocity;
+			if (movementAllowed)
+            {
+				rbody2D.velocity = origVelocity;
+			}
+
 
 			//Debug.Log("targetSpeed = " + (targetSpeed));
 
@@ -280,7 +327,7 @@ namespace StarterAssets
 			}
 			*/
 
-
+			//Debug.Log("Friction = " + playerPhysicsMaterial.friction);
 		}
 
 
@@ -303,7 +350,7 @@ namespace StarterAssets
 
 		private bool collisionChecker(string objectTag, LayerMask layermask)
         {
-			Collider2D parentCollider = gameObject.transform.parent.transform.gameObject.GetComponent<Collider2D>();
+			Collider2D parentCollider = gameObject.transform.parent.gameObject.GetComponent<Collider2D>();
 
 			// Find the colliders that overlap this one
 			Collider2D[] overlaps = new Collider2D[5];
@@ -325,10 +372,12 @@ namespace StarterAssets
 
 						if(overlapCollider.gameObject.CompareTag(objectTag))
                         {
+							/*
 							if (overlapCollider)
 							{
 								Debug.Log(overlapCollider.transform.name);
 							}
+							*/
 
 							return true;
 						}
@@ -355,6 +404,7 @@ namespace StarterAssets
 
 		private void CameraRotation()
 		{
+			/*
 			// if there is an input and camera position is not fixed
 			if (_input.look.sqrMagnitude >= _threshold && !LockCameraPosition)
 			{
@@ -367,6 +417,7 @@ namespace StarterAssets
 				_cinemachineTargetYaw += _input.look.x * Time.deltaTime  *dampValue; //dampvalue added for webGL
 				_cinemachineTargetPitch += _input.look.y * Time.deltaTime * dampValue;//dampvalue added for webGL
 			}
+			*/
 
 			// clamp our rotations so our values are limited 360 degrees
 			_cinemachineTargetYaw = ClampAngle(_cinemachineTargetYaw, float.MinValue, float.MaxValue);
@@ -454,12 +505,12 @@ namespace StarterAssets
 
 			//inputDirection = new Vector3(_input.move.x, 0.0f, 0.0f).normalized;
 
-			if(_input.move.x != 0)
-            {
+			if (_input.move.x != 0)
+			{
 				canMove = true;
-            }
-            else
-            {
+			}
+			else
+			{
 				if (canMove)
 				{
 					canClampVelocity = true;
@@ -467,6 +518,8 @@ namespace StarterAssets
 
 				canMove = false;
 			}
+			
+
 
 			/*
 			Vector2 origVelocity;
@@ -545,7 +598,7 @@ namespace StarterAssets
                 else
                 {
 					canJump = false;
-                }
+				}
 
 				// jump timeout
 				if (_jumpTimeoutDelta >= 0.0f)
@@ -588,9 +641,12 @@ namespace StarterAssets
 				*/
 				
 
-				
-				// if we are not grounded, do not jump
-				_input.jump = false;
+				if(canApplyGravity)
+                {
+					// if we are not grounded, do not jump
+					_input.jump = false;
+				}
+
 				
 			}
 
@@ -607,7 +663,21 @@ namespace StarterAssets
                 {
 					//_verticalVelocity = 5.0f;
 
-					_verticalVelocity = rbody2D.velocity.y;
+					if(movementAllowed)
+                    {
+						_verticalVelocity = rbody2D.velocity.y;
+					}
+                    else
+                    {
+						if (movementAllowed)
+                        {
+							rbody2D.velocity = new Vector2(rbody2D.velocity.x, 0.0f);
+						}
+							
+
+						_verticalVelocity = 8f;
+					}
+					
 				}
 				
 				

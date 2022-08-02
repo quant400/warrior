@@ -1,0 +1,444 @@
+fileFormatVersion: 2
+guid: 97209ad743876e24ba1eb71b96b04412
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 11
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 0
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 1024
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: sprite sheet Bear_walk_animation10_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 768
+        width: 512
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: -33, y: -128}
+        - {x: 25, y: -128}
+        - {x: 26, y: -118}
+        - {x: 25, y: -115}
+        - {x: 19, y: -111}
+        - {x: 14, y: -109}
+        - {x: 8, y: -109}
+        - {x: 7, y: -108}
+        - {x: 12, y: -109}
+        - {x: 18, y: -109}
+        - {x: 19, y: -110}
+        - {x: 42, y: -128}
+        - {x: 96, y: -128}
+        - {x: 72, y: -71}
+        - {x: 169, y: -41}
+        - {x: 169, y: -10}
+        - {x: 127, y: 38}
+        - {x: 40, y: 51}
+        - {x: -13, y: 53}
+        - {x: -104, y: 53}
+        - {x: -157, y: -8}
+        - {x: -157, y: -122}
+        - {x: -141, y: -128}
+        - {x: -105, y: -128}
+        - {x: -113, y: -116}
+        - {x: -124, y: -109}
+        - {x: -50, y: -124}
+      tessellationDetail: 0.1
+      bones: []
+      spriteID: b86ee825191bf3f49bf48c88565d70c3
+      internalID: -1033367594
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sprite sheet Bear_walk_animation10_1
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 768
+        width: 512
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: -25, y: -78}
+        - {x: -3, y: -128}
+        - {x: 46, y: -128}
+        - {x: 45, y: -121}
+        - {x: 117, y: -122}
+        - {x: 118, y: -106}
+        - {x: 109, y: -93}
+        - {x: 65, y: -72}
+        - {x: 82, y: -39}
+        - {x: 156, y: -47}
+        - {x: 168, y: -28}
+        - {x: 168, y: -13}
+        - {x: 143, y: 11}
+        - {x: 125, y: 24}
+        - {x: 58, y: 42}
+        - {x: -40, y: 62}
+        - {x: -83, y: 62}
+        - {x: -103, y: 52}
+        - {x: -132, y: 27}
+        - {x: -140, y: 2}
+        - {x: -145, y: -24}
+        - {x: -135, y: -57}
+        - {x: -159, y: -69}
+        - {x: -159, y: -118}
+        - {x: -142, y: -127}
+        - {x: -139, y: -125}
+        - {x: -74, y: -77}
+        - {x: -71, y: -109}
+        - {x: -62, y: -128}
+        - {x: -13, y: -128}
+        - {x: -17, y: -120}
+        - {x: -29, y: -114}
+      tessellationDetail: 0.1
+      bones: []
+      spriteID: 4f84d0dc77f58b747b17ae3f3bbf2c83
+      internalID: 493715315
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sprite sheet Bear_walk_animation10_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 512
+        width: 512
+        height: 250
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: -9, y: -125}
+        - {x: -10, y: -60}
+        - {x: 23, y: -66}
+        - {x: 56, y: -113}
+        - {x: 77, y: -125}
+        - {x: 132, y: -125}
+        - {x: 132, y: -115}
+        - {x: 76, y: -50}
+        - {x: 147, y: -48}
+        - {x: 155, y: -32}
+        - {x: 155, y: -17}
+        - {x: 132, y: 13}
+        - {x: 107, y: 32}
+        - {x: 31, y: 52}
+        - {x: -7, y: 58}
+        - {x: -89, y: 58}
+        - {x: -114, y: 54}
+        - {x: -140, y: 17}
+        - {x: -140, y: -13}
+        - {x: -125, y: -78}
+        - {x: -122, y: -124}
+        - {x: -119, y: -125}
+        - {x: -69, y: -125}
+        - {x: -65, y: -121}
+        - {x: -48, y: -110}
+        - {x: -31, y: -125}
+      tessellationDetail: 0.1
+      bones: []
+      spriteID: 92d1f930d9ff18b4bac4de4aca81edd6
+      internalID: -1565030965
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sprite sheet Bear_walk_animation10_3
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 512
+        width: 512
+        height: 250
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: -34, y: -91}
+        - {x: -27, y: -109}
+        - {x: -16, y: -125}
+        - {x: 1, y: -125}
+        - {x: 38, y: -117}
+        - {x: 50, y: -125}
+        - {x: 97, y: -125}
+        - {x: 105, y: -122}
+        - {x: 64, y: -69}
+        - {x: 71, y: -46}
+        - {x: 115, y: -41}
+        - {x: 161, y: -48}
+        - {x: 169, y: -36}
+        - {x: 169, y: -17}
+        - {x: 159, y: 5}
+        - {x: 132, y: 29}
+        - {x: 105, y: 37}
+        - {x: 32, y: 48}
+        - {x: 24, y: 49}
+        - {x: -83, y: 49}
+        - {x: -96, y: 48}
+        - {x: -132, y: 21}
+        - {x: -144, y: -18}
+        - {x: -153, y: -84}
+        - {x: -153, y: -119}
+        - {x: -149, y: -125}
+        - {x: -100, y: -125}
+        - {x: -95, y: -118}
+        - {x: -123, y: -103}
+        - {x: -84, y: -62}
+      - - {x: 3, y: -93}
+        - {x: 6, y: -95}
+        - {x: 2, y: -96}
+      tessellationDetail: 0.1
+      bones: []
+      spriteID: feed8bf31872a134cb031f859223f114
+      internalID: -950262169
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sprite sheet Bear_walk_animation10_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 256
+        width: 512
+        height: 250
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: 52, y: -125}
+        - {x: 58, y: -122}
+        - {x: 54, y: -117}
+        - {x: 42, y: -110}
+        - {x: 126, y: -120}
+        - {x: 130, y: -105}
+        - {x: 111, y: -84}
+        - {x: 73, y: -73}
+        - {x: 96, y: -39}
+        - {x: 173, y: -42}
+        - {x: 179, y: -32}
+        - {x: 179, y: -14}
+        - {x: 160, y: 19}
+        - {x: 55, y: 53}
+        - {x: -20, y: 63}
+        - {x: -64, y: 63}
+        - {x: -83, y: 62}
+        - {x: -121, y: 34}
+        - {x: -130, y: -16}
+        - {x: -116, y: -47}
+        - {x: -133, y: -72}
+        - {x: -133, y: -122}
+        - {x: -116, y: -111}
+        - {x: -58, y: -83}
+        - {x: -57, y: -125}
+        - {x: -3, y: -125}
+        - {x: 0, y: -120}
+        - {x: 12, y: -122}
+        - {x: 18, y: -125}
+      tessellationDetail: 0.1
+      bones: []
+      spriteID: 6741fecd93367214a918abd161c46432
+      internalID: 2067305883
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sprite sheet Bear_walk_animation10_5
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 256
+        width: 512
+        height: 250
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: 81, y: -125}
+        - {x: 128, y: -125}
+        - {x: 129, y: -120}
+        - {x: 112, y: -105}
+        - {x: 72, y: -54}
+        - {x: 76, y: -34}
+        - {x: 144, y: -44}
+        - {x: 150, y: -28}
+        - {x: 150, y: -11}
+        - {x: 134, y: 18}
+        - {x: 85, y: 44}
+        - {x: 27, y: 55}
+        - {x: -48, y: 65}
+        - {x: -101, y: 65}
+        - {x: -144, y: 34}
+        - {x: -146, y: 24}
+        - {x: -146, y: -15}
+        - {x: -117, y: -73}
+        - {x: -126, y: -95}
+        - {x: -120, y: -125}
+        - {x: -69, y: -125}
+        - {x: -69, y: -122}
+        - {x: -73, y: -116}
+        - {x: -58, y: -113}
+        - {x: -39, y: -125}
+        - {x: -8, y: -125}
+        - {x: -21, y: -102}
+        - {x: -15, y: -65}
+        - {x: 52, y: -101}
+      tessellationDetail: 0.1
+      bones: []
+      spriteID: 8992195aa2cd2864984bf9e405968b24
+      internalID: 80493399
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: db2445824cd316c4190178fc7ed37c70
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      sprite sheet Bear_walk_animation10_6: -898866463
+      sprite sheet Bear_walk_animation10_2: -1565030965
+      sprite sheet Bear_walk_animation10_4: 2067305883
+      sprite sheet Bear_walk_animation10_5: 80493399
+      sprite sheet Bear_walk_animation10_7: -870346664
+      sprite sheet Bear_walk_animation10_1: 493715315
+      sprite sheet Bear_walk_animation10_0: -1033367594
+      sprite sheet Bear_walk_animation10_3: -950262169
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -265,7 +265,7 @@ GameObject:
   - component: {fileID: 2106710910508879210}
   m_Layer: 7
   m_Name: VerticalMovingObstacle
-  m_TagString: Untagged
+  m_TagString: SlipperySurface
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -328,3 +328,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   distance: 2
   duration: 0
+  isFollowingPlayerPlatform: 0

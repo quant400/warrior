@@ -14,6 +14,7 @@ namespace StarterAssets
         private Rigidbody2D playerRBody;
 
         private bool forceActive;
+        //private bool canForceActCoroutine;
 
         [SerializeField] bool impusleOnlyToggle = false;
 
@@ -27,6 +28,8 @@ namespace StarterAssets
             firstTimeCollision = false;
 
             forceActive = false;
+
+            //canForceActCoroutine = false;
         }
 
         // Update is called once per frame
@@ -77,6 +80,7 @@ namespace StarterAssets
 
         }
 
+        /*
         private void OnCollisionStay2D(Collision2D collision)
         {
             if (collision.transform.CompareTag("PlayerBody"))
@@ -91,6 +95,7 @@ namespace StarterAssets
                 forceActive = true;
             }
         }
+        */
 
         private void OnCollisionExit2D(Collision2D collision)
         {
@@ -99,5 +104,16 @@ namespace StarterAssets
                 forceActive = false;
             }
         }
+
+        /*
+        IEnumerator canForceAct(float secs)
+        {
+            canForceActCoroutine = true;
+
+            yield return new WaitForSeconds(secs);
+
+            canForceActCoroutine = false;
+        }
+        */
     }
 }

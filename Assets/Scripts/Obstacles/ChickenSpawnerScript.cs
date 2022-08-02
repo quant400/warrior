@@ -9,21 +9,36 @@ public class ChickenSpawnerScript : MonoBehaviour
     [SerializeField]
     private float spawnDelay = 2.0f;
 
+    [SerializeField]
+    private int spawnNum = 1;
+
+    private bool activateSpawning;
+
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(chickenSpawnDelay(spawnDelay));
+        activateSpawning = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if(activateSpawning)
+        {
+            activateSpawning = false;
+
+            StartCoroutine(chickenSpawnDelay(spawnDelay));
+        }
+    }
+
+    public void startSpawning()
+    {
+        activateSpawning = true;
     }
 
     IEnumerator chickenSpawnDelay(float secs)
     {
-        while(true)
+        for(int i = 0; i < spawnNum; i++)
         {
             Instantiate(chickenPrefab, gameObject.transform.position, chickenPrefab.transform.rotation);
 

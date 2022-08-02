@@ -8,10 +8,15 @@ public class setFollowSettings : MonoBehaviour
     [SerializeField] CinemachineVirtualCamera followCameraSettings;
     [SerializeField] GameObject player;
     [SerializeField] StarterAssetsInputs _input;
-    CinemachineTransposer thirdperson;
+    //CinemachineTransposer thirdperson;
+    CinemachineFramingTransposer thirdperson;
+    [Header("Player Grounded")]
+    public GroundCheck groundCheck = null;
     // Start is called before the first frame update
     void Start()
     {
+        groundCheck = GameObject.FindGameObjectWithTag("GroundCheck").gameObject.GetComponent<GroundCheck>();
+
         if (player == null)
         {
             player = GameObject.FindGameObjectWithTag("Player");
@@ -29,20 +34,39 @@ public class setFollowSettings : MonoBehaviour
         {
             //followCameraSettings.LookAt = followCameraSettings.Follow;
             //thirdperson = followCameraSettings.GetCinemachineComponent<Cinemachine3rdPersonFollow>();
-            thirdperson = followCameraSettings.GetCinemachineComponent<CinemachineTransposer>();
-            followCameraSettings.AddCinemachineComponent<CinemachineComposer>();
-            thirdperson.m_XDamping = 0;
+
+
+            
+            thirdperson = followCameraSettings.GetCinemachineComponent<CinemachineFramingTransposer>();
             thirdperson.m_YDamping = 10;
+
+            thirdperson.m_DeadZoneHeight = 0;
+            thirdperson.m_SoftZoneHeight = 2;
+
+
+            /*
+            thirdperson = followCameraSettings.GetCinemachineComponent<CinemachineTransposer>();
+                        thirdperson.m_XDamping = 0;
+            thirdperson.m_YDamping = 10;
+            */
+
+            /*
+            followCameraSettings.AddCinemachineComponent<CinemachineComposer>();
+
 
             followCameraSettings.GetCinemachineComponent<CinemachineComposer>().m_HorizontalDamping = 0;
             followCameraSettings.GetCinemachineComponent<CinemachineComposer>().m_VerticalDamping = 20;
             followCameraSettings.GetCinemachineComponent<CinemachineComposer>().m_DeadZoneHeight = 2;
             followCameraSettings.GetCinemachineComponent<CinemachineComposer>().m_SoftZoneHeight = 2;
+            */
+            
+
+            //followCameraSettings.GetCinemachineComponent<CinemachineComposer>().m_ScreenY = 1.1f;
 
 
 
         }
-        
+
     }
 
     // Update is called once per frame
@@ -62,5 +86,27 @@ public class setFollowSettings : MonoBehaviour
             }
         }
         */
+
+        /*
+        if(grounded)
+        {
+            gameObject.transform.rotation = Quaternion.Euler(0, gameObject.transform.rotation.eulerAngles.y, gameObject.transform.rotation.eulerAngles.z);
+        }
+        */
+    }
+
+    public bool grounded
+    {
+        get
+        {
+            if (groundCheck != null)
+            {
+                return groundCheck.CheckGrounded();
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }

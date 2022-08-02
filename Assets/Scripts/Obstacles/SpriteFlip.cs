@@ -21,13 +21,18 @@ public class SpriteFlip : MonoBehaviour
     {
         if(previousX > gameObject.transform.position.x)
         {
-            gameObject.transform.eulerAngles = new Vector3(gameObject.transform.eulerAngles.x, 0.0f, gameObject.transform.eulerAngles.z);
+            //gameObject.transform.eulerAngles = new Vector3(gameObject.transform.eulerAngles.x, 0.0f, gameObject.transform.eulerAngles.z);
+
+            objectSptiteRenderer.flipX = true;
 
             previousX = gameObject.transform.position.x;
         }
         else if (previousX < gameObject.transform.position.x)
         {
-            gameObject.transform.eulerAngles = new Vector3(gameObject.transform.eulerAngles.x, 180.0f, gameObject.transform.eulerAngles.z);
+
+            //gameObject.transform.eulerAngles = new Vector3(gameObject.transform.eulerAngles.x, 180.0f, gameObject.transform.eulerAngles.z);
+
+            objectSptiteRenderer.flipX = false;
 
             previousX = gameObject.transform.position.x;
         }

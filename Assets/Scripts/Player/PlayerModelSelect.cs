@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -24,9 +25,14 @@ public class PlayerModelSelect : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //chosenNFTName = NameToSlugConvert(gameplayView.instance.chosenNFT.name);
-
-        chosenNFTName = "a-rod";
+        try
+        {
+            chosenNFTName = NameToSlugConvert(gameplayView.instance.chosenNFT.name);
+        }
+        catch (Exception e)
+        {
+            chosenNFTName = "a-rod";
+        }
 
         playerModelFBX = Resources.Load(Path.Combine("SinglePlayerPrefabs/DisplayModels", chosenNFTName)) as GameObject;
 

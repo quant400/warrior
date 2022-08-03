@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4975409790776744714}
   m_Layer: 7
   m_Name: Circle (1)
-  m_TagString: Untagged
+  m_TagString: SlipperySurface
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -99,7 +99,7 @@ GameObject:
   - component: {fileID: 4975409791054782711}
   m_Layer: 7
   m_Name: PushBackCircle
-  m_TagString: Untagged
+  m_TagString: SlipperySurface
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -230,7 +230,7 @@ GameObject:
   - component: {fileID: 4975409791763251218}
   m_Layer: 7
   m_Name: Circle (2)
-  m_TagString: Untagged
+  m_TagString: SlipperySurface
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -314,7 +314,7 @@ GameObject:
   - component: {fileID: 4975409792394729847}
   m_Layer: 7
   m_Name: Circle (3)
-  m_TagString: Untagged
+  m_TagString: SlipperySurface
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -398,7 +398,7 @@ GameObject:
   - component: {fileID: 4975409792437636546}
   m_Layer: 7
   m_Name: Circle (4)
-  m_TagString: Untagged
+  m_TagString: SlipperySurface
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

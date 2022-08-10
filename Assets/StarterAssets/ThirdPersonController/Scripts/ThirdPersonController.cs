@@ -163,9 +163,9 @@ namespace StarterAssets
 		}
 		public void fixFollowCamera()
 		{
-			GameObject obj=  transform.GetChild(1).gameObject;
+			GameObject obj= GameObject.FindGameObjectWithTag("CineMachine").gameObject;
 
-			if(obj.name== "CM FreeLook1")
+			if (obj.name== "CM FreeLook1")
 			{
 				obj.AddComponent<setFollowSettings>();
 			}
@@ -334,7 +334,7 @@ namespace StarterAssets
 		private void LateUpdate()
 		{
 
-			CameraRotation();
+			//CameraRotation();
 
 			//gameObject.transform.position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, 0);
 		}

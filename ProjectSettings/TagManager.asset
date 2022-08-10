@@ -16,6 +16,7 @@ TagManager:
   - Climable
   - GroundCheck
   - SlipperySurface
+  - CineMachine
   layers:
   - Default
   - TransparentFX

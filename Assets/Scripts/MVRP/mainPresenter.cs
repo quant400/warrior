@@ -24,11 +24,11 @@ using UnityEngine.SceneManagement;
     }
     public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if ((scene.name == chickenGameModel.singlePlayerScene1.sceneName)) 
+        if ((scene.name == warriorGameModel.singlePlayerScene1.sceneName)) 
         {
             Observable.Timer(TimeSpan.Zero)
                         .DelayFrame(2)
-                        .Do(_ => chickenGameModel.gameCurrentStep.Value = chickenGameModel.GameSteps.OnStartGame)
+                        .Do(_ => warriorGameModel.gameCurrentStep.Value = warriorGameModel.GameSteps.OnStartGame)
                         .Subscribe()
                         .AddTo(this);
         }
@@ -49,19 +49,19 @@ using UnityEngine.SceneManagement;
 
     void ObservePanelsStatus()
     {
-            chickenGameModel.gameCurrentStep
+            warriorGameModel.gameCurrentStep
                    .Subscribe(procedeGame)
                    .AddTo(this);
 
-            void procedeGame(chickenGameModel.GameSteps status)
+            void procedeGame(warriorGameModel.GameSteps status)
             {
                 switch (status)
                 {
-                    case chickenGameModel.GameSteps.OnLogin:
+                    case warriorGameModel.GameSteps.OnLogin:
                        
-                        if (chickenGameModel.userIsLogged.Value)
+                        if (warriorGameModel.userIsLogged.Value)
                         {
-                        chickenGameModel.gameCurrentStep.Value = chickenGameModel.GameSteps.OnCharacterSelection;
+                        warriorGameModel.gameCurrentStep.Value = warriorGameModel.GameSteps.OnCharacterSelection;
 
                         }
 
@@ -71,20 +71,20 @@ using UnityEngine.SceneManagement;
                         uiView.observeLogin();
                         }
                     break;
-                case chickenGameModel.GameSteps.Onlogged:
+                case warriorGameModel.GameSteps.Onlogged:
 
                     uiView.goToMenu("main");
                     break;
-                case chickenGameModel.GameSteps.OnPlayMenu:
+                case warriorGameModel.GameSteps.OnPlayMenu:
 
                     uiView.goToMenu("main");
 
                     break;
-                case chickenGameModel.GameSteps.OnLeaderBoard:
+                case warriorGameModel.GameSteps.OnLeaderBoard:
 
                     uiView.goToMenu("leaderboeard");
                     break;
-                case chickenGameModel.GameSteps.OnCharacterSelection:
+                case warriorGameModel.GameSteps.OnCharacterSelection:
                     uiView.goToMenu("characterSelection");
                     if (!gameplayView.instance.isTryout)
                     {
@@ -94,43 +94,43 @@ using UnityEngine.SceneManagement;
 
                     //webView.checkUSerLoggedAtStart(); /// condisder when start load again .....  !!!! 
                     break;
-                case chickenGameModel.GameSteps.OnCharacterSelected:
+                case warriorGameModel.GameSteps.OnCharacterSelected:
                     uiView.goToMenu("characterSelected");
                     gameEndView.resetDisplay();
                     scenesView.loadSinglePlayerScene();
 
                     break;
-                case chickenGameModel.GameSteps.OnStartGame:
+                case warriorGameModel.GameSteps.OnStartGame:
                     Observable.Timer(TimeSpan.Zero)
                         .DelayFrame(2)
                         .Do(_ => gameView.StartGame())
                         .Subscribe()
                         .AddTo(this);
 
-                    chickenGameModel.gameCurrentStep.Value = chickenGameModel.GameSteps.OnGameRunning;
+                    warriorGameModel.gameCurrentStep.Value = warriorGameModel.GameSteps.OnGameRunning;
 
                     break;
-                case chickenGameModel.GameSteps.OnGameRunning:
+                case warriorGameModel.GameSteps.OnGameRunning:
                     Debug.Log("game Is running");
                     break;
-                case chickenGameModel.GameSteps.OnGameEnded:
+                case warriorGameModel.GameSteps.OnGameEnded:
                     uiView.goToMenu("results");
                     if(!gameplayView.instance.isTryout)
                     gameEndView.setScoreAtStart();
                     gameView.EndGame();
                     break;
-                case chickenGameModel.GameSteps.OnBackToCharacterSelection:
+                case warriorGameModel.GameSteps.OnBackToCharacterSelection:
                     gameEndView.initializeValues();
                     gameEndView.resetDisplay();
                     dataView.initilizeValues();
-                    scenesView.LoadScene(chickenGameModel.mainSceneLoadname.sceneName);
+                    scenesView.LoadScene(warriorGameModel.mainSceneLoadname.sceneName);
                     Observable.Timer(TimeSpan.Zero)
                        .DelayFrame(2)
-                       .Do(_ => chickenGameModel.gameCurrentStep.Value = chickenGameModel.GameSteps.OnCharacterSelection)
+                       .Do(_ => warriorGameModel.gameCurrentStep.Value = warriorGameModel.GameSteps.OnCharacterSelection)
                        .Subscribe()
                        .AddTo(this);
                     break;
-                case chickenGameModel.GameSteps.onSceneLoaded:
+                case warriorGameModel.GameSteps.onSceneLoaded:
                     Debug.Log("sceneLoaded");
                     break;
 

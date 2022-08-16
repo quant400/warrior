@@ -38,19 +38,19 @@ public class webLoginView : MonoBehaviour
 
     public void checkUSerLoggedAtStart()
     {
-        if (chickenGameModel.userIsLogged.Value)
+        if (warriorGameModel.userIsLogged.Value)
         {
             nftGetter.savedLoggedDisplay();
         }
         else
         {
-            chickenGameModel.gameCurrentStep.Value = chickenGameModel.GameSteps.OnLogin;
+            warriorGameModel.gameCurrentStep.Value = warriorGameModel.GameSteps.OnLogin;
 
         }
     }
     public void OnLogin(Button loginBtn, Button skipBtn, Button tryoutBtn)
     {
-        if (chickenGameModel.userIsLogged.Value)
+        if (warriorGameModel.userIsLogged.Value)
         {
             loginBtn.GetComponent<Button>().interactable = false;
             skipBtn.GetComponent<Button>().interactable = false;
@@ -95,14 +95,27 @@ public class webLoginView : MonoBehaviour
 
     public void OnTryout()
     {
-        gameplayView.instance.isTryout = true; 
+        gameplayView.instance.isTryout = true;
+
+        foreach (Transform t in transform)
+        {
+            t.gameObject.SetActive(false);
+        }
+        transform.GetChild(0).gameObject.SetActive(true);
+        transform.GetChild(5).gameObject.SetActive(true);
+
+        nftGetter.Skip();
+        SceneManager.LoadScene(warriorGameModel.singlePlayerScene1.sceneName);
+
+        /*
         foreach(Transform t in transform)
         {
             t.gameObject.SetActive(false);
         }
         transform.GetChild(0).gameObject.SetActive(true);
         tryoutCanvas.SetActive(true);
-       
+        */
+
     }
 
 }

@@ -45,6 +45,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3746912097090934038}
     m_Modifications:
+    - target: {fileID: 2225740241969836429, guid: 9d9295e2128f5b04183c38438e462163, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -226677923, guid: ab1c45d7169df8b44846fa0292e5b57d, type: 3}
     - target: {fileID: 4550191128920797927, guid: 9d9295e2128f5b04183c38438e462163, type: 3}
       propertyPath: m_Name
       value: IndiviidualVerticalMovingObstacle 1 (5)
@@ -273,6 +277,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3746912097090934038}
     m_Modifications:
+    - target: {fileID: 2225740241969836429, guid: 9d9295e2128f5b04183c38438e462163, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -226677923, guid: ab1c45d7169df8b44846fa0292e5b57d, type: 3}
     - target: {fileID: 4550191128920797927, guid: 9d9295e2128f5b04183c38438e462163, type: 3}
       propertyPath: m_Name
       value: IndiviidualVerticalMovingObstacle 1 (2)
@@ -501,6 +509,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3746912097090934038}
     m_Modifications:
+    - target: {fileID: 2225740241969836429, guid: 9d9295e2128f5b04183c38438e462163, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -226677923, guid: ab1c45d7169df8b44846fa0292e5b57d, type: 3}
     - target: {fileID: 4550191128920797927, guid: 9d9295e2128f5b04183c38438e462163, type: 3}
       propertyPath: m_Name
       value: IndiviidualVerticalMovingObstacle 1 (3)
@@ -729,6 +741,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3746912097090934038}
     m_Modifications:
+    - target: {fileID: 2225740241969836429, guid: 9d9295e2128f5b04183c38438e462163, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -226677923, guid: ab1c45d7169df8b44846fa0292e5b57d, type: 3}
     - target: {fileID: 4550191128920797927, guid: 9d9295e2128f5b04183c38438e462163, type: 3}
       propertyPath: m_Name
       value: IndiviidualVerticalMovingObstacle 1 (1)
@@ -957,6 +973,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3746912097090934038}
     m_Modifications:
+    - target: {fileID: 2225740241969836429, guid: 9d9295e2128f5b04183c38438e462163, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -226677923, guid: ab1c45d7169df8b44846fa0292e5b57d, type: 3}
     - target: {fileID: 4550191128920797927, guid: 9d9295e2128f5b04183c38438e462163, type: 3}
       propertyPath: m_Name
       value: IndiviidualVerticalMovingObstacle 1
@@ -1185,6 +1205,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3746912097090934038}
     m_Modifications:
+    - target: {fileID: 2225740241969836429, guid: 9d9295e2128f5b04183c38438e462163, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -226677923, guid: ab1c45d7169df8b44846fa0292e5b57d, type: 3}
     - target: {fileID: 4550191128920797927, guid: 9d9295e2128f5b04183c38438e462163, type: 3}
       propertyPath: m_Name
       value: IndiviidualVerticalMovingObstacle 1 (4)
@@ -1413,6 +1437,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3746912097090934038}
     m_Modifications:
+    - target: {fileID: 2225740241969836429, guid: 9d9295e2128f5b04183c38438e462163, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -226677923, guid: ab1c45d7169df8b44846fa0292e5b57d, type: 3}
     - target: {fileID: 4550191128920797927, guid: 9d9295e2128f5b04183c38438e462163, type: 3}
       propertyPath: m_Name
       value: VerticalMovingObstacle

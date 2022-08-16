@@ -96,8 +96,8 @@ public class ButtonInfoHolder : MonoBehaviour
 
     void UpdateSessionInfo()
     {
-        if (chickenGameModel.currentNFTSession<10)
+        if (warriorGameModel.currentNFTSession<10)
             CSV.EnablePlay();
-        info.text = "PLAYED " + chickenGameModel.currentNFTSession + " OUT OF 10 DAILY GAMES";
+        info.text = "PLAYED " + warriorGameModel.currentNFTSession + " OUT OF 10 DAILY GAMES";
     }
 }

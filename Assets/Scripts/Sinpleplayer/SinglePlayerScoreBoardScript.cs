@@ -128,7 +128,7 @@ public class SinglePlayerScoreBoardScript : MonoBehaviour
                     gameplayView.instance.EndGame();
 
                 }
-                chickenGameModel.gameCurrentStep.Value = chickenGameModel.GameSteps.OnGameEnded;
+                warriorGameModel.gameCurrentStep.Value = warriorGameModel.GameSteps.OnGameEnded;
                 DisplayScore();
             
 

@@ -37,7 +37,8 @@ public class TryoutScript : MonoBehaviour
         }
         */
 
-        SceneManager.LoadScene(chickenGameModel.singlePlayerScene1.sceneName);
+        nftGetter.Skip();
+        SceneManager.LoadScene(warriorGameModel.singlePlayerScene1.sceneName);
 
         transform.gameObject.SetActive(false);
 
@@ -58,8 +59,8 @@ public class TryoutScript : MonoBehaviour
             transform.parent.GetChild(2).gameObject.SetActive(true);
             transform.parent.GetChild(2).GetChild(0).GetChild(4).gameObject.SetActive(true);
             transform.parent.GetChild(6).gameObject.SetActive(false);
-            chickenGameModel.gameCurrentStep.Value = chickenGameModel.GameSteps.OnLogin;
-            SceneManager.LoadScene(chickenGameModel.mainSceneLoadname.sceneName);
+            warriorGameModel.gameCurrentStep.Value = warriorGameModel.GameSteps.OnLogin;
+            SceneManager.LoadScene(warriorGameModel.mainSceneLoadname.sceneName);
 
         }
     }

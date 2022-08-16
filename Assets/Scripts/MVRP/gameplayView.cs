@@ -74,7 +74,7 @@ public class gameplayView : MonoBehaviour
         Debug.Log(chosenNFT.id);
         if(!instance.isTryout)
             DatabaseManagerRestApi._instance.startSessionFromRestApi(chosenNFT.id);
-        chickenGameModel.gameCurrentStep.Value = chickenGameModel.GameSteps.OnGameRunning;
+        warriorGameModel.gameCurrentStep.Value = warriorGameModel.GameSteps.OnGameRunning;
 
     }
     public void EndGame()

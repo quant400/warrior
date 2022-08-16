@@ -8,7 +8,7 @@ using UniRx.Triggers;
 using UniRx.Toolkit;
 [Serializable]
 
-public struct chickenGameModel
+public struct warriorGameModel
 {
     [Serializable]
     public enum GameSteps

@@ -40,4 +40,9 @@ public class PlayerStats : MonoBehaviour
     {
         
     }
+
+    public int GetScore()
+    {
+        return (int)playerScore;
+    }
 }

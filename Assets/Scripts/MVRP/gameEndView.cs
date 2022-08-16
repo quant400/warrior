@@ -76,7 +76,8 @@ public class gameEndView : MonoBehaviour
             {
                 Debug.Log("before Score");
 
-                DatabaseManagerRestApi._instance.setScoreRestApiMain(currentNFT.id.ToString(), SinglePlayerScoreBoardScript.instance.GetScore());
+                //DatabaseManagerRestApi._instance.setScoreRestApiMain(currentNFT.id.ToString(), SinglePlayerScoreBoardScript.instance.GetScore());
+                DatabaseManagerRestApi._instance.setScoreRestApiMain(currentNFT.id.ToString(), PlayerStats.Instance.GetScore());
                 Debug.Log("posted Score");
             }
             else
@@ -210,7 +211,7 @@ public class gameEndView : MonoBehaviour
     }
     private void Update()
     {
-        if (chickenGameModel.gameCurrentStep.Value == chickenGameModel.GameSteps.OnGameEnded)
+        if (warriorGameModel.gameCurrentStep.Value == warriorGameModel.GameSteps.OnGameEnded)
         {
             scorereactive.Value = gameplayView.instance.dailyScore;
             sessions.Value = gameplayView.instance.sessions;
@@ -243,13 +244,13 @@ public class gameEndView : MonoBehaviour
     }
     public void TryAgain()
     { 
-            chickenGameModel.gameCurrentStep.Value = chickenGameModel.GameSteps.OnCharacterSelected;
+            warriorGameModel.gameCurrentStep.Value = warriorGameModel.GameSteps.OnCharacterSelected;
    
     }
     public void goToMain()
     {
-        scenesView.LoadScene(chickenGameModel.mainSceneLoadname.sceneName);
-        chickenGameModel.gameCurrentStep.Value = chickenGameModel.GameSteps.OnBackToMenu;
+        scenesView.LoadScene(warriorGameModel.mainSceneLoadname.sceneName);
+        warriorGameModel.gameCurrentStep.Value = warriorGameModel.GameSteps.OnBackToMenu;
         
     }
 

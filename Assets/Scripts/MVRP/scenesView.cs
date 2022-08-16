@@ -45,7 +45,7 @@ public class scenesView : MonoBehaviour
     }
     public static void loadSinglePlayerScene()
     {
-        int scene = chickenGameModel.currentNFTSession;
+        int scene = warriorGameModel.currentNFTSession;
         /*
         switch (scene)
         {
@@ -95,6 +95,6 @@ public class scenesView : MonoBehaviour
 
         }*/
 
-        SceneManager.LoadScene(chickenGameModel.singlePlayerScene1.sceneName);
+        SceneManager.LoadScene(warriorGameModel.singlePlayerScene1.sceneName);
     }
 }

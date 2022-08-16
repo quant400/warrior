@@ -22,7 +22,7 @@ public class uiView : MonoBehaviour
     // Start is called before the first frame update
     private void Awake()
     {
-        scenesView.LoadScene(chickenGameModel.mainSceneLoadname.sceneName);
+        scenesView.LoadScene(warriorGameModel.mainSceneLoadname.sceneName);
     }
     void Start()
     {
@@ -30,9 +30,9 @@ public class uiView : MonoBehaviour
     }
     public void observeLogin()
     {
-        chickenGameModel.userIsLogged
+        warriorGameModel.userIsLogged
           .Where(_ => _)
-          .Do(_ => chickenGameModel.gameCurrentStep.Value = chickenGameModel.GameSteps.Onlogged)
+          .Do(_ => warriorGameModel.gameCurrentStep.Value = warriorGameModel.GameSteps.Onlogged)
           .Subscribe()
           .AddTo(this);
     }
@@ -65,9 +65,9 @@ public class uiView : MonoBehaviour
           .Do(_ =>
           {
               if (gameplayView.instance.isTryout)
-                  chickenGameModel.gameCurrentStep.Value = chickenGameModel.GameSteps.OnLogin;
+                  warriorGameModel.gameCurrentStep.Value = warriorGameModel.GameSteps.OnLogin;
               else
-                  chickenGameModel.gameCurrentStep.Value = chickenGameModel.GameSteps.OnBackToCharacterSelection;
+                  warriorGameModel.gameCurrentStep.Value = warriorGameModel.GameSteps.OnBackToCharacterSelection;
               })
           .Where(_ => PlaySounds.instance != null)
           .Do(_ => PlaySounds.instance.Play())
@@ -96,13 +96,13 @@ public class uiView : MonoBehaviour
     {
         leaderBoeardCanvas.GetComponent<LeaderBoardControllerRestApi>().ToggleLeaderBoard(true);
 
-        chickenGameModel.gameCurrentStep.Value = chickenGameModel.GameSteps.OnLeaderBoard;
+        warriorGameModel.gameCurrentStep.Value = warriorGameModel.GameSteps.OnLeaderBoard;
     }
     public void PlayMainButton()
     {
 
        
-        chickenGameModel.gameCurrentStep.Value = chickenGameModel.GameSteps.OnCharacterSelection;
+        warriorGameModel.gameCurrentStep.Value = warriorGameModel.GameSteps.OnCharacterSelection;
 
     }
     public void goToMenu(string menuName)

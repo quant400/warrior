@@ -49,7 +49,7 @@ public class characterSelectionView : MonoBehaviour
       
         gameplayView.instance.dailysessionReactive
             .Do(_ => setPlayButtonDependtoSessions(_))
-            .Do(_=>chickenGameModel.currentNFTSession=_)
+            .Do(_=>warriorGameModel.currentNFTSession=_)
             .Subscribe()
             .AddTo(this);
     }
@@ -83,7 +83,7 @@ public class characterSelectionView : MonoBehaviour
          .Do(_ => FinalSelectSinglePlayer())
          .Where(_ => PlaySounds.instance != null)
          .Do(_ => PlaySounds.instance.Play())
-         .Do(_ => chickenGameModel.gameCurrentStep.Value = chickenGameModel.GameSteps.OnCharacterSelected)
+         .Do(_ => warriorGameModel.gameCurrentStep.Value = warriorGameModel.GameSteps.OnCharacterSelected)
          .Subscribe()
          .AddTo(this);
 
@@ -223,7 +223,7 @@ public class characterSelectionView : MonoBehaviour
 
     private void SetUpCharacters()
     {
-        if (chickenGameModel.charactersSetted == false)
+        if (warriorGameModel.charactersSetted == false)
         {
 
 
@@ -292,7 +292,7 @@ public class characterSelectionView : MonoBehaviour
             }
         }
         ResetAvalaibleColors();
-        chickenGameModel.charactersSetted = true;
+        warriorGameModel.charactersSetted = true;
     }
     private void Done()
     {
@@ -303,7 +303,7 @@ public class characterSelectionView : MonoBehaviour
     void BackButton()
     {
         Debug.Log("reached");
-        chickenGameModel.gameCurrentStep.Value = chickenGameModel.GameSteps.Onlogged;
+        warriorGameModel.gameCurrentStep.Value = warriorGameModel.GameSteps.Onlogged;
     }
 
     string NameToSlugConvert(string name)

@@ -73,7 +73,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 416f7581c5f0ad24c9d91e8f3c4f84c3, type: 3}
+  m_Sprite: {fileID: -26826406, guid: 003a15b5f51a6f1418909c2f87a40178, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -157,7 +157,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 2c6da6de413f9d247857d8db01202bc2, type: 3}
+  m_Sprite: {fileID: -1265878902, guid: 003a15b5f51a6f1418909c2f87a40178, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -241,7 +241,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: a5e452d9c123fca4ba97036b370efebe, type: 3}
+  m_Sprite: {fileID: 431306067, guid: 003a15b5f51a6f1418909c2f87a40178, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -328,3 +328,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   distance: 5
   duration: 0
+  isFollowingPlayerPlatform: 0

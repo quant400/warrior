@@ -38,7 +38,10 @@ public class PlayerStats : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(timeLeft == 0)
+        {
+            warriorGameModel.gameCurrentStep.Value = warriorGameModel.GameSteps.OnGameEnded;
+        }
     }
 
     public int GetScore()

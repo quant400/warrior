@@ -74,8 +74,6 @@ public class TilemapProceduralGeneration : MonoBehaviour
 
     private int startingWidth;
 
-    
-
     //private float playerScore;
 
     /*
@@ -208,7 +206,6 @@ public class TilemapProceduralGeneration : MonoBehaviour
 
     private void Update()
     {
-
         IsTilemapCollidingWithPlayer();
 
         timeCountDown();
@@ -218,7 +215,6 @@ public class TilemapProceduralGeneration : MonoBehaviour
         checkpointMoving();
 
         scoreCalculator();
-
     }
 
     private GameObject Generation(float xAdd, int iterationNum)

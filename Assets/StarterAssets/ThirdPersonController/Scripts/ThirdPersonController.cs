@@ -159,6 +159,8 @@ namespace StarterAssets
 
 			gameObject.transform.rotation = Quaternion.Euler(gameObject.transform.rotation.eulerAngles.x, 180, gameObject.transform.rotation.eulerAngles.z);
 
+			GetComponent<StarterAssetsInputs>().SetCursorLock(false);
+
 			//gameObject.transform.rotation.eulerAngles = new Vector3(gameObject.transform.rotation.eulerAngles.x, 180, gameObject.transform.rotation.eulerAngles.z);
 		}
 		public void fixFollowCamera()
@@ -182,6 +184,7 @@ namespace StarterAssets
 
 			//Debug.Log("slimeCheck = " + slimeCheck);
 	
+			/*
 			if (!cursorUnlocked && Keyboard.current[Key.Escape].wasPressedThisFrame)
 			{
 				cursorUnlocked = true;
@@ -191,6 +194,7 @@ namespace StarterAssets
 			{
 				StartCoroutine(LockCursorAfter(1));
 			}
+			*/
 
 			//collisionChecker("Links", LayerMask.GetMask("Default"));
 

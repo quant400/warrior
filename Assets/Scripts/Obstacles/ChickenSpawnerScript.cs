@@ -14,10 +14,14 @@ public class ChickenSpawnerScript : MonoBehaviour
 
     private bool activateSpawning;
 
+    private Animator animator;
+
     // Start is called before the first frame update
     void Start()
     {
         activateSpawning = false;
+
+        animator = gameObject.GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -26,6 +30,8 @@ public class ChickenSpawnerScript : MonoBehaviour
         if(activateSpawning)
         {
             activateSpawning = false;
+
+            animator.SetBool("inRange", true);
 
             StartCoroutine(chickenSpawnDelay(spawnDelay));
         }
@@ -38,7 +44,9 @@ public class ChickenSpawnerScript : MonoBehaviour
 
     IEnumerator chickenSpawnDelay(float secs)
     {
-        for(int i = 0; i < spawnNum; i++)
+        yield return new WaitForSeconds(secs);
+
+        for (int i = 0; i < spawnNum; i++)
         {
             Instantiate(chickenPrefab, gameObject.transform.position, chickenPrefab.transform.rotation);
 

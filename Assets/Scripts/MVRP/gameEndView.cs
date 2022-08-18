@@ -29,18 +29,29 @@ public class gameEndView : MonoBehaviour
     ReactiveProperty<bool> gameEnded = new ReactiveProperty<bool>();
     [SerializeField] Button tryAgain, back;
     GameObject localDisplay;
+    [SerializeField] private RuntimeAnimatorController playerAnimatorController;
+
     // [SerializeField]
     //SinglePlayerSpawner spawner;
     [SerializeField]
     GameObject tryoutCanvas;
     private void OnEnable()
     {
+        /*
         if (gameplayView.instance.isTryout)
+        {
             GameObject.FindGameObjectWithTag("PlayerUI").SetActive(false);
+        }
+        */
+
+        GameObject.FindGameObjectWithTag("PlayerUI").SetActive(false);
+        GameObject.FindGameObjectWithTag("MainCamera").SetActive(false);
+
         if (gameplayView.instance.isTryout)
         {
             tryAgain.gameObject.SetActive(false);
-            currentScore.text = "CHICKENS CAUGHT : " + SinglePlayerScoreBoardScript.instance.GetScore().ToString();
+            //Debug.Log(SinglePlayerScoreBoardScript.instance.GetScore().ToString());
+            currentScore.text = "DISTANCE TRAVELED : " + PlayerStats.Instance.GetScore().ToString();
             dailyScore.text = "DAILY SCORE : " + 0;
             allTimeScore.text = "ALL TIME SCORE : " + 0;
             sessionCounterText.text = "NFT DAILY RUNS : " + 0 + "/10";
@@ -115,7 +126,8 @@ public class gameEndView : MonoBehaviour
 
             sessionsLeft.SetActive(true);
             sessionsNotLeft.SetActive(false);
-            currentScore.text = "CHICKENS CAUGHT : " + SinglePlayerScoreBoardScript.instance.GetScore().ToString();
+            //currentScore.text = "CHICKENS CAUGHT : " + SinglePlayerScoreBoardScript.instance.GetScore().ToString();
+            currentScore.text = "DISTANCE TRAVELED : " + PlayerStats.Instance.GetScore().ToString();
             dailyScore.text = "DAILY SCORE : " + (gameplayView.instance.GetDailyScore());
             allTimeScore.text = "ALL TIME SCORE : " + (gameplayView.instance.GetAllTimeScore());
             sessionCounterText.text = "NFT DAILY RUNS : " + (gameplayView.instance.GetSessions()) + "/10";
@@ -130,7 +142,7 @@ public class gameEndView : MonoBehaviour
             sessionCounterText.text = "NFT DAILY RUNS : " + (gameplayView.instance.GetSessions()) + "/10";
 
         }
-        SinglePlayerScoreBoardScript.instance.gameObject.transform.GetChild(0).gameObject.SetActive(false);
+        //SinglePlayerScoreBoardScript.instance.gameObject.transform.GetChild(0).gameObject.SetActive(false);
 
     }
     public void setScoreResutls()
@@ -141,7 +153,8 @@ public class gameEndView : MonoBehaviour
 
             sessionsLeft.SetActive(true);
             sessionsNotLeft.SetActive(false);
-            currentScore.text = "CHICKENS CAUGHT : " + SinglePlayerScoreBoardScript.instance.GetScore().ToString();
+            //currentScore.text = "CHICKENS CAUGHT : " + SinglePlayerScoreBoardScript.instance.GetScore().ToString();
+            currentScore.text = "DISTANCE TRAVELED : " + PlayerStats.Instance.GetScore().ToString();
             dailyScore.text = "DAILY SCORE : " + (gameplayView.instance.GetDailyScore());
             allTimeScore.text = "ALL TIME SCORE : " + (gameplayView.instance.GetAllTimeScore());
             sessionCounterText.text = "NFT DAILY RUNS : " + (gameplayView.instance.GetSessions()) + "/10";
@@ -161,19 +174,33 @@ public class gameEndView : MonoBehaviour
        
         //characters = spawner.GetCharacterList();
         Debug.Log("Load character");
-        Destroy(GameObject.FindGameObjectWithTag("Player"));
-        GameObject displayChar = Resources.Load(Path.Combine("SinglePlayerPrefabs/Characters", NameToSlugConvert(currentNFT.name))) as GameObject;
-        var temp = Instantiate(displayChar, characterDisplay.position, Quaternion.identity, characterDisplay);
+        //Destroy(GameObject.FindGameObjectWithTag("PlayerBody"));
+        //GameObject displayChar = Resources.Load(Path.Combine("SinglePlayerPrefabs/Characters", NameToSlugConvert(currentNFT.name))) as GameObject;
+        GameObject displayChar = Resources.Load(Path.Combine("SinglePlayerPrefabs/DisplayModels", NameToSlugConvert(currentNFT.name))) as GameObject;
+        Debug.Log(currentNFT.name);
+        Debug.Log(displayChar.name);
+        //var temp = Instantiate(displayChar, characterDisplay.position, Quaternion.identity, characterDisplay);
+        var temp = Instantiate(displayChar, characterDisplay.position, Quaternion.identity);
+
+        temp.gameObject.transform.SetParent(characterDisplay.transform);
 
         //destroying all player related components
+
+        temp.transform.GetChild(0).gameObject.SetActive(false);
+
+        //Destroy(temp.transform.GetChild(0).gameObject);
+        /*
         Destroy(temp.transform.GetChild(1).gameObject);
-        Destroy(temp.transform.GetChild(0).gameObject);
         Destroy(temp.transform.GetChild(2).gameObject);
         Destroy(temp.transform.GetChild(3).gameObject);
         Destroy(temp.GetComponent<StarterAssetsInputs>());
         Destroy(temp.GetComponent<ThirdPersonController>());
         Destroy(temp.GetComponent<CharacterController>());
         Destroy(temp.GetComponent<PlayerInput>());
+        */
+
+        temp.GetComponent<Animator>().runtimeAnimatorController = playerAnimatorController;
+
         temp.GetComponent<Animator>().SetBool("Ended", true);
 
         temp.transform.localPosition = Vector3.zero;
@@ -181,7 +208,7 @@ public class gameEndView : MonoBehaviour
         temp.transform.localScale = Vector3.one * 2;
         localDisplay = temp;
         //upddate other values here form leaderboard
-        SinglePlayerScoreBoardScript.instance.gameObject.transform.GetChild(0).gameObject.SetActive(false);
+        //SinglePlayerScoreBoardScript.instance.gameObject.transform.GetChild(0).gameObject.SetActive(false);
     }
     public void endGameAfterValueChange()
     {
@@ -213,6 +240,15 @@ public class gameEndView : MonoBehaviour
     {
         if (warriorGameModel.gameCurrentStep.Value == warriorGameModel.GameSteps.OnGameEnded)
         {
+            
+            Scene currentScene = SceneManager.GetActiveScene();
+
+            if(currentScene.name != "EndScene")
+            {
+                SceneManager.LoadScene("EndScene");
+            }
+            
+
             scorereactive.Value = gameplayView.instance.dailyScore;
             sessions.Value = gameplayView.instance.sessions;
         }
@@ -225,7 +261,8 @@ public class gameEndView : MonoBehaviour
 
             sessionsLeft.SetActive(true);
             sessionsNotLeft.SetActive(false);
-            currentScore.text = "CHICKENS CAUGHT : " + SinglePlayerScoreBoardScript.instance.GetScore().ToString();
+            //currentScore.text = "CHICKENS CAUGHT : " + SinglePlayerScoreBoardScript.instance.GetScore().ToString();
+            currentScore.text = "DISTANCE TRAVELED : " + PlayerStats.Instance.GetScore().ToString();
             dailyScore.text = "DAILY SCORE : " + (gameplayView.instance.GetDailyScore());
             allTimeScore.text = "ALL TIME SCORE : " + (gameplayView.instance.GetAllTimeScore());
             sessionCounterText.text = "NFT DAILY RUNS : " + (gameplayView.instance.GetSessions()) + "/10";

@@ -230,7 +230,9 @@ public class TilemapProceduralGeneration : MonoBehaviour
         {
             if (i == 0)
             {
-                Generation((width - (checkpointWidthAddition * widthAdditionMultiplier)) * widthAdditionMultiplier, i);
+                //Generation((width - (checkpointWidthAddition * widthAdditionMultiplier)) * widthAdditionMultiplier, i);
+
+                FirstGeneration((width - (checkpointWidthAddition * widthAdditionMultiplier)) * widthAdditionMultiplier, i);
 
                 checkpoints[i] = Instantiate(checkpointPrefab, new Vector3(checkpointPrefab.transform.position.x + (width - checkpointWidthAddition) + tilemapDistance - 9.05f, 5, checkpointPrefab.transform.position.z), checkpointPrefab.transform.rotation);
             }
@@ -268,9 +270,9 @@ public class TilemapProceduralGeneration : MonoBehaviour
         {
             tilemaps[i] = Instantiate(obstacleMaps[i]);
 
-            tilemaps[i].SetActive(false);
-
             tilemaps[i].transform.parent = grid.transform;
+
+            tilemaps[i].SetActive(false);
         }
     }
 
@@ -322,6 +324,32 @@ public class TilemapProceduralGeneration : MonoBehaviour
         widthAdditionMultiplier++;
 
         //return tilemap;
+    }
+
+    private void FirstGeneration(float xAdd, int iterationNum)
+    {
+
+        //currentActiveTilemaps[iterationNum] = randomObstacleMapIndex();
+
+        currentActiveTilemaps[iterationNum] = 0;
+
+        mapColliders[iterationNum] = tilemaps[currentActiveTilemaps[iterationNum]].transform.GetChild(0).GetComponent<Collider2D>();
+
+
+        tilemaps[currentActiveTilemaps[iterationNum]].SetActive(true);
+
+        tilemaps[currentActiveTilemaps[iterationNum]].transform.position = new Vector3(xAdd, tilemaps[currentActiveTilemaps[iterationNum]].transform.position.y, tilemaps[currentActiveTilemaps[iterationNum]].transform.position.z);
+
+        for (int i = 0; i < tilemaps[currentActiveTilemaps[iterationNum]].transform.childCount; i++)
+        {
+            tilemaps[currentActiveTilemaps[iterationNum]].transform.GetChild(i).transform.localPosition = obstacleMaps[currentActiveTilemaps[iterationNum]].transform.GetChild(i).transform.localPosition;
+
+            tilemaps[currentActiveTilemaps[iterationNum]].transform.GetChild(i).transform.localRotation = obstacleMaps[currentActiveTilemaps[iterationNum]].transform.GetChild(i).transform.localRotation;
+        }
+
+        width += checkpointWidthAddition;
+
+        widthAdditionMultiplier++;
     }
 
 

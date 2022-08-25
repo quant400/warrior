@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace StarterAssets
 {
-    public class PushBackScript : MonoBehaviour
+    public class PushBackIsTrriggerScript1 : MonoBehaviour
     {
         [SerializeField] float pushBackForce = 2.0f;
 
@@ -61,7 +61,8 @@ namespace StarterAssets
             }
         }
 
-        private void OnCollisionEnter2D(Collision2D collision)
+
+        private void OnTriggerEnter2D(Collider2D collision)
         {
             if (collision.transform.CompareTag("PlayerBody"))
             {
@@ -74,12 +75,11 @@ namespace StarterAssets
 
                 forceActive = true;
 
-
             }
-
         }
 
-        private void OnCollisionStay2D(Collision2D collision)
+
+        private void OnTriggerStay2D(Collider2D collision)
         {
             if (collision.transform.CompareTag("PlayerBody"))
             {
@@ -94,12 +94,15 @@ namespace StarterAssets
             }
         }
 
-        private void OnCollisionExit2D(Collision2D collision)
+
+        private void OnTriggerExit2D(Collider2D collision)
         {
             if (collision.transform.CompareTag("PlayerBody"))
             {
                 forceActive = false;
             }
         }
+
+
     }
 }

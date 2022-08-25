@@ -109,7 +109,7 @@ namespace StarterAssets
 		float targetSpeed;
 		Vector3 inputDirection;
 		float inputMagnitude;
-		Vector2 origVelocity;
+		Vector2 origVelocity = Vector2.zero;
 
 		//AddedForGame
 		bool started=false;
@@ -245,7 +245,15 @@ namespace StarterAssets
                 {
 					playerPhysicsMaterial.friction = 0.1f;
 
-					rbody2D.AddForce(inputDirection * _speed, ForceMode2D.Force);
+					if(origVelocity.x < targetSpeed)
+                    {
+						rbody2D.AddForce(inputDirection * _speed * 1.2f, ForceMode2D.Force);
+					}
+                    else
+                    {
+						rbody2D.AddForce(inputDirection * _speed, ForceMode2D.Force);
+					}
+					
 
 					//rbody2D.AddForce(inputDirection * _speed, ForceMode2D.Impulse);
 				}

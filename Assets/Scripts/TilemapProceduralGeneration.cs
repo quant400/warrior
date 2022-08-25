@@ -113,7 +113,9 @@ public class TilemapProceduralGeneration : MonoBehaviour
 
         //Debug.Log("currentPlayerTilemap = " + currentPlayerTilemap);
 
+        instantiateAllMaps();
 
+        /*
         if (obstacleMaps.Length > 3)
         {
             tilemaps = new GameObject[3];
@@ -162,7 +164,7 @@ public class TilemapProceduralGeneration : MonoBehaviour
                 currentActiveTilemaps[i] = -1;
             }
         }
-
+        
 
         for (int i = 0; i < tilemaps.Length; i++)
         {
@@ -170,81 +172,156 @@ public class TilemapProceduralGeneration : MonoBehaviour
             {
                 tilemaps[i] = Generation((width - (checkpointWidthAddition * widthAdditionMultiplier)) * widthAdditionMultiplier, i);
 
-                /*
-                distanceCovered[i] = Instantiate(distanceCoveredPrefab, new Vector3(tilemaps[i].transform.position.x + (width - (checkpointWidthAddition * widthAdditionMultiplier)) + 19.05f, distanceCoveredPrefab.transform.position.y, distanceCoveredPrefab.transform.position.z), distanceCoveredPrefab.transform.rotation);
-
-                //distanceCovered[i].transform.parent = canvasWorldSpace.transform;
-
-                distanceCovered[i].transform.SetParent(canvasWorldSpace.transform);
-
-                distanceCovered[i].transform.GetChild(0).gameObject.GetComponent<Text>().text = (width - (checkpointWidthAddition * widthAdditionMultiplier)).ToString();
-                */
-
                 checkpoints[i] = Instantiate(checkpointPrefab, new Vector3(checkpointPrefab.transform.position.x + (width - checkpointWidthAddition) + tilemapDistance - 9.05f, 5, checkpointPrefab.transform.position.z), checkpointPrefab.transform.rotation);
             }
             else
             {
                 tilemaps[i] = Generation((width - (checkpointWidthAddition * widthAdditionMultiplier)) * widthAdditionMultiplier + (tilemapDistance * widthAdditionMultiplier), i);
 
-                /*
-                distanceCovered[i] = Instantiate(distanceCoveredPrefab, new Vector3(tilemaps[i].transform.position.x + (width - (checkpointWidthAddition * widthAdditionMultiplier)) + 19.05f, distanceCoveredPrefab.transform.position.y, distanceCoveredPrefab.transform.position.z), distanceCoveredPrefab.transform.rotation);
-
-                //distanceCovered[i].transform.parent = canvasWorldSpace.transform;
-
-                distanceCovered[i].transform.SetParent(canvasWorldSpace.transform);
-
-                distanceCovered[i].transform.GetChild(0).gameObject.GetComponent<Text>().text = ((width - (checkpointWidthAddition * widthAdditionMultiplier)) * widthAdditionMultiplier).ToString();
-                */
-
                 checkpoints[i] = Instantiate(checkpointPrefab, new Vector3(checkpoints[i - 1].transform.position.x + (width - checkpointWidthAddition) + tilemapDistance, 5, checkpointPrefab.transform.position.z), checkpointPrefab.transform.rotation);
 
             }
 
+        }
+        */
+
+        if (obstacleMaps.Length > 3)
+        {
+            currentActiveTilemaps = new int[3];
+
+            checkpoints = new GameObject[3];
+
+            checkpointCheck = new bool[3];
+
+            //distanceCovered = new GameObject[3];
+
+            for (int i = 0; i < checkpointCheck.Length; i++)
+            {
+                checkpointCheck[i] = true;
+            }
+
+            mapColliders = new Collider2D[3];
+        }
+        else
+        {
+            currentActiveTilemaps = new int[obstacleMaps.Length];
+
+            checkpoints = new GameObject[obstacleMaps.Length];
+
+            checkpointCheck = new bool[obstacleMaps.Length];
+
+            //distanceCovered = new GameObject[obstacleMaps.Length];
+
+            for (int i = 0; i < checkpointCheck.Length; i++)
+            {
+                checkpointCheck[i] = true;
+            }
+
+            mapColliders = new Collider2D[obstacleMaps.Length];
+        }
+
+        for (int i = 0; i < currentActiveTilemaps.Length; i++)
+        {
+            currentActiveTilemaps[i] = -1;
+        }
+
+
+        for (int i = 0; i < currentActiveTilemaps.Length; i++)
+        {
+            if (i == 0)
+            {
+                Generation((width - (checkpointWidthAddition * widthAdditionMultiplier)) * widthAdditionMultiplier, i);
+
+                checkpoints[i] = Instantiate(checkpointPrefab, new Vector3(checkpointPrefab.transform.position.x + (width - checkpointWidthAddition) + tilemapDistance - 9.05f, 5, checkpointPrefab.transform.position.z), checkpointPrefab.transform.rotation);
+            }
+            else
+            {
+                Generation((width - (checkpointWidthAddition * widthAdditionMultiplier)) * widthAdditionMultiplier + (tilemapDistance * widthAdditionMultiplier), i);
+
+                checkpoints[i] = Instantiate(checkpointPrefab, new Vector3(checkpoints[i - 1].transform.position.x + (width - checkpointWidthAddition) + tilemapDistance, 5, checkpointPrefab.transform.position.z), checkpointPrefab.transform.rotation);
+
+            }
         }
 
     }
 
     private void Update()
     {
+
         IsTilemapCollidingWithPlayer();
 
-        timeCountDown();
+        TimeCountDown();
 
-        tilemapSwapping();
+        TilemapSwapping();
 
-        checkpointMoving();
+        CheckpointMoving();
 
-        scoreCalculator();
+        ScoreCalculator();
+
     }
 
-    private GameObject Generation(float xAdd, int iterationNum)
+    private void instantiateAllMaps()
+    {
+        tilemaps = new GameObject[obstacleMaps.Length];
+
+        for (int i = 0; i < obstacleMaps.Length; i++)
+        {
+            tilemaps[i] = Instantiate(obstacleMaps[i]);
+
+            tilemaps[i].SetActive(false);
+
+            tilemaps[i].transform.parent = grid.transform;
+        }
+    }
+
+    private void Generation(float xAdd, int iterationNum)
     {
         //Debug.Log(xAdd);
 
-        GameObject tilemap;
+        //GameObject tilemap;
 
 
         currentActiveTilemaps[iterationNum] = randomObstacleMapIndex();
 
-        mapColliders[iterationNum] = obstacleMaps[currentActiveTilemaps[iterationNum]].transform.GetChild(0).GetComponent<Collider2D>();
+        mapColliders[iterationNum] = tilemaps[currentActiveTilemaps[iterationNum]].transform.GetChild(0).GetComponent<Collider2D>();
 
 
+        //GameObject obstacleMap = tilemaps[currentActiveTilemaps[iterationNum]];
+
+        tilemaps[currentActiveTilemaps[iterationNum]].SetActive(true);
+
+        tilemaps[currentActiveTilemaps[iterationNum]].transform.position = new Vector3(xAdd, tilemaps[currentActiveTilemaps[iterationNum]].transform.position.y, tilemaps[currentActiveTilemaps[iterationNum]].transform.position.z);
+
+        for (int i = 0; i < tilemaps[currentActiveTilemaps[iterationNum]].transform.childCount; i++)
+        {
+            tilemaps[currentActiveTilemaps[iterationNum]].transform.GetChild(i).transform.localPosition = obstacleMaps[currentActiveTilemaps[iterationNum]].transform.GetChild(i).transform.localPosition;
+
+            tilemaps[currentActiveTilemaps[iterationNum]].transform.GetChild(i).transform.localRotation = obstacleMaps[currentActiveTilemaps[iterationNum]].transform.GetChild(i).transform.localRotation;
+        }
+
+
+
+        /*
+        
         GameObject obstacleMap = obstacleMaps[currentActiveTilemaps[iterationNum]];
+
+        //Debug.Log("obstacleMap.transform.position.x = " + obstacleMap.transform.position.x);
 
 
         tilemap = Instantiate(obstacleMap, new Vector3(obstacleMap.transform.position.x + xAdd, obstacleMap.transform.position.y, obstacleMap.transform.position.z), obstacleMap.transform.rotation);
+        
 
         //tilemap.transform.position = new Vector3(tilemap.transform.position.x + xAdd, tilemap.transform.position.y, tilemap.transform.position.z);
 
         tilemap.transform.parent = grid.transform;
         //caveTilemap.transform.position = new Vector3(caveTilemap.transform.position.x + xAdd, caveTilemap.transform.position.y, caveTilemap.transform.position.z);
-
+        */
 
         width += checkpointWidthAddition;
 
         widthAdditionMultiplier++;
 
-        return tilemap;
+        //return tilemap;
     }
 
 
@@ -264,7 +341,7 @@ public class TilemapProceduralGeneration : MonoBehaviour
 
     private void NextActiveTilemap()
     {
-        if(currentPlayerTilemap < 3)
+        if (currentPlayerTilemap < 3)
         {
             currentPlayerTilemap++;
         }
@@ -283,15 +360,15 @@ public class TilemapProceduralGeneration : MonoBehaviour
         bool caveCollision;
 
 
-        if(currentPlayerTilemap < 3)
+        if (currentPlayerTilemap < 3)
         {
-            groundCollision = tilemaps[currentPlayerTilemap].transform.GetChild(0).GetComponent<TilemapColliisionChecker>().IsCollidingWithPlayer();
-            caveCollision = tilemaps[currentPlayerTilemap].transform.GetChild(1).GetComponent<TilemapColliisionChecker>().IsCollidingWithPlayer();
+            groundCollision = tilemaps[currentActiveTilemaps[currentPlayerTilemap]].transform.GetChild(0).GetComponent<TilemapColliisionChecker>().IsCollidingWithPlayer();
+            caveCollision = tilemaps[currentActiveTilemaps[currentPlayerTilemap]].transform.GetChild(1).GetComponent<TilemapColliisionChecker>().IsCollidingWithPlayer();
         }
         else
         {
-            groundCollision = tilemaps[0].transform.GetChild(0).GetComponent<TilemapColliisionChecker>().IsCollidingWithPlayer();
-            caveCollision = tilemaps[0].transform.GetChild(1).GetComponent<TilemapColliisionChecker>().IsCollidingWithPlayer();
+            groundCollision = tilemaps[currentActiveTilemaps[0]].transform.GetChild(0).GetComponent<TilemapColliisionChecker>().IsCollidingWithPlayer();
+            caveCollision = tilemaps[currentActiveTilemaps[0]].transform.GetChild(1).GetComponent<TilemapColliisionChecker>().IsCollidingWithPlayer();
         }
 
 
@@ -300,9 +377,11 @@ public class TilemapProceduralGeneration : MonoBehaviour
         {
             NextActiveTilemap();
 
+            //Debug.Log("active map = " + currentPlayerTilemap);
+
             return true;
         }
-        
+
 
         return false;
 
@@ -314,9 +393,19 @@ public class TilemapProceduralGeneration : MonoBehaviour
         int loopLimit = currentActiveTilemaps.Length * 2;
 
         int randomNum;
-        
-        randomNum = UnityEngine.Random.Range(0, obstacleMaps.Length);
 
+        randomNum = UnityEngine.Random.Range(0, tilemaps.Length);
+
+        //Debug.Log("Random Num: " + randomNum);
+
+        while (tilemaps[randomNum].activeSelf)
+        {
+            randomNum = UnityEngine.Random.Range(0, tilemaps.Length);
+
+            //Debug.Log("Random Num: " + randomNum);
+        }
+
+        /*
         for (int j = 0; j < currentActiveTilemaps.Length; j++)
         {
             if (currentActiveTilemaps[j] == randomNum)
@@ -335,7 +424,7 @@ public class TilemapProceduralGeneration : MonoBehaviour
         }
 
         //Debug.Log("Random Number Generated: " + randomNum);
-
+        */
 
 
         return randomNum;
@@ -349,7 +438,7 @@ public class TilemapProceduralGeneration : MonoBehaviour
 
         for (int i = 0; i < 6; ++i)
         {
-            if(i != 2 || i != 3)
+            if (i != 2 || i != 3)
             {
                 if (planes[i].GetDistanceToPoint(point) < 0)
                 {
@@ -361,16 +450,16 @@ public class TilemapProceduralGeneration : MonoBehaviour
 
         return true;
 
-        
+
     }
 
-    private void timeCountDown()
+    private void TimeCountDown()
     {
         if (PlayerStats.Instance.timeLeft > 0)
         {
             PlayerStats.Instance.timeLeft -= Time.deltaTime;
         }
-        else if(PlayerStats.Instance.timeLeft < 0)
+        else if (PlayerStats.Instance.timeLeft < 0)
         {
             PlayerStats.Instance.timeLeft = 0;
         }
@@ -378,23 +467,34 @@ public class TilemapProceduralGeneration : MonoBehaviour
         timerText.text = MathF.Round(PlayerStats.Instance.timeLeft).ToString();
     }
 
-    private void tilemapSwapping()
+    private void TilemapSwapping()
     {
+        GameObject mapToTrunOff;
 
         if (newestMap == 3 && oldestMap == 1)
         {
-            distanceOfPlayerToMiddleMap = player.transform.position.x - tilemaps[1].transform.GetChild(0).transform.gameObject.GetComponent<Collider2D>().bounds.center.x;
+            distanceOfPlayerToMiddleMap = player.transform.position.x - tilemaps[currentActiveTilemaps[1]].transform.GetChild(0).transform.gameObject.GetComponent<Collider2D>().bounds.center.x;
 
             //Debug.Log("Map: " + 2);
 
 
             if (distanceOfPlayerToMiddleMap > 10)
             {
-                Destroy(tilemaps[oldestMap - 1]);
+                //StartCoroutine(DeleteMap(tilemaps[oldestMap - 1]));
 
-                tilemaps[oldestMap - 1] = Generation((width - (checkpointWidthAddition * widthAdditionMultiplier)) * widthAdditionMultiplier + (tilemapDistance * widthAdditionMultiplier), oldestMap - 1);
+                //Destroy(tilemaps[oldestMap - 1]);
 
-                startTiles.transform.position = tilemaps[oldestMap].transform.position;
+                //tilemaps[oldestMap - 1] = Generation((width - (checkpointWidthAddition * widthAdditionMultiplier)) * widthAdditionMultiplier + (tilemapDistance * widthAdditionMultiplier), oldestMap - 1);
+
+                //tilemaps[currentActiveTilemaps[oldestMap - 1]].SetActive(false);
+
+                mapToTrunOff = tilemaps[currentActiveTilemaps[oldestMap - 1]];
+
+                Generation((width - (checkpointWidthAddition * widthAdditionMultiplier)) * widthAdditionMultiplier + (tilemapDistance * widthAdditionMultiplier), oldestMap - 1);
+
+                mapToTrunOff.SetActive(false);
+
+                startTiles.transform.position = tilemaps[currentActiveTilemaps[oldestMap]].transform.position;
 
                 /*
                 distanceCovered[oldestMap - 1].transform.position = new Vector3(tilemaps[oldestMap - 1].transform.position.x + (width - (checkpointWidthAddition * widthAdditionMultiplier)) + 19.05f, distanceCoveredPrefab.transform.position.y, distanceCoveredPrefab.transform.position.z);
@@ -410,18 +510,28 @@ public class TilemapProceduralGeneration : MonoBehaviour
         }
         else if (newestMap == 1 && oldestMap == 2)
         {
-            distanceOfPlayerToMiddleMap = player.transform.position.x - tilemaps[2].transform.GetChild(0).transform.gameObject.GetComponent<Collider2D>().bounds.center.x;
+            distanceOfPlayerToMiddleMap = player.transform.position.x - tilemaps[currentActiveTilemaps[2]].transform.GetChild(0).transform.gameObject.GetComponent<Collider2D>().bounds.center.x;
 
             //Debug.Log("Map: " + 3);
 
 
             if (distanceOfPlayerToMiddleMap > 10)
             {
-                Destroy(tilemaps[oldestMap - 1]);
+                //StartCoroutine(DeleteMap(tilemaps[oldestMap - 1]));
 
-                tilemaps[oldestMap - 1] = Generation((width - (checkpointWidthAddition * widthAdditionMultiplier)) * widthAdditionMultiplier + (tilemapDistance * widthAdditionMultiplier), oldestMap - 1);
+                //Destroy(tilemaps[oldestMap - 1]);
 
-                startTiles.transform.position = tilemaps[oldestMap].transform.position;
+                //tilemaps[oldestMap - 1] = Generation((width - (checkpointWidthAddition * widthAdditionMultiplier)) * widthAdditionMultiplier + (tilemapDistance * widthAdditionMultiplier), oldestMap - 1);
+
+                //tilemaps[currentActiveTilemaps[oldestMap - 1]].SetActive(false);
+
+                mapToTrunOff = tilemaps[currentActiveTilemaps[oldestMap - 1]];
+
+                Generation((width - (checkpointWidthAddition * widthAdditionMultiplier)) * widthAdditionMultiplier + (tilemapDistance * widthAdditionMultiplier), oldestMap - 1);
+
+                mapToTrunOff.SetActive(false);
+
+                startTiles.transform.position = tilemaps[currentActiveTilemaps[oldestMap]].transform.position;
 
                 /*
                 distanceCovered[oldestMap - 1].transform.position = new Vector3(tilemaps[oldestMap - 1].transform.position.x + (width - (checkpointWidthAddition * widthAdditionMultiplier)) + 19.05f, distanceCoveredPrefab.transform.position.y, distanceCoveredPrefab.transform.position.z);
@@ -437,18 +547,28 @@ public class TilemapProceduralGeneration : MonoBehaviour
         }
         else if (newestMap == 2 && oldestMap == 3)
         {
-            distanceOfPlayerToMiddleMap = player.transform.position.x - tilemaps[0].transform.GetChild(0).transform.gameObject.GetComponent<Collider2D>().bounds.center.x;
+            distanceOfPlayerToMiddleMap = player.transform.position.x - tilemaps[currentActiveTilemaps[0]].transform.GetChild(0).transform.gameObject.GetComponent<Collider2D>().bounds.center.x;
 
             //Debug.Log("Map: " + 1);
 
 
             if (distanceOfPlayerToMiddleMap > 10)
             {
-                Destroy(tilemaps[oldestMap - 1]);
+                //StartCoroutine(DeleteMap(tilemaps[oldestMap - 1]));
 
-                tilemaps[oldestMap - 1] = Generation((width - (checkpointWidthAddition * widthAdditionMultiplier)) * widthAdditionMultiplier + (tilemapDistance * widthAdditionMultiplier), oldestMap - 1);
+                //Destroy(tilemaps[oldestMap - 1]);
 
-                //startTiles.transform.position = tilemaps[oldestMap].transform.position;
+                //tilemaps[oldestMap - 1] = Generation((width - (checkpointWidthAddition * widthAdditionMultiplier)) * widthAdditionMultiplier + (tilemapDistance * widthAdditionMultiplier), oldestMap - 1);
+
+                //tilemaps[currentActiveTilemaps[oldestMap - 1]].SetActive(false);
+
+                mapToTrunOff = tilemaps[currentActiveTilemaps[oldestMap - 1]];
+
+                Generation((width - (checkpointWidthAddition * widthAdditionMultiplier)) * widthAdditionMultiplier + (tilemapDistance * widthAdditionMultiplier), oldestMap - 1);
+
+                mapToTrunOff.SetActive(false);
+
+                //startTiles.transform.position = tilemaps[currentActiveTilemaps[oldestMap]].transform.position;
 
                 /*
                 distanceCovered[oldestMap - 1].transform.position = new Vector3(tilemaps[oldestMap - 1].transform.position.x + (width - (checkpointWidthAddition * widthAdditionMultiplier)) + 19.05f, distanceCoveredPrefab.transform.position.y, distanceCoveredPrefab.transform.position.z);
@@ -460,13 +580,13 @@ public class TilemapProceduralGeneration : MonoBehaviour
 
                 oldestMap = 1;
 
-                startTiles.transform.position = tilemaps[oldestMap - 1].transform.position;
+                startTiles.transform.position = tilemaps[currentActiveTilemaps[oldestMap - 1]].transform.position;
             }
 
         }
     }
 
-    private void checkpointMoving()
+    private void CheckpointMoving()
     {
         for (int i = 0; i < checkpoints.Length; i++)
         {
@@ -604,9 +724,9 @@ public class TilemapProceduralGeneration : MonoBehaviour
         }
     }
 
-    private void scoreCalculator()
+    private void ScoreCalculator()
     {
-        if((PlayerStats.Instance.checkpointDistance - checkpointLastDistance) < 0)
+        if ((PlayerStats.Instance.checkpointDistance - checkpointLastDistance) < 0)
         {
             PlayerStats.Instance.playerScore += Mathf.Abs(PlayerStats.Instance.checkpointDistance - checkpointLastDistance);
 
@@ -616,5 +736,12 @@ public class TilemapProceduralGeneration : MonoBehaviour
         }
 
 
+    }
+
+    IEnumerator DeleteMap(GameObject tileMapToDestroy)
+    {
+        yield return new WaitForSeconds(5f);
+
+        Destroy(tileMapToDestroy);
     }
 }

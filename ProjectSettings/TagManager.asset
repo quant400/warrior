@@ -19,6 +19,7 @@ TagManager:
   - CineMachine
   - PlayerUI
   - Cameras
+  - Grid
   layers:
   - Default
   - TransparentFX

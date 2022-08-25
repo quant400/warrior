@@ -101,20 +101,26 @@ public class webLoginView : MonoBehaviour
         {
             t.gameObject.SetActive(false);
         }
+
         transform.GetChild(0).gameObject.SetActive(true);
         transform.GetChild(5).gameObject.SetActive(true);
 
         nftGetter.Skip();
         SceneManager.LoadScene(warriorGameModel.singlePlayerScene1.sceneName);
 
-        /*
+        
         foreach(Transform t in transform)
         {
             t.gameObject.SetActive(false);
         }
         transform.GetChild(0).gameObject.SetActive(true);
-        tryoutCanvas.SetActive(true);
-        */
+        
+
+        //transform.GetChild(8).gameObject.SetActive(true);
+
+
+        //tryoutCanvas.SetActive(true);
+
 
     }
 

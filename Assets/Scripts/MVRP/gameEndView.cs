@@ -44,11 +44,12 @@ public class gameEndView : MonoBehaviour
         }
         */
 
-        GameObject.FindGameObjectWithTag("PlayerUI").SetActive(false);
-        GameObject.FindGameObjectWithTag("MainCamera").SetActive(false);
+        //GameObject.FindGameObjectWithTag("PlayerUI").SetActive(false);
+        //GameObject.FindGameObjectWithTag("MainCamera").SetActive(false);
 
         if (gameplayView.instance.isTryout)
         {
+            transform.parent.transform.GetChild(8).gameObject.SetActive(true);
             tryAgain.gameObject.SetActive(false);
             //Debug.Log(SinglePlayerScoreBoardScript.instance.GetScore().ToString());
             currentScore.text = "DISTANCE TRAVELED : " + PlayerStats.Instance.GetScore().ToString();

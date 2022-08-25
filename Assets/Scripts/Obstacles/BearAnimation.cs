@@ -60,7 +60,7 @@ public class BearAnimation : MonoBehaviour
 
             if (!bearPushBackDelayCoroutine)
             {
-                StartCoroutine(bearPushBackDelay(0.5f));
+                StartCoroutine(BearPushBackDelay(0.5f));
             }
         }
     }
@@ -81,7 +81,7 @@ public class BearAnimation : MonoBehaviour
         }
     }
 
-    IEnumerator bearPushBackDelay(float secs)
+    IEnumerator BearPushBackDelay(float secs)
     {
         bearPushBackDelayCoroutine = true;
 

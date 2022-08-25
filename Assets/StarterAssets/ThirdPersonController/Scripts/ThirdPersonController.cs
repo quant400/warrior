@@ -99,6 +99,7 @@ namespace StarterAssets
 		public PhysicsMaterial2D playerPhysicsMaterial;
 
 		private LayerMask slipperyObstacleColliderMask;
+		//private LayerMask slowDownColliderMask;
 
 
 		private const float _threshold = 0.01f;
@@ -123,6 +124,8 @@ namespace StarterAssets
 		public static bool canApplyGravity;
 		public static bool movementAllowed;
 
+		private Collider2D parentCollider2D;
+
 		private void Awake()
 		{
 			// get a reference to our main camera
@@ -140,6 +143,9 @@ namespace StarterAssets
 			//rbody2D = GetComponent<Rigidbody2D>();
 
 			slipperyObstacleColliderMask = LayerMask.GetMask("Foreground");
+			//slowDownColliderMask = LayerMask.GetMask("SlowDown");
+
+			parentCollider2D = gameObject.transform.parent.gameObject.GetComponent<Collider2D>();
 
 			canMove = false;
 			canJump = false;
@@ -155,7 +161,7 @@ namespace StarterAssets
 			_jumpTimeoutDelta = JumpTimeout;
 			_fallTimeoutDelta = FallTimeout;
 
-			fixFollowCamera();
+			FixFollowCamera();
 
 			gameObject.transform.rotation = Quaternion.Euler(gameObject.transform.rotation.eulerAngles.x, 180, gameObject.transform.rotation.eulerAngles.z);
 
@@ -163,7 +169,7 @@ namespace StarterAssets
 
 			//gameObject.transform.rotation.eulerAngles = new Vector3(gameObject.transform.rotation.eulerAngles.x, 180, gameObject.transform.rotation.eulerAngles.z);
 		}
-		public void fixFollowCamera()
+		public void FixFollowCamera()
 		{
 			GameObject obj= GameObject.FindGameObjectWithTag("CineMachine").gameObject;
 
@@ -183,7 +189,7 @@ namespace StarterAssets
 			Move();
 
 			//Debug.Log("slimeCheck = " + slimeCheck);
-	
+
 			/*
 			if (!cursorUnlocked && Keyboard.current[Key.Escape].wasPressedThisFrame)
 			{
@@ -196,11 +202,11 @@ namespace StarterAssets
 			}
 			*/
 
-			//collisionChecker("Links", LayerMask.GetMask("Default"));
+			//CollisionChecker("Links", LayerMask.GetMask("Default"));
 
-			//Debug.Log("Links = " + collisionChecker("Links", LayerMask.GetMask("Default")));
+			//Debug.Log("Links = " + CollisionChecker("Links", LayerMask.GetMask("Default")));
 
-			//Debug.Log("Handle = " + collisionChecker("Handle", LayerMask.GetMask("Default")));
+			//Debug.Log("Handle = " + CollisionChecker("Handle", LayerMask.GetMask("Default")));
 
 			//Debug.Log("_verticalVelocity = " + _verticalVelocity);
 		}
@@ -217,12 +223,16 @@ namespace StarterAssets
 
 			if (currentHorizontalSpeed < targetSpeed - speedOffset || currentHorizontalSpeed > targetSpeed + speedOffset)
 			{
+				//Debug.Log("_speed = " + _speed);
+
 				// creates curved result rather than a linear one giving a more organic speed change
 				// note T in Lerp is clamped, so we don't need to clamp our speed
 				_speed = Mathf.Lerp(currentHorizontalSpeed, targetSpeed * inputMagnitude, Time.deltaTime * SpeedChangeRate);
 
 				// round speed to 3 decimal places
 				_speed = Mathf.Round(_speed * 1000f) / 1000f;
+
+				//Debug.Log("_speed = " + _speed);
 			}
 			else
 			{
@@ -236,6 +246,8 @@ namespace StarterAssets
 					playerPhysicsMaterial.friction = 0.1f;
 
 					rbody2D.AddForce(inputDirection * _speed, ForceMode2D.Force);
+
+					//rbody2D.AddForce(inputDirection * _speed, ForceMode2D.Impulse);
 				}
 					
 				//rbody2D.AddForce(inputDirection * (_speed * Time.deltaTime) * 50, ForceMode2D.Force);
@@ -244,7 +256,7 @@ namespace StarterAssets
 			}
             else
             {
-				if(collisionChecker("SlipperySurface", slipperyObstacleColliderMask))
+				if(CollisionChecker("SlipperySurface", slipperyObstacleColliderMask))
                 {
 					playerPhysicsMaterial.friction = 0.1f;
 				}
@@ -352,7 +364,7 @@ namespace StarterAssets
 			_animIDMotionSpeed = Animator.StringToHash("MotionSpeed");
 		}
 
-		private bool collisionChecker(string objectTag, LayerMask layermask)
+		private bool CollisionChecker(string objectTag, LayerMask layermask)
         {
 			Collider2D parentCollider = gameObject.transform.parent.gameObject.GetComponent<Collider2D>();
 
@@ -372,7 +384,7 @@ namespace StarterAssets
 					int match = contactFilter.layerMask.value & (int)Mathf.Pow(2, overlapCollider.gameObject.layer);
 					if (match > 0)
 					{
-						//Debug.Log("match");
+						//Debug.Log("match: " + overlapCollider.gameObject.name);
 
 						if(overlapCollider.gameObject.CompareTag(objectTag))
                         {
@@ -583,8 +595,25 @@ namespace StarterAssets
 
 					canJump = true;
 
+					
+					if (parentCollider2D.friction == 0)
+					{
+						//Debug.Log("Slime Jump");
+
+						// the square root of H * -2 * G = how much velocity needed to reach desired height
+						_verticalVelocity = Mathf.Sqrt((JumpHeight + 0.9f) * -2f * Gravity);
+					}
+					else
+					{
+						//Debug.Log("NOT Slime Jump");
+
+						// the square root of H * -2 * G = how much velocity needed to reach desired height
+						_verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
+					}
+					
+
 					// the square root of H * -2 * G = how much velocity needed to reach desired height
-					_verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
+					//_verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
 
 					//rbody2D.velocity = new Vector2(rbody2D.velocity.x, _verticalVelocity);
 
@@ -596,7 +625,7 @@ namespace StarterAssets
 
 					if(!groundCheckColliderCouroutine)
                     {
-						StartCoroutine(groundCheckColliderDeactivate(0.2f));
+						StartCoroutine(GroundCheckColliderDeactivate(0.2f));
 					}
 				}
                 else
@@ -754,7 +783,7 @@ namespace StarterAssets
 			}
 		}
 
-		IEnumerator groundCheckColliderDeactivate(float secs)
+		IEnumerator GroundCheckColliderDeactivate(float secs)
 		{
 			groundCheckColliderCouroutine = true;
 

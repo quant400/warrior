@@ -9,6 +9,17 @@ public class TryoutScript : MonoBehaviour
     GameObject startscreen;
     [SerializeField]
     NFTGetView nftGetter;
+
+    /*
+    private void OnEnable()
+    {
+        nftGetter.Skip();
+        SceneManager.LoadScene(warriorGameModel.singlePlayerScene1.sceneName);
+
+        transform.gameObject.SetActive(false);
+    }
+    */
+    
     public void ButtonPressed(int i)
     {
         /*
@@ -43,6 +54,7 @@ public class TryoutScript : MonoBehaviour
         transform.gameObject.SetActive(false);
 
     }
+    
 
     public void BackButton()
     {

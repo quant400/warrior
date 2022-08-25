@@ -42,7 +42,7 @@ public class PlayerModelSelect : MonoBehaviour
         randomNum = UnityEngine.Random.Range(0, playerModelFBX.Length - 1);
         */
 
-        spawnModel();
+        SpawnModel();
     }
 
     // Update is called once per frame
@@ -51,7 +51,7 @@ public class PlayerModelSelect : MonoBehaviour
         
     }
 
-    private void spawnModel()
+    private void SpawnModel()
     {
         Debug.Log(playerModelFBX.name);
 

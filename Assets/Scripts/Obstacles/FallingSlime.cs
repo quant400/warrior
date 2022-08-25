@@ -52,11 +52,11 @@ public class FallingSlime : MonoBehaviour
     {
         if (collision.CompareTag("Slime"))
         {
-            StartCoroutine(positionChange(fadeOutTime));
+            StartCoroutine(PositionChange(fadeOutTime));
         }
     }
 
-    IEnumerator positionChange(float secs)
+    IEnumerator PositionChange(float secs)
     {
         childSprite.DOFade(0, fadeOutTime);
 

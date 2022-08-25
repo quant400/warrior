@@ -14,6 +14,8 @@ namespace StarterAssets
 
         public bool isFollowingPlayerPlatform = false;
 
+        private Vector3 startPosition;
+
         private StarterAssetsInputs _input;
 
         // Start is called before the first frame update
@@ -21,7 +23,33 @@ namespace StarterAssets
         {
             _input = GameObject.FindGameObjectWithTag("Player").GetComponent<StarterAssetsInputs>();
 
-            transform.DOMoveX(transform.position.x + distance, duration).SetLoops(-1, LoopType.Yoyo);
+            startPosition = transform.localPosition;
+
+            //transform.DOMoveX(transform.position.x + distance, duration).SetLoops(-1, LoopType.Yoyo);
+
+            Vector3 localPosition = transform.localPosition;
+
+            localPosition.x += distance;
+
+            transform.DOLocalMove(localPosition, duration).SetLoops(-1, LoopType.Yoyo);
+        }
+
+        private void OnEnable()
+        {
+            //transform.DOMoveX(transform.position.x + distance, duration).SetLoops(-1, LoopType.Yoyo);
+
+            DOTween.Play(gameObject.transform);
+        }
+
+        private void OnDisable()
+        {
+            //DOTween.Kill(gameObject.transform);
+
+            DOTween.Pause(gameObject.transform);
+
+            //DOTween.Kill(gameObject.transform);
+
+            //transform.localPosition = startPosition;
         }
 
         // Update is called once per frame

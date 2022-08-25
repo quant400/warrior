@@ -33,16 +33,16 @@ public class ChickenSpawnerScript : MonoBehaviour
 
             animator.SetBool("inRange", true);
 
-            StartCoroutine(chickenSpawnDelay(spawnDelay));
+            StartCoroutine(ChickenSpawnDelay(spawnDelay));
         }
     }
 
-    public void startSpawning()
+    public void StartSpawning()
     {
         activateSpawning = true;
     }
 
-    IEnumerator chickenSpawnDelay(float secs)
+    IEnumerator ChickenSpawnDelay(float secs)
     {
         yield return new WaitForSeconds(secs);
 

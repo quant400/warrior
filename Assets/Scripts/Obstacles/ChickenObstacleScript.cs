@@ -22,6 +22,11 @@ public class ChickenObstacleScript : MonoBehaviour
         spawner = gameObject.transform.GetChild(0).gameObject;
     }
 
+    private void OnDisable()
+    {
+        hasSpawned = false;
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -29,7 +34,7 @@ public class ChickenObstacleScript : MonoBehaviour
         {
             hasSpawned = true;
 
-            spawner.GetComponent<ChickenSpawnerScript>().startSpawning();
+            spawner.GetComponent<ChickenSpawnerScript>().StartSpawning();
         }
     }
 

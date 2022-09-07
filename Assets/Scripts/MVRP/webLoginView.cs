@@ -35,6 +35,8 @@ public class webLoginView : MonoBehaviour
     GameObject tryoutButton;
     [SerializeField]
     GameObject tryoutCanvas;
+    [SerializeField]
+    GameObject segmentSelect;
 
     public void checkUSerLoggedAtStart()
     {
@@ -104,17 +106,65 @@ public class webLoginView : MonoBehaviour
 
         transform.GetChild(0).gameObject.SetActive(true);
         transform.GetChild(5).gameObject.SetActive(true);
+        transform.GetChild(8).gameObject.SetActive(true);
 
         nftGetter.Skip();
         SceneManager.LoadScene(warriorGameModel.singlePlayerScene1.sceneName);
 
         
+        /*
         foreach(Transform t in transform)
         {
             t.gameObject.SetActive(false);
         }
         transform.GetChild(0).gameObject.SetActive(true);
-        
+        */
+
+        //transform.GetChild(8).gameObject.SetActive(true);
+
+
+        //tryoutCanvas.SetActive(true);
+
+
+    }
+
+    public void OnSegmentSelect()
+    {
+        /*
+        gameplayView.instance.isTryout = true;
+
+        foreach (Transform t in transform)
+        {
+            t.gameObject.SetActive(false);
+        }
+
+        transform.GetChild(0).gameObject.SetActive(true);
+        transform.GetChild(5).gameObject.SetActive(true);
+        transform.GetChild(8).gameObject.SetActive(true);
+
+        nftGetter.Skip();
+        SceneManager.LoadScene(warriorGameModel.singlePlayerScene1.sceneName);
+        */
+
+        foreach (Transform t in transform)
+        {
+            t.gameObject.SetActive(false);
+        }
+
+        transform.GetChild(0).gameObject.SetActive(true);
+        transform.GetChild(8).gameObject.SetActive(true);
+        transform.GetChild(5).gameObject.SetActive(true);
+        transform.GetChild(10).gameObject.SetActive(true);
+
+        segmentSelect.SetActive(true);
+
+        /*
+        foreach(Transform t in transform)
+        {
+            t.gameObject.SetActive(false);
+        }
+        transform.GetChild(0).gameObject.SetActive(true);
+        */
 
         //transform.GetChild(8).gameObject.SetActive(true);
 

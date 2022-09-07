@@ -21,7 +21,7 @@ public class PlayerTimeAddScript : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Chicken"))
         {
-            PlayerStats.Instance.timeLeft += 10;
+            PlayerStats.Instance.timeLeft += 15;
 
             Destroy(collision.gameObject);
         }

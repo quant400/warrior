@@ -15,22 +15,38 @@ namespace StarterAssets
         private float textureUnitSizeX;
         private float textureUnitSizeY;
 
+        private float length, startpos;
+        public float parallaxEffect;
+
         private void Start()
         {
             cameraTransform = Camera.main.transform;
             lastCameraPosition = cameraTransform.position;
+
+            
             Sprite sprite = GetComponent<SpriteRenderer>().sprite;
             Texture2D texture = sprite.texture;
             textureUnitSizeX = texture.width / sprite.pixelsPerUnit;
             textureUnitSizeY = texture.height / sprite.pixelsPerUnit;
+            
+            
+            startpos = transform.position.x;
+            length = gameObject.GetComponent<SpriteRenderer>().bounds.size.x;
+
+            //Debug.Log("length = " + length);
         }
 
-        private void LateUpdate()
+
+        private void Update()
         {
             Vector3 deltaMovement = cameraTransform.position - lastCameraPosition;
-            transform.position += new Vector3(deltaMovement.x * parallaxEffectMultiplier.x, deltaMovement.y * parallaxEffectMultiplier.y);
+            //transform.position += new Vector3(deltaMovement.x * parallaxEffectMultiplier.x, deltaMovement.y * parallaxEffectMultiplier.y);
+            transform.position += new Vector3(transform.position.x, deltaMovement.y * parallaxEffectMultiplier.y);
             lastCameraPosition = cameraTransform.position;
 
+
+
+            /*
             if (infiniteHorizontal)
             {
                 if (Mathf.Abs(cameraTransform.position.x - transform.position.x) >= textureUnitSizeX)
@@ -39,6 +55,23 @@ namespace StarterAssets
                     transform.position = new Vector3(cameraTransform.position.x + offsetPositionX, transform.position.y);
                 }
             }
+            */
+
+            float temp = (cameraTransform.position.x * (1 - parallaxEffect));
+            float dist = (cameraTransform.position.x * parallaxEffect);
+
+            transform.position = new Vector3(startpos + dist, transform.position.y, transform.position.z);
+
+            if (temp > startpos + length)
+            {
+                startpos += length;
+            }
+            else if (temp < startpos - length)
+            {
+                startpos -= length;
+            }
+
+
 
             if (infiniteVertical)
             {
@@ -50,5 +83,54 @@ namespace StarterAssets
             }
         }
 
+        /*
+        private void LateUpdate()
+        {
+            
+            Vector3 deltaMovement = cameraTransform.position - lastCameraPosition;
+            //transform.position += new Vector3(deltaMovement.x * parallaxEffectMultiplier.x, deltaMovement.y * parallaxEffectMultiplier.y);
+            transform.position += new Vector3(transform.position.x, deltaMovement.y * parallaxEffectMultiplier.y);
+            lastCameraPosition = cameraTransform.position;
+            
+
+
+            
+            if (infiniteHorizontal)
+            {
+                if (Mathf.Abs(cameraTransform.position.x - transform.position.x) >= textureUnitSizeX)
+                {
+                    float offsetPositionX = (cameraTransform.position.x - transform.position.x) % textureUnitSizeX;
+                    transform.position = new Vector3(cameraTransform.position.x + offsetPositionX, transform.position.y);
+                }
+            }
+            
+
+            float temp = (cameraTransform.position.x * (1 - parallaxEffect));
+            float dist = (cameraTransform.position.x * parallaxEffect);
+
+            transform.position = new Vector3(startpos + dist, transform.position.y, transform.position.z);
+
+            if (temp > startpos + length)
+            {
+                startpos += length;
+            }
+            else if (temp < startpos - length)
+            {
+                startpos -= length;
+            }
+                
+
+            
+            if (infiniteVertical)
+            {
+                if (Mathf.Abs(cameraTransform.position.y - transform.position.y) >= textureUnitSizeY)
+                {
+                    float offsetPositionY = (cameraTransform.position.y - transform.position.y) % textureUnitSizeY;
+                    transform.position = new Vector3(transform.position.x, cameraTransform.position.y + offsetPositionY);
+                }
+            }
+
+        }
+        */
     }
 }

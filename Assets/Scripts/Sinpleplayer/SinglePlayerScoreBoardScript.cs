@@ -11,6 +11,8 @@ using UniRx.Operators;
 public class SinglePlayerScoreBoardScript : MonoBehaviour
 {
     public static SinglePlayerScoreBoardScript instance;
+
+    /*
     [SerializeField]
     Transform scorePanel;
 
@@ -36,6 +38,8 @@ public class SinglePlayerScoreBoardScript : MonoBehaviour
     float currentTime;
     public ReactiveProperty<bool> timeIsUp = new ReactiveProperty<bool>();
     public ReactiveProperty<float> reactiveTime = new ReactiveProperty<float>();
+    */
+
 
     [SerializeField]
     GameObject settingsPanel;
@@ -49,12 +53,14 @@ public class SinglePlayerScoreBoardScript : MonoBehaviour
         {
             instance = this;
         }
-        timeIsUp.Value = true;
+        //timeIsUp.Value = true;
 
 
     }
+    /*
     public void StartGame(float timeOfGame)
     {
+        
         Debug.Log("timeSetted");
         time = timeOfGame;
         currentTime = time;
@@ -64,7 +70,11 @@ public class SinglePlayerScoreBoardScript : MonoBehaviour
         barTimer.fillAmount = 1;
         barTimer.transform.parent.gameObject.SetActive(false);
         counterObservation();
+        
     }
+    */
+
+    /*
     public void counterObservation()
     {
         timeIsUp
@@ -92,6 +102,9 @@ public class SinglePlayerScoreBoardScript : MonoBehaviour
 
 
     }
+    */
+
+    /*
     public void SetReactiveTime()
     {
         reactiveTime.Value -= 1;
@@ -100,6 +113,9 @@ public class SinglePlayerScoreBoardScript : MonoBehaviour
 
 
     }
+    */
+
+    /*
     public void SetTimeInUI(float time)
     {
         if (time > 20)
@@ -117,6 +133,9 @@ public class SinglePlayerScoreBoardScript : MonoBehaviour
         //timmer object size was 1.5f
         //timerFill.fillAmount = (float)currentTime / (float)SinglePlayerScoreBoardScript.instance.time;
     }
+    */
+
+    /*
     public void SetTimeEndGame(float time)
     {
 
@@ -135,11 +154,13 @@ public class SinglePlayerScoreBoardScript : MonoBehaviour
 
         
     }
+    */
     private void Update()
     {
        
     }
 
+    
     public void DisplayScore()
     {
         //winnerText.text = "You collected " + chickensCollected + " chickens";
@@ -149,6 +170,8 @@ public class SinglePlayerScoreBoardScript : MonoBehaviour
             gameplayView.instance.gameOverObject.SetActive(true);
         }
     }
+    
+    /*
     public void AnimChickenCollected()
     {
         chickensCollected++;
@@ -162,12 +185,14 @@ public class SinglePlayerScoreBoardScript : MonoBehaviour
 
         });
     }
+    */
 
+    /*
     public int GetScore()
     {
         return chickensCollected;
     }
-
+    */
 
     public void OpenSettings()
     {

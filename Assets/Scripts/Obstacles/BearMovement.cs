@@ -23,7 +23,6 @@ public class BearMovement : MonoBehaviour
 
     Vector2 origVelocity;
 
-
     // Start is called before the first frame update
     void Start()
     {
@@ -49,7 +48,7 @@ public class BearMovement : MonoBehaviour
         {
             bearAnimator.SetBool("bearStill", false);
         }
-        else
+        else if(!playerInRange && origVelocity.x == 0)
         {
             bearAnimator.SetBool("bearStill", true);
         }
@@ -82,7 +81,41 @@ public class BearMovement : MonoBehaviour
         {
             origVelocity = bearRBody2D.velocity;
 
-            origVelocity.x = Vector2.ClampMagnitude(bearRBody2D.velocity, 0.0f).x;
+            //Debug.Log("bear position = " + bearBody.transform.position.x);
+
+            //Debug.Log("gameObject position = " + gameObject.transform.position.x);
+
+            if(Mathf.Abs(bearBody.transform.position.x - gameObject.transform.position.x) > 0.01)
+            {
+                if (bearBody.transform.position.x > gameObject.transform.position.x)
+                {
+                    moveDirection = new Vector3(-1, 0, 0);
+
+                    bearSpriteRenderer.flipX = true;
+
+                    bearRBody2D.AddForce(moveDirection * speed * 100, ForceMode2D.Force);
+
+                    origVelocity = bearRBody2D.velocity;
+
+                    origVelocity.x = Vector2.ClampMagnitude(bearRBody2D.velocity, speed).x;
+                }
+                else if (bearBody.transform.position.x < gameObject.transform.position.x)
+                {
+                    moveDirection = new Vector3(1, 0, 0);
+
+                    bearSpriteRenderer.flipX = false;
+
+                    bearRBody2D.AddForce(moveDirection * speed * 100, ForceMode2D.Force);
+
+                    origVelocity = bearRBody2D.velocity;
+
+                    origVelocity.x = Vector2.ClampMagnitude(bearRBody2D.velocity, speed).x;
+                }
+            }
+            else
+            {
+                origVelocity.x = Vector2.ClampMagnitude(bearRBody2D.velocity, 0.0f).x;
+            }    
         }
 
         bearRBody2D.velocity = origVelocity;

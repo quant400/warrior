@@ -5,34 +5,32 @@ using DG.Tweening;
 
 public class FallingSlime : MonoBehaviour
 {
-    SpriteRenderer childSprite;
+    //SpriteRenderer childSprite;
 
     Rigidbody2D rBody;
 
-    [SerializeField] float fadeInTime = 1f;
+    //[SerializeField] float fadeInTime = 1f;
 
     [SerializeField] float fadeOutTime = 1f;
 
     private Vector3 origPosition;
 
-    
-
     // Start is called before the first frame update
     void Start()
     {
-        origPosition = gameObject.transform.position;
+        origPosition = gameObject.transform.localPosition;
 
-        childSprite = gameObject.transform.GetChild(0).transform.GetComponent<SpriteRenderer>();
+        //childSprite = gameObject.transform.GetChild(0).transform.GetComponent<SpriteRenderer>();
 
         rBody = gameObject.transform.GetComponent<Rigidbody2D>();
 
-        Color origChildColor = childSprite.color;
+        //Color origChildColor = childSprite.color;
 
-        origChildColor.a = 0.0f;
+        //origChildColor.a = 0.0f;
 
-        childSprite.color = origChildColor;
+        //childSprite.color = origChildColor;
 
-        childSprite.DOFade(59, fadeInTime);
+        //childSprite.DOFade(59, fadeInTime);
     }
 
     // Update is called once per frame
@@ -41,11 +39,29 @@ public class FallingSlime : MonoBehaviour
         
     }
 
+    private void OnEnable()
+    {
+        //transform.DOMoveX(transform.position.x + distance, duration).SetLoops(-1, LoopType.Yoyo);
+
+        DOTween.Play(gameObject.transform);
+    }
+
+    private void OnDisable()
+    {
+        //DOTween.Kill(gameObject.transform);
+
+        DOTween.Pause(gameObject.transform);
+
+        //DOTween.Kill(gameObject.transform);
+
+        //transform.localPosition = startPosition;
+    }
+
     void OnDestroy()
     {
-        DOTween.Kill(childSprite);
+        //DOTween.Kill(childSprite);
 
-        DOTween.Kill(gameObject.transform);
+        //DOTween.Kill(gameObject.transform);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -58,14 +74,16 @@ public class FallingSlime : MonoBehaviour
 
     IEnumerator PositionChange(float secs)
     {
-        childSprite.DOFade(0, fadeOutTime);
+        //childSprite.DOFade(0, fadeOutTime);
 
         yield return new WaitForSeconds(secs);
 
-        gameObject.transform.position = origPosition;
+        gameObject.transform.localPosition = origPosition;
+
+        //Debug.Log(origPosition);
 
         rBody.velocity = Vector3.zero;
 
-        childSprite.DOFade(59, fadeInTime);
+        //childSprite.DOFade(59, fadeInTime);
     }
 }

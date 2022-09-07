@@ -137,7 +137,7 @@ public class SinglePlayerChickenScript : MonoBehaviour
                 Destroy(t.gameObject);
             }
             GetComponent<BoxCollider>().enabled = false;
-            SinglePlayerScoreBoardScript.instance.AnimChickenCollected();
+            //SinglePlayerScoreBoardScript.instance.AnimChickenCollected();
             Invoke("Collected", 1f);
         }
         if (other.CompareTag("Bot"))

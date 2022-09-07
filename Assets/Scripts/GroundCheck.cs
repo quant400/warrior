@@ -100,6 +100,7 @@ public class GroundCheck : MonoBehaviour
                     {
                         Instantiate(landingEffect, transform.position, Quaternion.identity, null);
                     }
+
                     groundedLastCheck = true;
                     return true;
                 }

@@ -247,6 +247,8 @@ public class gameEndView : MonoBehaviour
             if(currentScene.name != "EndScene")
             {
                 SceneManager.LoadScene("EndScene");
+
+                SegmentScript.Instance.segmentSelected = -5;
             }
             
 

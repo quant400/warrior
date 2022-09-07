@@ -66,7 +66,7 @@ public class SingleplayerGameControler : MonoBehaviour
 
     public void StartGame()
     {
-        SinglePlayerScoreBoardScript.instance.StartGame(GetTimeForGame());
+        //SinglePlayerScoreBoardScript.instance.StartGame(GetTimeForGame());
         player = GameObject.FindGameObjectWithTag("Player");
         player.GetComponent<ThirdPersonController>().SetStarted(true);
         GetScores();

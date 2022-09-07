@@ -190,7 +190,7 @@ namespace StarterAssets
 
 			//Debug.Log("slimeCheck = " + slimeCheck);
 
-			/*
+			
 			if (!cursorUnlocked && Keyboard.current[Key.Escape].wasPressedThisFrame)
 			{
 				cursorUnlocked = true;
@@ -200,7 +200,7 @@ namespace StarterAssets
 			{
 				StartCoroutine(LockCursorAfter(1));
 			}
-			*/
+			
 
 			//CollisionChecker("Links", LayerMask.GetMask("Default"));
 
@@ -213,7 +213,9 @@ namespace StarterAssets
 
 		private void FixedUpdate()
         {
-			
+			JumpFixedUpdate();
+
+
 			float currentHorizontalSpeed = new Vector3(rbody2D.velocity.x, 0.0f, 0.0f).magnitude;
 
 			float speedOffset = 0.1f;
@@ -283,6 +285,7 @@ namespace StarterAssets
 
 			if (canJump)
 			{
+				//JumpFixedUpdate();
 				
 				if (movementAllowed)
 				{
@@ -293,8 +296,11 @@ namespace StarterAssets
 				origVelocity.y = _verticalVelocity;
 			}
 
+			//GravityFixedUpdate();
 
-			if(canClampVelocity)
+			//origVelocity.y = _verticalVelocity;
+
+			if (canClampVelocity)
             {
 				origVelocity.x = Vector2.ClampMagnitude(rbody2D.velocity, targetSpeed).x;
 
@@ -305,7 +311,7 @@ namespace StarterAssets
 				origVelocity.x = Vector2.ClampMagnitude(rbody2D.velocity, targetSpeed).x;
 			}
 
-
+			
 
 			/*
 			if(_input.sprint && _input.move.x != 0)
@@ -574,14 +580,96 @@ namespace StarterAssets
 		
 		}
 
+		private void JumpFixedUpdate()
+        {
+			/*
+			if(grounded)
+            {
+
+				if (canJump)
+                {
+					if (parentCollider2D.friction == 0)
+					{
+						//Debug.Log("Slime Jump");
+
+						// the square root of H * -2 * G = how much velocity needed to reach desired height
+						_verticalVelocity = Mathf.Sqrt((JumpHeight + 0.9f) * -2f * Gravity);
+					}
+					else
+					{
+						//Debug.Log("NOT Slime Jump");
+
+						// the square root of H * -2 * G = how much velocity needed to reach desired height
+						_verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
+					}
+
+
+					// the square root of H * -2 * G = how much velocity needed to reach desired height
+					//_verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
+
+					//rbody2D.velocity = new Vector2(rbody2D.velocity.x, _verticalVelocity);
+
+
+					if (!groundCheckColliderCouroutine)
+					{
+						StartCoroutine(GroundCheckColliderDeactivate(0.2f));
+					}
+				}
+			}
+			*/
+
+			// apply gravity over time if under terminal (multiply by delta time twice to linearly speed up over time)
+			if (_verticalVelocity < _terminalVelocity)
+			{
+				//canJump = true;
+
+				if (canApplyGravity)
+				{
+					_verticalVelocity += Gravity * Time.deltaTime;
+				}
+				else
+				{
+					//_verticalVelocity = 5.0f;
+
+					if (movementAllowed)
+					{
+						_verticalVelocity = rbody2D.velocity.y;
+					}
+					else
+					{
+						if (movementAllowed)
+						{
+							rbody2D.velocity = new Vector2(rbody2D.velocity.x, 0.0f);
+						}
+
+
+						_verticalVelocity = 8f;
+					}
+
+				}
+
+
+
+				//rbody2D.velocity = new Vector2(rbody2D.velocity.x, _verticalVelocity);
+			}
+			else
+			{
+				//canJump = false;
+			}
+		}
+
+
+
 		private void JumpAndGravity()
 		{
 			if (grounded)
 			{
 				//Debug.Log("grounded");
 
+				
 				// reset the fall timeout timer
 				_fallTimeoutDelta = FallTimeout;
+				
 
 				// update animator if using character
 				if (_hasAnimator)
@@ -597,9 +685,8 @@ namespace StarterAssets
 				}
 
 				// Jump
-				if (_input.jump && _jumpTimeoutDelta <= 0.0f)
+				if (_input.jump && (_jumpTimeoutDelta <= 0.0f))
 				{
-					//Debug.Log("_jumpTimeoutDelta <= 0.0f");
 
 					canJump = true;
 
@@ -631,25 +718,29 @@ namespace StarterAssets
 						_animator.SetBool(_animIDJump, true);
 					}
 
+					
 					if(!groundCheckColliderCouroutine)
                     {
 						StartCoroutine(GroundCheckColliderDeactivate(0.2f));
 					}
+					
 				}
                 else
                 {
 					canJump = false;
 				}
 
+
+				
 				// jump timeout
 				if (_jumpTimeoutDelta >= 0.0f)
 				{
 					_jumpTimeoutDelta -= Time.deltaTime;
 				}
+				
 			}
 			else
 			{
-
 				//Debug.Log("not grounded");
 
 				// reset the jump timeout timer
@@ -668,18 +759,6 @@ namespace StarterAssets
 						_animator.SetBool(_animIDFreeFall, true);
 					}
 				}
-
-				/*
-				if (!jumpWaitCoroutine)
-				{
-					// if we are not grounded, do not jump
-					_input.jump = false;
-				}
-				else
-                {
-					_input.jump = true;
-				}
-				*/
 				
 
 				if(canApplyGravity)
@@ -691,6 +770,9 @@ namespace StarterAssets
 				
 			}
 
+
+
+			/*
 			// apply gravity over time if under terminal (multiply by delta time twice to linearly speed up over time)
 			if (_verticalVelocity < _terminalVelocity)
 			{
@@ -729,6 +811,7 @@ namespace StarterAssets
             {
 				//canJump = false;
 			}
+			*/
 		}
 
 		private static float ClampAngle(float lfAngle, float lfMin, float lfMax)

@@ -404,6 +404,7 @@ namespace StarterAssets
             }
             */
 
+            playerAttached = false;
         }
 
         private void RockClimbAttach()

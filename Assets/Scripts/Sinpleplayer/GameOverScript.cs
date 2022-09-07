@@ -46,7 +46,7 @@ public class GameOverScript : MonoBehaviour
         {
             if (SingleplayerGameControler.instance.isRestApi)
             {
-                DatabaseManagerRestApi._instance.setScoreRestApiMain(currentNFT.id.ToString(), SinglePlayerScoreBoardScript.instance.GetScore());
+                DatabaseManagerRestApi._instance.setScoreRestApiMain(currentNFT.id.ToString(), PlayerStats.Instance.GetScore());
 
             }
             else
@@ -83,7 +83,7 @@ public class GameOverScript : MonoBehaviour
             
             sessionsLeft.SetActive(true);
             sessionsNotLeft.SetActive(false);
-            currentScore.text = "CHICKENS CAUGHT : " + SinglePlayerScoreBoardScript.instance.GetScore().ToString();
+            currentScore.text = "DISTANCE TRAVELED : " + PlayerStats.Instance.GetScore().ToString();
             dailyScore.text = "DAILY SCORE : " + (SingleplayerGameControler.instance.GetDailyScore());
             allTimeScore.text = "ALL TIME SCORE : " + (SingleplayerGameControler.instance.GetAllTimeScore() );
             sessionCounterText.text = "NFT DAILY RUNS : " + (SingleplayerGameControler.instance.GetSessions()) + "/10";
@@ -160,7 +160,7 @@ public class GameOverScript : MonoBehaviour
     public void setScoreToUI()
     {
         gameEnded.Value = true;
-        currentScore.text = "CHICKENS CAUGHT : " + SinglePlayerScoreBoardScript.instance.GetScore().ToString() ;
+        currentScore.text = "DISTANCE TRAVELED : " + PlayerStats.Instance.GetScore().ToString();
         dailyScore.text = "DAILY SCORE : " + (SingleplayerGameControler.instance.GetDailyScore() );
         allTimeScore.text = "ALL TIME SCORE : " + (SingleplayerGameControler.instance.GetAllTimeScore() );
         sessionCounterText.text= "NFT DAILY RUNS : " + (SingleplayerGameControler.instance.GetSessions())+"/10";

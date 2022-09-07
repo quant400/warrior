@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.UI;
+using TMPro;
 
 public class TilemapProceduralGeneration : MonoBehaviour
 {
@@ -13,8 +14,22 @@ public class TilemapProceduralGeneration : MonoBehaviour
     [SerializeField] int checkpointWidthAddition;
     private int widthAdditionMultiplier;
 
-    [Tooltip("Add prefab maps here")]
-    [SerializeField] GameObject[] obstacleMaps;
+    [Tooltip("Add prefab easy difficulty map segments here")]
+    [SerializeField] GameObject[] easyObstacleSegments;
+    [Tooltip("Insert number here for how many easy difficulty segments will spawn before medium difficulty segments start spawning")]
+    [SerializeField]
+    private int noOfEasySegments;
+
+
+    [Tooltip("Add prefab medium difficulty map segments here")]
+    [SerializeField] GameObject[] mediumObstacleSegments;
+    [Tooltip("Insert number here for how many medium difficulty segments will spawn before hard difficulty segments start spawning")]
+    [SerializeField]
+    private int noOfMediumSegments;
+
+    [Tooltip("Add prefab hard difficulty map segments here")]
+    [SerializeField] GameObject[] hardObstacleSegments;
+
     private GameObject[] tilemaps;
     private int[] currentActiveTilemaps;
     private Collider2D[] mapColliders;
@@ -22,11 +37,18 @@ public class TilemapProceduralGeneration : MonoBehaviour
     [Tooltip("Checkpoint object prefab")]
     [SerializeField] GameObject checkpointPrefab;
     [Tooltip("Text in canvas for checkpoint distance")]
-    [SerializeField] Text checkpointText;
+    [SerializeField] TextMeshProUGUI checkpointText;
+
+    [Tooltip("Slider for checkpoint distance")]
+    [SerializeField] Slider checkpointSlider;
+
     [Tooltip("Text in canvas for time left")]
-    [SerializeField] Text timerText;
+    //[SerializeField] Text timerText;
+    //[SerializeField] GameObject timerTextGameObject;
+    [SerializeField] TextMeshProUGUI timerText;
+
     [Tooltip("Text in canvas for player Score")]
-    [SerializeField] Text playerScoreText;
+    [SerializeField] TextMeshProUGUI playerScoreText;
     /*
     [Tooltip("Enter starting time")]
     [SerializeField] float timeLeft;
@@ -74,6 +96,8 @@ public class TilemapProceduralGeneration : MonoBehaviour
 
     private int startingWidth;
 
+    bool firstTestSpawn;
+
     //private float playerScore;
 
     /*
@@ -81,6 +105,14 @@ public class TilemapProceduralGeneration : MonoBehaviour
     {
         QualitySettings.vSyncCount = 0;  // VSync must be disabled
         Application.targetFrameRate = -1;
+    }
+    */
+
+    /*
+    void Awake()
+    {
+        QualitySettings.vSyncCount = 0;  // VSync must be disabled
+        Application.targetFrameRate = 45;
     }
     */
 
@@ -104,12 +136,13 @@ public class TilemapProceduralGeneration : MonoBehaviour
 
         checkpointCrossed = false;
 
+        firstTestSpawn = true;
+
         //playerScore = 0.0f;
 
         //checkpointDistance = 0.0f;
 
         checkpointLastDistance = width;
-
 
         //Debug.Log("currentPlayerTilemap = " + currentPlayerTilemap);
 
@@ -185,7 +218,9 @@ public class TilemapProceduralGeneration : MonoBehaviour
         }
         */
 
-        if (obstacleMaps.Length > 3)
+        
+
+        if ((easyObstacleSegments.Length + mediumObstacleSegments.Length + hardObstacleSegments.Length) > 3)
         {
             currentActiveTilemaps = new int[3];
 
@@ -204,11 +239,11 @@ public class TilemapProceduralGeneration : MonoBehaviour
         }
         else
         {
-            currentActiveTilemaps = new int[obstacleMaps.Length];
+            currentActiveTilemaps = new int[(easyObstacleSegments.Length + mediumObstacleSegments.Length + hardObstacleSegments.Length)];
 
-            checkpoints = new GameObject[obstacleMaps.Length];
+            checkpoints = new GameObject[(easyObstacleSegments.Length + mediumObstacleSegments.Length + hardObstacleSegments.Length)];
 
-            checkpointCheck = new bool[obstacleMaps.Length];
+            checkpointCheck = new bool[(easyObstacleSegments.Length + mediumObstacleSegments.Length + hardObstacleSegments.Length)];
 
             //distanceCovered = new GameObject[obstacleMaps.Length];
 
@@ -217,7 +252,7 @@ public class TilemapProceduralGeneration : MonoBehaviour
                 checkpointCheck[i] = true;
             }
 
-            mapColliders = new Collider2D[obstacleMaps.Length];
+            mapColliders = new Collider2D[(easyObstacleSegments.Length + mediumObstacleSegments.Length + hardObstacleSegments.Length)];
         }
 
         for (int i = 0; i < currentActiveTilemaps.Length; i++)
@@ -232,13 +267,90 @@ public class TilemapProceduralGeneration : MonoBehaviour
             {
                 //Generation((width - (checkpointWidthAddition * widthAdditionMultiplier)) * widthAdditionMultiplier, i);
 
-                FirstGeneration((width - (checkpointWidthAddition * widthAdditionMultiplier)) * widthAdditionMultiplier, i);
+
+                if(SegmentScript.Instance)
+                {
+                    //Debug.Log("SegmentScript.Instance.segmentSelected = " + SegmentScript.Instance.segmentSelected);
+
+                    if (SegmentScript.Instance.segmentSelected == -5)
+                    {
+                        //Debug.Log("Hello??");
+
+                        FirstGeneration((width - (checkpointWidthAddition * widthAdditionMultiplier)) * widthAdditionMultiplier, i, i);
+                    }
+                    else
+                    {
+                        if (SegmentScript.Instance.easyOnly)
+                        {
+                            //Debug.Log("Easy Only");
+
+                            FirstGeneration((width - (checkpointWidthAddition * widthAdditionMultiplier)) * widthAdditionMultiplier, i, i);
+                        }
+                        else if (SegmentScript.Instance.mediumOnly)
+                        {
+                            //Debug.Log("Medium Only");
+
+                            noOfEasySegments = -1;
+
+                            Generation((width - (checkpointWidthAddition * widthAdditionMultiplier)) * widthAdditionMultiplier, i);
+                        }
+                        else if (SegmentScript.Instance.hardOnly)
+                        {
+                            //Debug.Log("Hard Only");
+
+                            noOfEasySegments = -1;
+
+                            noOfMediumSegments = -1;
+
+                            Generation((width - (checkpointWidthAddition * widthAdditionMultiplier)) * widthAdditionMultiplier, i);
+                        }
+                    }
+                }
+                else
+                {
+                    FirstGeneration((width - (checkpointWidthAddition * widthAdditionMultiplier)) * widthAdditionMultiplier, i, i);
+                }
+                
 
                 checkpoints[i] = Instantiate(checkpointPrefab, new Vector3(checkpointPrefab.transform.position.x + (width - checkpointWidthAddition) + tilemapDistance - 9.05f, 5, checkpointPrefab.transform.position.z), checkpointPrefab.transform.rotation);
             }
-            else
+            else if (i == 1)
             {
-                Generation((width - (checkpointWidthAddition * widthAdditionMultiplier)) * widthAdditionMultiplier + (tilemapDistance * widthAdditionMultiplier), i);
+                if (SegmentScript.Instance)
+                {
+                    if(SegmentScript.Instance.segmentSelected < 0)
+                    {
+                        Generation((width - (checkpointWidthAddition * widthAdditionMultiplier)) * widthAdditionMultiplier + (tilemapDistance * widthAdditionMultiplier), i);
+                    }
+                }
+                else
+                {
+                    Generation((width - (checkpointWidthAddition * widthAdditionMultiplier)) * widthAdditionMultiplier + (tilemapDistance * widthAdditionMultiplier), i);
+                }
+                    
+
+                //FirstGeneration((width - (checkpointWidthAddition * widthAdditionMultiplier)) * widthAdditionMultiplier + (tilemapDistance * widthAdditionMultiplier), i, 5);
+
+                checkpoints[i] = Instantiate(checkpointPrefab, new Vector3(checkpoints[i - 1].transform.position.x + (width - checkpointWidthAddition) + tilemapDistance, 5, checkpointPrefab.transform.position.z), checkpointPrefab.transform.rotation);
+
+            }
+            else if (i == 2)
+            {
+                if (SegmentScript.Instance)
+                {
+                    if (SegmentScript.Instance.segmentSelected < 0)
+                    {
+                        Generation((width - (checkpointWidthAddition * widthAdditionMultiplier)) * widthAdditionMultiplier + (tilemapDistance * widthAdditionMultiplier), i);
+                    }
+                }
+                else
+                {
+                    Generation((width - (checkpointWidthAddition * widthAdditionMultiplier)) * widthAdditionMultiplier + (tilemapDistance * widthAdditionMultiplier), i);
+                }
+
+                
+
+                //FirstGeneration((width - (checkpointWidthAddition * widthAdditionMultiplier)) * widthAdditionMultiplier + (tilemapDistance * widthAdditionMultiplier), i, 3);
 
                 checkpoints[i] = Instantiate(checkpointPrefab, new Vector3(checkpoints[i - 1].transform.position.x + (width - checkpointWidthAddition) + tilemapDistance, 5, checkpointPrefab.transform.position.z), checkpointPrefab.transform.rotation);
 
@@ -249,26 +361,76 @@ public class TilemapProceduralGeneration : MonoBehaviour
 
     private void Update()
     {
+        if (SegmentScript.Instance)
+        {
 
-        IsTilemapCollidingWithPlayer();
+            if(SegmentScript.Instance.segmentSelected == -5)
+            {
+                IsTilemapCollidingWithPlayer();
 
-        TimeCountDown();
+                TimeCountDown();
 
-        TilemapSwapping();
+                TilemapSwapping();
 
-        CheckpointMoving();
+                CheckpointMoving();
 
-        ScoreCalculator();
+                ScoreCalculator();
+            }
+            else
+            {
+                if (SegmentScript.Instance.easyOnly || SegmentScript.Instance.mediumOnly || SegmentScript.Instance.hardOnly)
+                {
+                    IsTilemapCollidingWithPlayer();
 
+                    //TimeCountDown();
+
+                    TilemapSwapping();
+
+                    CheckpointMoving();
+
+                    //ScoreCalculator();
+                }
+            }
+
+        }
+        else
+        {
+            IsTilemapCollidingWithPlayer();
+
+            TimeCountDown();
+
+            TilemapSwapping();
+
+            CheckpointMoving();
+
+            ScoreCalculator();
+        }
     }
 
     private void instantiateAllMaps()
     {
-        tilemaps = new GameObject[obstacleMaps.Length];
+        tilemaps = new GameObject[(easyObstacleSegments.Length + mediumObstacleSegments.Length + hardObstacleSegments.Length)];
 
-        for (int i = 0; i < obstacleMaps.Length; i++)
+        for (int i = 0; i < (easyObstacleSegments.Length + mediumObstacleSegments.Length + hardObstacleSegments.Length); i++)
         {
-            tilemaps[i] = Instantiate(obstacleMaps[i]);
+            if(i < easyObstacleSegments.Length)
+            {
+                tilemaps[i] = Instantiate(easyObstacleSegments[i]);
+
+                tilemaps[i].name = easyObstacleSegments[i].name;
+            }
+            else if (i < easyObstacleSegments.Length + mediumObstacleSegments.Length)
+            {
+                tilemaps[i] = Instantiate(mediumObstacleSegments[i - easyObstacleSegments.Length]);
+
+                tilemaps[i].name = mediumObstacleSegments[i - easyObstacleSegments.Length].name;
+            }
+            else
+            {
+                tilemaps[i] = Instantiate(hardObstacleSegments[i - (easyObstacleSegments.Length + mediumObstacleSegments.Length)]);
+
+                tilemaps[i].name = hardObstacleSegments[i - (easyObstacleSegments.Length + mediumObstacleSegments.Length)].name;
+            }
 
             tilemaps[i].transform.parent = grid.transform;
 
@@ -282,8 +444,73 @@ public class TilemapProceduralGeneration : MonoBehaviour
 
         //GameObject tilemap;
 
+        /*
+        if(firstTestSpawn)
+        {
+            currentActiveTilemaps[iterationNum] = randomObstacleMapIndex();
 
-        currentActiveTilemaps[iterationNum] = randomObstacleMapIndex();
+            firstTestSpawn = false;
+        }
+        else
+        {
+            currentActiveTilemaps[iterationNum] = 5;
+
+            firstTestSpawn = true;
+        }
+        */
+
+        //easyObstacleSegments mediumObstacleSegments hardObstacleSegments
+
+        int difficultyNum;
+
+
+        if(noOfEasySegments > 0)
+        {
+            difficultyNum = 1;
+
+            currentActiveTilemaps[iterationNum] = randomObstacleMapIndex(difficultyNum);
+
+            if(SegmentScript.Instance)
+            {
+                if (SegmentScript.Instance.segmentSelected == -5)
+                {
+                    noOfEasySegments--;
+                }
+            }
+            else
+            {
+                noOfEasySegments--;
+            }
+
+                
+        }
+        else if (noOfMediumSegments > 0)
+        {
+            difficultyNum = 2;
+
+            currentActiveTilemaps[iterationNum] = randomObstacleMapIndex(difficultyNum);
+
+            if (SegmentScript.Instance)
+            {
+                if (SegmentScript.Instance.segmentSelected == -5)
+                {
+                    noOfMediumSegments--;
+                }
+            }
+            else
+            {
+                noOfMediumSegments--;
+            }
+
+                
+        }
+        else
+        {
+            difficultyNum = 3;
+
+            currentActiveTilemaps[iterationNum] = randomObstacleMapIndex(difficultyNum);
+        }
+
 
         mapColliders[iterationNum] = tilemaps[currentActiveTilemaps[iterationNum]].transform.GetChild(0).GetComponent<Collider2D>();
 
@@ -296,9 +523,58 @@ public class TilemapProceduralGeneration : MonoBehaviour
 
         for (int i = 0; i < tilemaps[currentActiveTilemaps[iterationNum]].transform.childCount; i++)
         {
-            tilemaps[currentActiveTilemaps[iterationNum]].transform.GetChild(i).transform.localPosition = obstacleMaps[currentActiveTilemaps[iterationNum]].transform.GetChild(i).transform.localPosition;
+            if(difficultyNum == 1)
+            {
+                tilemaps[currentActiveTilemaps[iterationNum]].transform.GetChild(i).transform.localPosition = easyObstacleSegments[currentActiveTilemaps[iterationNum]].transform.GetChild(i).transform.localPosition;
 
-            tilemaps[currentActiveTilemaps[iterationNum]].transform.GetChild(i).transform.localRotation = obstacleMaps[currentActiveTilemaps[iterationNum]].transform.GetChild(i).transform.localRotation;
+                tilemaps[currentActiveTilemaps[iterationNum]].transform.GetChild(i).transform.localRotation = easyObstacleSegments[currentActiveTilemaps[iterationNum]].transform.GetChild(i).transform.localRotation;
+            }
+            else if(difficultyNum == 2)
+            {
+                tilemaps[currentActiveTilemaps[iterationNum]].transform.GetChild(i).transform.localPosition = mediumObstacleSegments[currentActiveTilemaps[iterationNum] - easyObstacleSegments.Length].transform.GetChild(i).transform.localPosition;
+
+                tilemaps[currentActiveTilemaps[iterationNum]].transform.GetChild(i).transform.localRotation = mediumObstacleSegments[currentActiveTilemaps[iterationNum] - easyObstacleSegments.Length].transform.GetChild(i).transform.localRotation;
+            }
+            else
+            {
+                tilemaps[currentActiveTilemaps[iterationNum]].transform.GetChild(i).transform.localPosition = hardObstacleSegments[currentActiveTilemaps[iterationNum] - (easyObstacleSegments.Length + mediumObstacleSegments.Length)].transform.GetChild(i).transform.localPosition;
+
+                tilemaps[currentActiveTilemaps[iterationNum]].transform.GetChild(i).transform.localRotation = hardObstacleSegments[currentActiveTilemaps[iterationNum] - (easyObstacleSegments.Length + mediumObstacleSegments.Length)].transform.GetChild(i).transform.localRotation;
+            }
+
+
+            if (tilemaps[currentActiveTilemaps[iterationNum]].transform.GetChild(i).transform.childCount > 0)
+            {
+                for (int j = 0; j < tilemaps[currentActiveTilemaps[iterationNum]].transform.GetChild(i).transform.childCount; j++)
+                {
+                    if (tilemaps[currentActiveTilemaps[iterationNum]].transform.GetChild(i).transform.GetChild(j).gameObject.activeSelf)
+                    {
+                        if (difficultyNum == 1)
+                        {
+                            tilemaps[currentActiveTilemaps[iterationNum]].transform.GetChild(i).transform.GetChild(j).transform.localPosition = easyObstacleSegments[currentActiveTilemaps[iterationNum]].transform.GetChild(i).transform.GetChild(j).transform.localPosition;
+
+                            tilemaps[currentActiveTilemaps[iterationNum]].transform.GetChild(i).transform.GetChild(j).transform.localRotation = easyObstacleSegments[currentActiveTilemaps[iterationNum]].transform.GetChild(i).transform.GetChild(j).transform.localRotation;
+                        }
+                        else if (difficultyNum == 2)
+                        {
+                            tilemaps[currentActiveTilemaps[iterationNum]].transform.GetChild(i).transform.GetChild(j).transform.localPosition = mediumObstacleSegments[currentActiveTilemaps[iterationNum] - easyObstacleSegments.Length].transform.GetChild(i).transform.GetChild(j).transform.localPosition;
+
+                            tilemaps[currentActiveTilemaps[iterationNum]].transform.GetChild(i).transform.GetChild(j).transform.localRotation = mediumObstacleSegments[currentActiveTilemaps[iterationNum] - easyObstacleSegments.Length].transform.GetChild(i).transform.GetChild(j).transform.localRotation;
+                        }
+                        else
+                        {
+                            tilemaps[currentActiveTilemaps[iterationNum]].transform.GetChild(i).transform.GetChild(j).transform.localPosition = hardObstacleSegments[currentActiveTilemaps[iterationNum] - (easyObstacleSegments.Length + mediumObstacleSegments.Length)].transform.GetChild(i).transform.GetChild(j).transform.localPosition;
+
+                            tilemaps[currentActiveTilemaps[iterationNum]].transform.GetChild(i).transform.GetChild(j).transform.localRotation = hardObstacleSegments[currentActiveTilemaps[iterationNum] - (easyObstacleSegments.Length + mediumObstacleSegments.Length)].transform.GetChild(i).transform.GetChild(j).transform.localRotation;
+                        }
+
+
+                        //tilemaps[currentActiveTilemaps[iterationNum]].transform.GetChild(i).transform.GetChild(j).transform.localPosition = obstacleMaps[currentActiveTilemaps[iterationNum]].transform.GetChild(i).transform.GetChild(j).transform.localPosition;
+
+                        //tilemaps[currentActiveTilemaps[iterationNum]].transform.GetChild(i).transform.GetChild(j).transform.localRotation = obstacleMaps[currentActiveTilemaps[iterationNum]].transform.GetChild(i).transform.GetChild(j).transform.localRotation;
+                    }
+                }
+            }
         }
 
 
@@ -326,12 +602,13 @@ public class TilemapProceduralGeneration : MonoBehaviour
         //return tilemap;
     }
 
-    private void FirstGeneration(float xAdd, int iterationNum)
+    private void FirstGeneration(float xAdd, int iterationNum, int mapNum)
     {
+        noOfEasySegments--;
 
         //currentActiveTilemaps[iterationNum] = randomObstacleMapIndex();
 
-        currentActiveTilemaps[iterationNum] = 0;
+        currentActiveTilemaps[iterationNum] = mapNum;
 
         mapColliders[iterationNum] = tilemaps[currentActiveTilemaps[iterationNum]].transform.GetChild(0).GetComponent<Collider2D>();
 
@@ -342,9 +619,22 @@ public class TilemapProceduralGeneration : MonoBehaviour
 
         for (int i = 0; i < tilemaps[currentActiveTilemaps[iterationNum]].transform.childCount; i++)
         {
-            tilemaps[currentActiveTilemaps[iterationNum]].transform.GetChild(i).transform.localPosition = obstacleMaps[currentActiveTilemaps[iterationNum]].transform.GetChild(i).transform.localPosition;
+            tilemaps[currentActiveTilemaps[iterationNum]].transform.GetChild(i).transform.localPosition = easyObstacleSegments[currentActiveTilemaps[iterationNum]].transform.GetChild(i).transform.localPosition;
 
-            tilemaps[currentActiveTilemaps[iterationNum]].transform.GetChild(i).transform.localRotation = obstacleMaps[currentActiveTilemaps[iterationNum]].transform.GetChild(i).transform.localRotation;
+            tilemaps[currentActiveTilemaps[iterationNum]].transform.GetChild(i).transform.localRotation = easyObstacleSegments[currentActiveTilemaps[iterationNum]].transform.GetChild(i).transform.localRotation;
+
+            if(tilemaps[currentActiveTilemaps[iterationNum]].transform.GetChild(i).transform.childCount > 0)
+            {
+                for (int j = 0; j < tilemaps[currentActiveTilemaps[iterationNum]].transform.GetChild(i).transform.childCount; j++)
+                {
+                    if(tilemaps[currentActiveTilemaps[iterationNum]].transform.GetChild(i).transform.GetChild(j).gameObject.activeSelf)
+                    {
+                        tilemaps[currentActiveTilemaps[iterationNum]].transform.GetChild(i).transform.GetChild(j).transform.localPosition = easyObstacleSegments[currentActiveTilemaps[iterationNum]].transform.GetChild(i).transform.GetChild(j).transform.localPosition;
+
+                        tilemaps[currentActiveTilemaps[iterationNum]].transform.GetChild(i).transform.GetChild(j).transform.localRotation = easyObstacleSegments[currentActiveTilemaps[iterationNum]].transform.GetChild(i).transform.GetChild(j).transform.localRotation;
+                    }
+                }
+            }
         }
 
         width += checkpointWidthAddition;
@@ -416,19 +706,42 @@ public class TilemapProceduralGeneration : MonoBehaviour
     }
 
 
-    private int randomObstacleMapIndex()
+    private int randomObstacleMapIndex(int difficultyNo)
     {
-        int loopLimit = currentActiveTilemaps.Length * 2;
+        //int loopLimit = currentActiveTilemaps.Length * 2;
 
         int randomNum;
 
-        randomNum = UnityEngine.Random.Range(0, tilemaps.Length);
+        int lowerRange;
+
+        int upperRange;
+
+        if (difficultyNo == 1)
+        {
+            lowerRange = 0;
+
+            upperRange = easyObstacleSegments.Length;
+        }
+        else if(difficultyNo == 2)
+        {
+            lowerRange = easyObstacleSegments.Length;
+
+            upperRange = mediumObstacleSegments.Length + easyObstacleSegments.Length;
+        }
+        else
+        {
+            lowerRange = mediumObstacleSegments.Length + easyObstacleSegments.Length;
+
+            upperRange = mediumObstacleSegments.Length + easyObstacleSegments.Length + hardObstacleSegments.Length;
+        }
+
+        randomNum = UnityEngine.Random.Range(lowerRange, upperRange);
 
         //Debug.Log("Random Num: " + randomNum);
 
         while (tilemaps[randomNum].activeSelf)
         {
-            randomNum = UnityEngine.Random.Range(0, tilemaps.Length);
+            randomNum = UnityEngine.Random.Range(lowerRange, upperRange);
 
             //Debug.Log("Random Num: " + randomNum);
         }
@@ -483,6 +796,10 @@ public class TilemapProceduralGeneration : MonoBehaviour
 
     private void TimeCountDown()
     {
+        int minutes;
+
+        int seconds;
+
         if (PlayerStats.Instance.timeLeft > 0)
         {
             PlayerStats.Instance.timeLeft -= Time.deltaTime;
@@ -492,7 +809,23 @@ public class TilemapProceduralGeneration : MonoBehaviour
             PlayerStats.Instance.timeLeft = 0;
         }
 
-        timerText.text = MathF.Round(PlayerStats.Instance.timeLeft).ToString();
+        minutes = (int)Mathf.Floor(PlayerStats.Instance.timeLeft / 60);
+
+        seconds = (int)(PlayerStats.Instance.timeLeft % 60);
+
+        if(seconds < 10)
+        {
+            timerText.text = "TIME: " + minutes.ToString() + ":0" + seconds.ToString();
+        }
+        else if (seconds <= 0)
+        {
+            timerText.text = "TIME: " + minutes.ToString() + ":00";
+        }
+        else
+        {
+            timerText.text = "TIME: " + minutes.ToString() + ":" + seconds.ToString();
+        }
+        
     }
 
     private void TilemapSwapping()
@@ -641,6 +974,8 @@ public class TilemapProceduralGeneration : MonoBehaviour
                     PlayerStats.Instance.playerScore++;
 
                     checkpointLastDistance = startingWidth;
+
+                    AudioManager.Instance.playCheckpointSound();
                 }
             }
             else if (i == 1)
@@ -666,6 +1001,8 @@ public class TilemapProceduralGeneration : MonoBehaviour
                     PlayerStats.Instance.playerScore++;
 
                     checkpointLastDistance = startingWidth;
+
+                    AudioManager.Instance.playCheckpointSound();
                 }
             }
             else
@@ -691,6 +1028,8 @@ public class TilemapProceduralGeneration : MonoBehaviour
                     PlayerStats.Instance.playerScore++;
 
                     checkpointLastDistance = startingWidth;
+
+                    AudioManager.Instance.playCheckpointSound();
                 }
             }
         }
@@ -707,7 +1046,11 @@ public class TilemapProceduralGeneration : MonoBehaviour
             {
                 PlayerStats.Instance.checkpointDistance = Mathf.RoundToInt(((checkpoints[0].transform.position.x - player.transform.position.x) / (checkpoints[0].transform.position.x - startingPosition.x)) * startingWidth);
 
-                checkpointText.text = PlayerStats.Instance.checkpointDistance.ToString() + "m";
+                //checkpointText.text = "CHECKPOINT: " + PlayerStats.Instance.checkpointDistance.ToString() + "M";
+
+                checkpointText.text = PlayerStats.Instance.checkpointDistance.ToString() + "M";
+
+                checkpointSlider.value = (startingWidth - PlayerStats.Instance.checkpointDistance) / startingWidth;
             }
             else
             {
@@ -721,7 +1064,11 @@ public class TilemapProceduralGeneration : MonoBehaviour
             {
                 PlayerStats.Instance.checkpointDistance = Mathf.RoundToInt(((checkpoints[1].transform.position.x - player.transform.position.x) / (checkpoints[1].transform.position.x - startingPosition.x)) * startingWidth);
 
-                checkpointText.text = PlayerStats.Instance.checkpointDistance.ToString() + "m";
+                //checkpointText.text = "CHECKPOINT: " + PlayerStats.Instance.checkpointDistance.ToString() + "M";
+
+                checkpointText.text = PlayerStats.Instance.checkpointDistance.ToString() + "M";
+
+                checkpointSlider.value = (startingWidth - PlayerStats.Instance.checkpointDistance) / startingWidth;
             }
             else
             {
@@ -734,7 +1081,11 @@ public class TilemapProceduralGeneration : MonoBehaviour
             {
                 PlayerStats.Instance.checkpointDistance = Mathf.RoundToInt(((checkpoints[2].transform.position.x - player.transform.position.x) / (checkpoints[2].transform.position.x - startingPosition.x)) * startingWidth);
 
-                checkpointText.text = PlayerStats.Instance.checkpointDistance.ToString() + "m";
+                //checkpointText.text = "CHECKPOINT: " + PlayerStats.Instance.checkpointDistance.ToString() + "M";
+
+                checkpointText.text = PlayerStats.Instance.checkpointDistance.ToString() + "M";
+
+                checkpointSlider.value = (startingWidth - PlayerStats.Instance.checkpointDistance) / startingWidth;
             }
             else
             {
@@ -754,15 +1105,50 @@ public class TilemapProceduralGeneration : MonoBehaviour
 
     private void ScoreCalculator()
     {
+        /*
         if ((PlayerStats.Instance.checkpointDistance - checkpointLastDistance) < 0)
         {
-            PlayerStats.Instance.playerScore += Mathf.Abs(PlayerStats.Instance.checkpointDistance - checkpointLastDistance);
+            //PlayerStats.Instance.playerScore += Mathf.Abs(PlayerStats.Instance.checkpointDistance - checkpointLastDistance);
+
+            PlayerStats.Instance.playerScore += checkpointLastDistance - PlayerStats.Instance.checkpointDistance;
 
             checkpointLastDistance = PlayerStats.Instance.checkpointDistance;
 
-            playerScoreText.text = Mathf.RoundToInt(PlayerStats.Instance.playerScore).ToString();
-        }
 
+            if(PlayerStats.Instance.playerScore < 10)
+            {
+                playerScoreText.text = "SCORE: 0" + Mathf.RoundToInt(PlayerStats.Instance.playerScore).ToString();
+            }
+            else
+            {
+                playerScoreText.text = "SCORE: " + Mathf.RoundToInt(PlayerStats.Instance.playerScore).ToString();
+            }
+            
+        }
+        */
+
+        if (PlayerStats.Instance.playerScore >= 0)
+        {
+            //PlayerStats.Instance.playerScore += Mathf.Abs(PlayerStats.Instance.checkpointDistance - checkpointLastDistance);
+
+            if (!(((checkpointLastDistance - PlayerStats.Instance.checkpointDistance) < 0) && PlayerStats.Instance.playerScore == 0))
+            {
+                PlayerStats.Instance.playerScore += checkpointLastDistance - PlayerStats.Instance.checkpointDistance;
+
+                checkpointLastDistance = PlayerStats.Instance.checkpointDistance;
+
+
+                if (PlayerStats.Instance.playerScore < 10)
+                {
+                    playerScoreText.text = "SCORE: 0" + Mathf.RoundToInt(PlayerStats.Instance.playerScore).ToString();
+                }
+                else
+                {
+                    playerScoreText.text = "SCORE: " + Mathf.RoundToInt(PlayerStats.Instance.playerScore).ToString();
+                }
+            }
+
+        }
 
     }
 

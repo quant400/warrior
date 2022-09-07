@@ -85,7 +85,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
         {
             if(collision.gameObject.CompareTag("Chicken"))
             {
-                SinglePlayerScoreBoardScript.instance.AnimChickenCollected();
+                //SinglePlayerScoreBoardScript.instance.AnimChickenCollected();
             }
         }
     }

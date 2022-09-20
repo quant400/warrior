@@ -108,6 +108,7 @@ namespace StarterAssets
 
 		float targetSpeed;
 		Vector3 inputDirection;
+		float prevInputDirection = 0;
 		float inputMagnitude;
 		Vector2 origVelocity = Vector2.zero;
 
@@ -154,6 +155,8 @@ namespace StarterAssets
 
 			canApplyGravity = true;
 			movementAllowed = true;
+
+			prevInputDirection = 0;
 
 			AssignAnimationIDs();
 
@@ -311,7 +314,21 @@ namespace StarterAssets
 				origVelocity.x = Vector2.ClampMagnitude(rbody2D.velocity, targetSpeed).x;
 			}
 
-			
+
+			if (prevInputDirection != inputDirection.x)
+			{
+				if (prevInputDirection > 0 && inputDirection.x < 0)
+				{
+					origVelocity.x = Vector2.ClampMagnitude(rbody2D.velocity, 0.0f).x;
+				}
+				else if (prevInputDirection < 0 && inputDirection.x > 0)
+                {
+					origVelocity.x = Vector2.ClampMagnitude(rbody2D.velocity, 0.0f).x;
+				}
+
+				prevInputDirection = inputDirection.x;
+			}
+
 
 			/*
 			if(_input.sprint && _input.move.x != 0)

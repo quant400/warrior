@@ -37,7 +37,10 @@ public class SlimeDrop : MonoBehaviour
 
     void OnDestroy()
     {
-        DOTween.Kill(slimeDrop.transform);
+        if (tweenEnabled)
+        {
+            DOTween.Kill(slimeDrop.transform);
+        }
     }
 
     private void OnEnable()
@@ -50,7 +53,10 @@ public class SlimeDrop : MonoBehaviour
 
     private void OnDisable()
     {
-        DOTween.Pause(slimeDrop.transform);
+        if (tweenEnabled)
+        {
+            DOTween.Pause(slimeDrop.transform);
+        }
     }
 
     IEnumerator CannonFireDelay(float secs)

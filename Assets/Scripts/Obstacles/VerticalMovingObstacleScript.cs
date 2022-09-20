@@ -30,6 +30,25 @@ namespace StarterAssets
 
         }
 
+        private void MoveUp()
+        {
+            Vector3 localPosition = transform.localPosition;
+
+            localPosition.x += distance;
+
+            transform.DOLocalMove(localPosition, duration).OnComplete(() => MoveDown()).SetEase(Ease.Linear);
+        }
+
+
+        private void MoveDown()
+        {
+            Vector3 localPosition = transform.localPosition;
+
+            localPosition.x -= distance;
+
+            transform.DOLocalMove(localPosition, duration).OnComplete(() => MoveUp()).SetEase(Ease.Linear);
+        }
+
         void OnDestroy()
         {
             DOTween.Kill(gameObject.transform);

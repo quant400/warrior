@@ -12,11 +12,15 @@ namespace StarterAssets
         public float distance;
         public float duration;
 
+        public bool nonLinearMovement = false;
+
         public bool isFollowingPlayerPlatform = false;
 
         private Vector3 startPosition;
 
         private StarterAssetsInputs _input;
+
+        private bool tweenEnabled = false;
 
         // Start is called before the first frame update
         void Start()
@@ -31,21 +35,38 @@ namespace StarterAssets
 
             localPosition.x += distance;
 
-            transform.DOLocalMove(localPosition, duration).SetLoops(-1, LoopType.Yoyo);
+            //transform.DOLocalMove(localPosition, duration).SetLoops(-1, LoopType.Yoyo);
+
+            if(!nonLinearMovement)
+            {
+                MoveRight();
+            }
+            else
+            {
+                transform.DOLocalMove(localPosition, duration).SetLoops(-1, LoopType.Yoyo);
+            }
+            
+
+            tweenEnabled = true;
         }
 
         private void OnEnable()
         {
             //transform.DOMoveX(transform.position.x + distance, duration).SetLoops(-1, LoopType.Yoyo);
-
-            DOTween.Play(gameObject.transform);
+            if (tweenEnabled)
+            {
+                DOTween.Play(gameObject.transform);
+            }
         }
 
         private void OnDisable()
         {
             //DOTween.Kill(gameObject.transform);
 
-            DOTween.Pause(gameObject.transform);
+            if (tweenEnabled)
+            {
+                DOTween.Pause(gameObject.transform);
+            }
 
             //DOTween.Kill(gameObject.transform);
 
@@ -58,9 +79,31 @@ namespace StarterAssets
 
         }
 
+        private void MoveRight()
+        {
+            Vector3 localPosition = transform.localPosition;
+
+            localPosition.x += distance;
+
+            transform.DOLocalMove(localPosition, duration).OnComplete(() => MoveLeft()).SetEase(Ease.Linear);
+        }
+
+
+        private void MoveLeft()
+        {
+            Vector3 localPosition = transform.localPosition;
+
+            localPosition.x -= distance;
+
+            transform.DOLocalMove(localPosition, duration).OnComplete(() => MoveRight()).SetEase(Ease.Linear);
+        }
+
         void OnDestroy()
         {
-            DOTween.Kill(gameObject.transform);
+            if (tweenEnabled)
+            {
+                DOTween.Kill(gameObject.transform);
+            }
         }
 
         private void OnCollisionEnter2D(Collision2D collision)

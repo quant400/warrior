@@ -13,6 +13,7 @@ namespace StarterAssets
 		public bool jump;
 		public bool sprint;
 		public bool ropeAttach = false;
+		public bool crouch;
 
 		[Header("Movement Settings")]
 		public bool analogMovement;
@@ -51,6 +52,11 @@ namespace StarterAssets
 		{
 			RopeAttachInput(value.isPressed);
 		}
+
+		public void OnCrouch(InputValue value)
+		{
+			CrouchInput(value.isPressed);
+		}
 #else
 	// old input sys if we do decide to have it (most likely wont)...
 #endif
@@ -79,6 +85,11 @@ namespace StarterAssets
 		public void RopeAttachInput(bool newRopeAttachState)
 		{
 			ropeAttach = !ropeAttach;
+		}
+
+		public void CrouchInput(bool newSprintState)
+		{
+			crouch = newSprintState;
 		}
 
 #if !UNITY_IOS || !UNITY_ANDROID

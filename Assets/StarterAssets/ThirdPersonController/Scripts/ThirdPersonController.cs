@@ -21,6 +21,8 @@ namespace StarterAssets
 		public float MoveSpeed = 2.0f;
 		[Tooltip("Sprint speed of the character in m/s")]
 		public float SprintSpeed = 5.335f;
+		[Tooltip("Crouch speed of the character in m/s")]
+		public float CrouchSpeed = 5.335f;
 		[Tooltip("How fast the character turns to face movement direction")]
 		[Range(0.0f, 0.3f)]
 		public float RotationSmoothTime = 0.12f;
@@ -86,6 +88,7 @@ namespace StarterAssets
 		private int _animIDJump;
 		private int _animIDFreeFall;
 		private int _animIDMotionSpeed;
+		private int _animIDCrouch;
 
 		private Animator _animator;
 		//private CharacterController _controller;
@@ -121,11 +124,17 @@ namespace StarterAssets
 		bool canJump;
 		bool groundCheckColliderCouroutine;
 		bool canClampVelocity;
+		bool crouchSpeedActivate;
+		bool firstCrouch;
 
 		public static bool canApplyGravity;
 		public static bool movementAllowed;
 
-		private Collider2D parentCollider2D;
+		private PolygonCollider2D parentCollider2D;
+
+		Vector2[] modelPaths;
+
+		Vector3 originalColliderTopValues;
 
 		private void Awake()
 		{
@@ -146,7 +155,9 @@ namespace StarterAssets
 			slipperyObstacleColliderMask = LayerMask.GetMask("Foreground");
 			//slowDownColliderMask = LayerMask.GetMask("SlowDown");
 
-			parentCollider2D = gameObject.transform.parent.gameObject.GetComponent<Collider2D>();
+			parentCollider2D = gameObject.transform.parent.gameObject.GetComponent<PolygonCollider2D>();
+
+			originalColliderTopValues = Vector3.zero;
 
 			canMove = false;
 			canJump = false;
@@ -155,6 +166,9 @@ namespace StarterAssets
 
 			canApplyGravity = true;
 			movementAllowed = true;
+
+			crouchSpeedActivate = false;
+			firstCrouch = true;
 
 			prevInputDirection = 0;
 
@@ -189,6 +203,7 @@ namespace StarterAssets
 
 			JumpAndGravity();
 			GroundedCheck();
+			Crouch();
 			Move();
 
 			//Debug.Log("slimeCheck = " + slimeCheck);
@@ -203,7 +218,7 @@ namespace StarterAssets
 			{
 				StartCoroutine(LockCursorAfter(1));
 			}
-			
+
 
 			//CollisionChecker("Links", LayerMask.GetMask("Default"));
 
@@ -252,11 +267,26 @@ namespace StarterAssets
 
 					if(origVelocity.x < targetSpeed)
                     {
-						rbody2D.AddForce(inputDirection * _speed * 1.2f, ForceMode2D.Force);
+						if(crouchSpeedActivate)
+                        {
+							rbody2D.AddForce(inputDirection * (CrouchSpeed) * 1.2f, ForceMode2D.Force);
+						}
+                        else
+                        {
+							rbody2D.AddForce(inputDirection * _speed * 1.2f, ForceMode2D.Force);
+						}
+						
 					}
                     else
                     {
-						rbody2D.AddForce(inputDirection * _speed, ForceMode2D.Force);
+						if (crouchSpeedActivate)
+                        {
+							rbody2D.AddForce(inputDirection * (CrouchSpeed), ForceMode2D.Force);
+						}
+                        else
+                        {
+							rbody2D.AddForce(inputDirection * _speed, ForceMode2D.Force);
+						}
 					}
 					
 
@@ -305,13 +335,27 @@ namespace StarterAssets
 
 			if (canClampVelocity)
             {
-				origVelocity.x = Vector2.ClampMagnitude(rbody2D.velocity, targetSpeed).x;
+				if (crouchSpeedActivate)
+                {
+					origVelocity.x = Vector2.ClampMagnitude(rbody2D.velocity, targetSpeed).x;
+				}
+                else
+                {
+					origVelocity.x = Vector2.ClampMagnitude(rbody2D.velocity, targetSpeed).x;
+				}
 
 				canClampVelocity = false;
 			}
 			else if (_input.move.x != 0)
 			{
-				origVelocity.x = Vector2.ClampMagnitude(rbody2D.velocity, targetSpeed).x;
+				if (crouchSpeedActivate)
+                {
+					origVelocity.x = Vector2.ClampMagnitude(rbody2D.velocity, CrouchSpeed).x;
+				}
+                else
+                {
+					origVelocity.x = Vector2.ClampMagnitude(rbody2D.velocity, targetSpeed).x;
+				}
 			}
 
 
@@ -393,6 +437,7 @@ namespace StarterAssets
 			_animIDJump = Animator.StringToHash("Jump");
 			_animIDFreeFall = Animator.StringToHash("FreeFall");
 			_animIDMotionSpeed = Animator.StringToHash("MotionSpeed");
+			_animIDCrouch = Animator.StringToHash("Crouching");
 		}
 
 		private bool CollisionChecker(string objectTag, LayerMask layermask)
@@ -830,6 +875,80 @@ namespace StarterAssets
 			}
 			*/
 		}
+
+		private void Crouch()
+        {
+			if(_input.crouch)
+            {
+				if(firstCrouch)
+                {
+					modelPaths = parentCollider2D.GetPath(0);
+
+					originalColliderTopValues = new Vector3(modelPaths[0].y, modelPaths[1].y, modelPaths[5].y);
+
+					//Debug.Log(originalColliderTopValues);
+
+					firstCrouch = false;
+				}
+
+				_animator.SetBool(_animIDCrouch, true);
+
+				if(grounded)
+                {
+					if(!crouchSpeedActivate)
+                    {
+						modelPaths[0].y = originalColliderTopValues[0] - 0.12f;
+
+						modelPaths[1].y = originalColliderTopValues[1] - 0.12f;
+
+						modelPaths[5].y = originalColliderTopValues[2] - 0.12f;
+
+						//Debug.Log("Paths Set");
+
+						parentCollider2D.SetPath(0, modelPaths);
+					}
+
+					crouchSpeedActivate = true;
+				}
+                else
+                {
+					if (crouchSpeedActivate)
+					{
+						modelPaths[0].y = originalColliderTopValues[0];
+
+						modelPaths[1].y = originalColliderTopValues[1];
+
+						modelPaths[5].y = originalColliderTopValues[2];
+
+						//Debug.Log("Paths Set");
+
+						parentCollider2D.SetPath(0, modelPaths);
+					}
+
+					crouchSpeedActivate = false;
+				}
+				
+			}
+            else
+            {
+				_animator.SetBool(_animIDCrouch, false);
+
+				if (crouchSpeedActivate)
+				{
+					modelPaths[0].y = originalColliderTopValues[0];
+
+					modelPaths[1].y = originalColliderTopValues[1];
+
+					modelPaths[5].y = originalColliderTopValues[2];
+
+					//Debug.Log("Paths Set");
+
+					parentCollider2D.SetPath(0, modelPaths);
+				}
+
+				crouchSpeedActivate = false;
+			}
+        }
 
 		private static float ClampAngle(float lfAngle, float lfMin, float lfMax)
 		{

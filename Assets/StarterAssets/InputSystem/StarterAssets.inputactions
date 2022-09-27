@@ -262,7 +262,7 @@
                 {
                     "name": "",
                     "id": "bc406e2f-62eb-446c-ad0b-3ee6c1ee1fb2",
-                    "path": "<Keyboard>/ctrl",
+                    "path": "<Keyboard>/c",
                     "interactions": "",
                     "processors": "",
                     "groups": "KeyboardMouse",

@@ -36,16 +36,66 @@ public class AudioManager : MonoBehaviour
 
     public AudioClip checkpointSound;
 
+    private AudioMixerSnapshot normal;
+
+    private AudioMixerSnapshot inSlime;
+
     // Start is called before the first frame update
     void Start()
     {
+        normal = audioMixer.FindSnapshot("NormalSound");
 
+        inSlime = audioMixer.FindSnapshot("SlimeSound"); 
     }
 
     // Update is called once per frame
     void Update()
     {
 
+    }
+
+    public void OutSlimeSoundEffect()
+    {
+        //audioMixer.FindSnapshot
+
+        //normal.TransitionTo(0.5f);
+
+        /*
+        while (musicAudioSource.pitch < 1)
+        {
+            musicAudioSource.pitch = musicAudioSource.pitch + Time.deltaTime;
+        }
+        */
+
+        if (musicAudioSource.pitch < 1)
+        {
+            musicAudioSource.pitch = musicAudioSource.pitch + Time.deltaTime;
+
+            if(Mathf.Abs(musicAudioSource.pitch - 1) < 0.01f)
+            {
+                musicAudioSource.pitch = 1;
+            }
+        }
+            
+    }
+
+    public void InSlimeSoundEffect()
+    {
+        //audioMixer.FindSnapshot
+
+        //inSlime.TransitionTo(0.25f);
+
+        /*
+        while(musicAudioSource.pitch > 0.95f)
+        {
+            musicAudioSource.pitch = musicAudioSource.pitch - Time.deltaTime;
+        }
+        */
+
+        if(musicAudioSource.pitch > 0.8f)
+        {
+            musicAudioSource.pitch = musicAudioSource.pitch - (Time.deltaTime / 10);
+        }
     }
 
     public void muteUnmuteMusic()

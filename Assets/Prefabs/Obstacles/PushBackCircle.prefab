@@ -218,6 +218,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pushBackForce: 50
   impusleOnlyToggle: 0
+  pushOnlyOnOneSideToggle: 1
 --- !u!1 &4975409791763251214
 GameObject:
   m_ObjectHideFlags: 0

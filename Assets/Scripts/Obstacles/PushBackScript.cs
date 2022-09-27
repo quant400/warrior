@@ -13,9 +13,13 @@ namespace StarterAssets
 
         private Rigidbody2D playerRBody;
 
+        private GameObject playerObject;
+
         private bool forceActive;
 
         [SerializeField] bool impusleOnlyToggle = false;
+
+        [SerializeField] bool pushOnlyOnOneSideToggle = false;
 
         private StarterAssetsInputs _input;
 
@@ -44,14 +48,38 @@ namespace StarterAssets
                 {
                     if(_input.move.x != 0)
                     {
-                        playerRBody.AddForce(new Vector3(-1, 0, 0) * pushBackForce * 2, ForceMode2D.Force);
+                        if(pushOnlyOnOneSideToggle)
+                        {
+                            if (playerObject.transform.position.x < (gameObject.transform.position.x + 0.7f))
+                            {
+                                playerRBody.AddForce(new Vector3(-1, 0, 0) * pushBackForce * 2, ForceMode2D.Force);
 
-                        playerRBody.AddForce(new Vector3(-1, 0, 0) * pushBackForce / 10, ForceMode2D.Impulse);
+                                playerRBody.AddForce(new Vector3(-1, 0, 0) * pushBackForce / 10, ForceMode2D.Impulse);
+                            }
+                        }
+                        else
+                        {
+                            playerRBody.AddForce(new Vector3(-1, 0, 0) * pushBackForce * 2, ForceMode2D.Force);
+
+                            playerRBody.AddForce(new Vector3(-1, 0, 0) * pushBackForce / 10, ForceMode2D.Impulse);
+                        }
+
+
                     }
                     else
                     {
-                        playerRBody.AddForce(new Vector3(-1, 0, 0) * pushBackForce * 2, ForceMode2D.Force);
 
+                        if (pushOnlyOnOneSideToggle)
+                        {
+                            if (playerObject.transform.position.x < (gameObject.transform.position.x + 0.7f))
+                            {
+                                playerRBody.AddForce(new Vector3(-1, 0, 0) * pushBackForce * 2, ForceMode2D.Force);
+                            }
+                        }
+                        else
+                        {
+                            playerRBody.AddForce(new Vector3(-1, 0, 0) * pushBackForce * 2, ForceMode2D.Force);
+                        }
                         //playerRBody.AddForce(new Vector3(-1, 0, 0) * pushBackForce / 10, ForceMode2D.Impulse);
                     }
 
@@ -68,6 +96,8 @@ namespace StarterAssets
                 if (!firstTimeCollision)
                 {
                     playerRBody = collision.transform.GetComponent<Rigidbody2D>();
+
+                    playerObject = collision.gameObject;
 
                     firstTimeCollision = true;
                 }
@@ -86,6 +116,8 @@ namespace StarterAssets
                 if (!firstTimeCollision)
                 {
                     playerRBody = collision.transform.GetComponent<Rigidbody2D>();
+
+                    playerObject = collision.gameObject;
 
                     firstTimeCollision = true;
                 }

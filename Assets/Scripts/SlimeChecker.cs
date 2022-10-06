@@ -26,6 +26,8 @@ namespace StarterAssets
 
         private StarterAssetsInputs _input;
 
+        private bool jumpPressed;
+
         // Start is called before the first frame update
         void Start()
         {
@@ -36,6 +38,8 @@ namespace StarterAssets
             collider = gameObject.GetComponent<Collider2D>();
 
             isInSlime = false;
+
+            jumpPressed = false;
 
             originalDragValue = rBody.drag;
 
@@ -53,8 +57,18 @@ namespace StarterAssets
 
         private void FixedUpdate()
         {
+            if(_input.jump)
+            {
+                if(!jumpPressed)
+                {
+                    StartCoroutine(TemporarySlimeDeactivate(0.2f));
+                }
+            }
+
             if (isInSlime)
             {
+                //Debug.Log("Pressure Applied");
+
                 rBody.drag = slowDownAmount;
 
                 //rBody.angularDrag = 5.0f;
@@ -68,6 +82,8 @@ namespace StarterAssets
             }
             else if (isInSlimeDrop)
             {
+                //Debug.Log("Pressure Applied");
+
                 rBody.drag = slowDownAmount + 10;
 
                 rBody.gravityScale = slowDownAmount + 10;
@@ -76,6 +92,8 @@ namespace StarterAssets
             }
             else
             {
+                //Debug.Log("Pressure Released");
+
                 rBody.drag = originalDragValue;
 
                 rBody.gravityScale = originalGravityValue;
@@ -100,6 +118,8 @@ namespace StarterAssets
                 */
 
                 isInSlime = true;
+
+                AudioManager.Instance.EnterSlimeSound();
             }
             else if (collision.CompareTag("SlimeDrop"))
             {
@@ -113,6 +133,8 @@ namespace StarterAssets
                 */
 
                 isInSlimeDrop = true;
+
+                AudioManager.Instance.EnterSlimeSound();
             }
 
         }
@@ -159,8 +181,8 @@ namespace StarterAssets
                 {
                     AudioManager.Instance.OutSlimeSoundEffect();
                 }
-                
 
+                AudioManager.Instance.ExitSlimeSound();
             }
 
 
@@ -179,6 +201,15 @@ namespace StarterAssets
 
                 isInSlimeDrop = false;
             }
+        }
+
+        IEnumerator TemporarySlimeDeactivate(float secs)
+        {
+            jumpPressed = true;
+
+            yield return new WaitForSeconds(secs);
+
+            jumpPressed = false;
         }
     }
 }

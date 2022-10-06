@@ -38,7 +38,7 @@ public class PlayerModelSelect : MonoBehaviour
         parentCollider = gameObject.transform.parent.gameObject.GetComponent<PolygonCollider2D>();
 
         groundCheck = GameObject.FindGameObjectWithTag("GroundCheck");
-
+        /*
         defaultNFTName = "a-rod";
 
         GameObject defaultGameObject = (Resources.Load(Path.Combine("SinglePlayerPrefabs/DisplayModels", defaultNFTName)) as GameObject);
@@ -46,6 +46,7 @@ public class PlayerModelSelect : MonoBehaviour
         defaultGameObject.transform.localScale = new Vector3(2, 2, defaultGameObject.transform.localScale.z);
 
         defaultModelSMR = defaultGameObject.transform.GetChild(1).gameObject.transform.GetChild(0).gameObject.GetComponent<SkinnedMeshRenderer>();
+        */
 
         try
         {
@@ -86,9 +87,11 @@ public class PlayerModelSelect : MonoBehaviour
 
         }
 
-        
 
-        playerModelFBX = Resources.Load(Path.Combine("SinglePlayerPrefabs/DisplayModels", chosenNFTName)) as GameObject;
+
+        //playerModelFBX = Resources.Load(Path.Combine("SinglePlayerPrefabs/DisplayModels", chosenNFTName)) as GameObject;
+
+        playerModelFBX = Resources.Load(Path.Combine(("SinglePlayerPrefabs/Fighters2.0/" + chosenNFTName), chosenNFTName)) as GameObject;
 
         /*
         int randomNum;
@@ -98,7 +101,7 @@ public class PlayerModelSelect : MonoBehaviour
 
         SpawnModel();
 
-        HeightAdjuster();
+        //HeightAdjuster();
     }
 
     // Update is called once per frame
@@ -111,24 +114,43 @@ public class PlayerModelSelect : MonoBehaviour
     {
         Debug.Log(playerModelFBX.name);
 
-        playerModelFBX.transform.localScale = new Vector3(gameObject.transform.parent.transform.localScale.y, gameObject.transform.parent.transform.localScale.x, gameObject.transform.parent.transform.localScale.z);
+        
+        playerModelFBX.transform.localScale = new Vector3(gameObject.transform.parent.transform.localScale.y / 10, gameObject.transform.parent.transform.localScale.y / 10, gameObject.transform.parent.transform.localScale.z / 10);
 
         playerModelFBX.transform.position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.x, gameObject.transform.position.x);
-
+        
+        
         GameObject playerModel = Instantiate(playerModelFBX);
+
+
+        playerModel.transform.position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z);
 
         playerAnimator = gameObject.GetComponent<Animator>();
 
 
+        //playerModel.gameObject.transform.GetChild(0).transform.position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z);
+
+        //Debug.Log(playerModel.gameObject.transform.GetChild(0).name + "position: " + playerModel.gameObject.transform.GetChild(0).transform.position);
+
         playerModel.gameObject.transform.GetChild(0).SetParent(gameObject.transform);
 
-        geometry = playerModel.gameObject.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject;
+        
+
+        //geometry = playerModel.gameObject.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject;
+
+        geometry = playerModel.gameObject.transform.GetChild(0).gameObject;
+
+        //geometry.transform.position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z);
+
 
         playerModel.gameObject.transform.GetChild(0).SetParent(gameObject.transform);
 
         playerAnimator.avatar = playerModelFBX.GetComponent<Animator>().avatar;
 
+        //Debug.Log(gameObject.transform.GetChild(0).name + "position: " + gameObject.transform.GetChild(0).transform.position);
+
         Destroy(playerModel);
+        
     }
 
     string NameToSlugConvert(string name)

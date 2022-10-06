@@ -136,6 +136,10 @@ namespace StarterAssets
 
 		Vector3 originalColliderTopValues;
 
+		Vector2 origParentColliderOffset;
+
+		Vector2 origGroundColliderOffset;
+
 		private void Awake()
 		{
 			// get a reference to our main camera
@@ -152,10 +156,16 @@ namespace StarterAssets
 			_input = GetComponent<StarterAssetsInputs>();
 			//rbody2D = GetComponent<Rigidbody2D>();
 
+			//Debug.Log(groundCheckObject.name);
+
 			slipperyObstacleColliderMask = LayerMask.GetMask("Foreground");
 			//slowDownColliderMask = LayerMask.GetMask("SlowDown");
 
 			parentCollider2D = gameObject.transform.parent.gameObject.GetComponent<PolygonCollider2D>();
+
+			origParentColliderOffset = parentCollider2D.offset;
+
+			origGroundColliderOffset = groundCheckCollider.offset;
 
 			originalColliderTopValues = Vector3.zero;
 
@@ -209,7 +219,7 @@ namespace StarterAssets
 			//Debug.Log("slimeCheck = " + slimeCheck);
 
 			
-			if (!cursorUnlocked && Keyboard.current[Key.Escape].wasPressedThisFrame)
+			if (!cursorUnlocked && Keyboard.current[Key.Enter].wasPressedThisFrame)
 			{
 				cursorUnlocked = true;
 				GetComponent<StarterAssetsInputs>().SetCursorLock(false);
@@ -430,6 +440,12 @@ namespace StarterAssets
 			//gameObject.transform.position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, 0);
 		}
 
+		private void Step()
+        {
+			AudioManager.Instance.RunSound();
+		}
+
+
 		private void AssignAnimationIDs()
 		{
 			_animIDSpeed = Animator.StringToHash("Speed");
@@ -586,8 +602,58 @@ namespace StarterAssets
 
 				// rotate to face input direction relative to camera position
 				transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
+				//transform.GetChild(1).transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
+				
+				if(_input.move.x > 0)
+                {
+					if(canApplyGravity)
+                    {
+						if (parentCollider2D.offset.x > -0.13)
+						{
+							parentCollider2D.offset -= new Vector2(Time.deltaTime, 0);
+
+							groundCheckCollider.offset -= new Vector2(Time.deltaTime, 0);
+						}
+					}
+					else
+					{
+						parentCollider2D.offset = origParentColliderOffset;
+
+						groundCheckCollider.offset = origGroundColliderOffset;
+
+					}
 
 
+
+				}
+				else
+                {
+					if (canApplyGravity)
+                    {
+						if (parentCollider2D.offset.x < 0.16)
+						{
+							parentCollider2D.offset += new Vector2(Time.deltaTime, 0);
+
+							groundCheckCollider.offset += new Vector2(Time.deltaTime, 0);
+						}
+					}
+					else
+					{
+						parentCollider2D.offset = origParentColliderOffset;
+
+						groundCheckCollider.offset = origGroundColliderOffset;
+
+					}
+
+
+				}
+				
+
+				//transform.Rotate(0.0f, rotation, 0.0f, Space.Self);
+
+				//Debug.Log(gameObject.transform.GetChild(0).name + "position: " + gameObject.transform.GetChild(0).transform.position);
+
+				//transform.Rotate(transform.position, 180);
 			}
 
 
@@ -752,6 +818,8 @@ namespace StarterAssets
 
 					canJump = true;
 
+					//Debug.Log("Jump");
+					AudioManager.Instance.PlayJumpSound();
 					
 					if (parentCollider2D.friction == 0)
 					{
@@ -768,6 +836,8 @@ namespace StarterAssets
 						_verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
 					}
 					
+
+					//_verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
 
 					// the square root of H * -2 * G = how much velocity needed to reach desired height
 					//_verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);

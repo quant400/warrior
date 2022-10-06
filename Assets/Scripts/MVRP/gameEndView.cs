@@ -177,7 +177,7 @@ public class gameEndView : MonoBehaviour
         Debug.Log("Load character");
         //Destroy(GameObject.FindGameObjectWithTag("PlayerBody"));
         //GameObject displayChar = Resources.Load(Path.Combine("SinglePlayerPrefabs/Characters", NameToSlugConvert(currentNFT.name))) as GameObject;
-        GameObject displayChar = Resources.Load(Path.Combine("SinglePlayerPrefabs/DisplayModels", NameToSlugConvert(currentNFT.name))) as GameObject;
+        GameObject displayChar = Resources.Load(Path.Combine(("SinglePlayerPrefabs/Fighters2.0/" + currentNFT.name), NameToSlugConvert(currentNFT.name))) as GameObject;
         Debug.Log(currentNFT.name);
         Debug.Log(displayChar.name);
         //var temp = Instantiate(displayChar, characterDisplay.position, Quaternion.identity, characterDisplay);
@@ -187,7 +187,7 @@ public class gameEndView : MonoBehaviour
 
         //destroying all player related components
 
-        temp.transform.GetChild(0).gameObject.SetActive(false);
+        //temp.transform.GetChild(0).gameObject.SetActive(false);
 
         //Destroy(temp.transform.GetChild(0).gameObject);
         /*
@@ -206,7 +206,7 @@ public class gameEndView : MonoBehaviour
 
         temp.transform.localPosition = Vector3.zero;
         temp.transform.localRotation = Quaternion.identity;
-        temp.transform.localScale = Vector3.one * 2;
+        temp.transform.localScale = Vector3.one * (0.2f);
         localDisplay = temp;
         //upddate other values here form leaderboard
         //SinglePlayerScoreBoardScript.instance.gameObject.transform.GetChild(0).gameObject.SetActive(false);

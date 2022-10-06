@@ -975,7 +975,7 @@ public class TilemapProceduralGeneration : MonoBehaviour
 
                     checkpointLastDistance = startingWidth;
 
-                    AudioManager.Instance.playCheckpointSound();
+                    AudioManager.Instance.PlayCheckpointSound();
                 }
             }
             else if (i == 1)
@@ -1002,7 +1002,7 @@ public class TilemapProceduralGeneration : MonoBehaviour
 
                     checkpointLastDistance = startingWidth;
 
-                    AudioManager.Instance.playCheckpointSound();
+                    AudioManager.Instance.PlayCheckpointSound();
                 }
             }
             else
@@ -1029,7 +1029,7 @@ public class TilemapProceduralGeneration : MonoBehaviour
 
                     checkpointLastDistance = startingWidth;
 
-                    AudioManager.Instance.playCheckpointSound();
+                    AudioManager.Instance.PlayCheckpointSound();
                 }
             }
         }

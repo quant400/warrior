@@ -34,7 +34,17 @@ public class AudioManager : MonoBehaviour
 
     public AudioClip bgMusic;
 
+    public AudioClip bgMusicLowPass;
+
     public AudioClip checkpointSound;
+
+    public AudioClip jumpSound;
+
+    public AudioClip[] runSound;
+
+    public AudioClip[] enterSlimeSound;
+
+    public AudioClip[] exitSlimeSound;
 
     private AudioMixerSnapshot normal;
 
@@ -56,6 +66,8 @@ public class AudioManager : MonoBehaviour
 
     public void OutSlimeSoundEffect()
     {
+        float time;
+
         //audioMixer.FindSnapshot
 
         //normal.TransitionTo(0.5f);
@@ -67,6 +79,7 @@ public class AudioManager : MonoBehaviour
         }
         */
 
+        /*
         if (musicAudioSource.pitch < 1)
         {
             musicAudioSource.pitch = musicAudioSource.pitch + Time.deltaTime;
@@ -76,11 +89,26 @@ public class AudioManager : MonoBehaviour
                 musicAudioSource.pitch = 1;
             }
         }
-            
+        */
+
+        
+
+        if(musicAudioSource.clip != bgMusic)
+        {
+            time = musicAudioSource.time;
+
+            musicAudioSource.clip = bgMusic;
+
+            musicAudioSource.time = time;
+
+            musicAudioSource.Play();
+        }
     }
 
     public void InSlimeSoundEffect()
     {
+        float time;
+
         //audioMixer.FindSnapshot
 
         //inSlime.TransitionTo(0.25f);
@@ -92,13 +120,26 @@ public class AudioManager : MonoBehaviour
         }
         */
 
+        /*
         if(musicAudioSource.pitch > 0.8f)
         {
             musicAudioSource.pitch = musicAudioSource.pitch - (Time.deltaTime / 10);
         }
+        */
+
+        if (musicAudioSource.clip != bgMusicLowPass)
+        {
+            time = musicAudioSource.time;
+
+            musicAudioSource.clip = bgMusicLowPass;
+
+            musicAudioSource.time = time;
+
+            musicAudioSource.Play();
+        }
     }
 
-    public void muteUnmuteMusic()
+    public void MuteUnmuteMusic()
     {
         float volume;
 
@@ -118,7 +159,7 @@ public class AudioManager : MonoBehaviour
         
     }
 
-    public void muteUnmuteSFX()
+    public void MuteUnmuteSFX()
     {
         float volume;
 
@@ -138,8 +179,39 @@ public class AudioManager : MonoBehaviour
     }
 
 
-    public void playCheckpointSound()
+    public void PlayCheckpointSound()
     {
         sfxAudioSource.PlayOneShot(checkpointSound);
+    }
+
+    public void PlayJumpSound()
+    {
+        sfxAudioSource.PlayOneShot(jumpSound);
+    }
+
+    public void RunSound()
+    {
+        AudioClip clip = GetRandomClip(runSound);
+
+        sfxAudioSource.PlayOneShot(clip);
+    }
+
+    public void EnterSlimeSound()
+    {
+        AudioClip clip = GetRandomClip(enterSlimeSound);
+
+        sfxAudioSource.PlayOneShot(clip);
+    }
+
+    public void ExitSlimeSound()
+    {
+        AudioClip clip = GetRandomClip(exitSlimeSound);
+
+        sfxAudioSource.PlayOneShot(clip);
+    }
+
+    private AudioClip GetRandomClip(AudioClip[] clip)
+    {
+        return clip[UnityEngine.Random.Range(0, clip.Length)];
     }
 }

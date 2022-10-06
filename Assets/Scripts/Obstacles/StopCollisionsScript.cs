@@ -31,7 +31,7 @@ public class StopCollisionsScript : MonoBehaviour
     {
         if(!stopCollisonsCoroutine)
         {
-            StartCoroutine(stopCollisons(0.1f));
+            StartCoroutine(stopCollisons(0.2f));
         }
     }
 

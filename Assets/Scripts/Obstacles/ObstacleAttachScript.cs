@@ -13,6 +13,8 @@ namespace StarterAssets
 
         private bool playerAttached;
 
+        private bool ropeDetachCoroutine;
+
         private Rigidbody2D playerRBody2D;
 
         private Collider2D playerCollider2D;
@@ -60,6 +62,8 @@ namespace StarterAssets
             ropeObstacle = false;
 
             rockClimbObstacle = false;
+
+            ropeDetachCoroutine = false;
         }
 
         // Update is called once per frame

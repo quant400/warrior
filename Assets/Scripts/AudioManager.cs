@@ -42,9 +42,13 @@ public class AudioManager : MonoBehaviour
 
     public AudioClip[] runSound;
 
-    public AudioClip[] enterSlimeSound;
+    //public AudioClip[] enterSlimeSound;
 
-    public AudioClip[] exitSlimeSound;
+    //public AudioClip[] exitSlimeSound;
+
+    public AudioClip enterSlimeSound;
+
+    public AudioClip pushBackSound;
 
     private AudioMixerSnapshot normal;
 
@@ -189,6 +193,11 @@ public class AudioManager : MonoBehaviour
         sfxAudioSource.PlayOneShot(jumpSound);
     }
 
+    public void PlayPushBackSound()
+    {
+        sfxAudioSource.PlayOneShot(pushBackSound);
+    }
+
     public void RunSound()
     {
         AudioClip clip = GetRandomClip(runSound);
@@ -198,17 +207,19 @@ public class AudioManager : MonoBehaviour
 
     public void EnterSlimeSound()
     {
-        AudioClip clip = GetRandomClip(enterSlimeSound);
+        //AudioClip clip = GetRandomClip(enterSlimeSound);
 
-        sfxAudioSource.PlayOneShot(clip);
+        sfxAudioSource.PlayOneShot(enterSlimeSound);
     }
 
+    /*
     public void ExitSlimeSound()
     {
         AudioClip clip = GetRandomClip(exitSlimeSound);
 
         sfxAudioSource.PlayOneShot(clip);
     }
+    */
 
     private AudioClip GetRandomClip(AudioClip[] clip)
     {

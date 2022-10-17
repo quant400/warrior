@@ -42,7 +42,7 @@ public class characterSelectionView : MonoBehaviour
     {
         observeCharacterSelectionBtns();
         observesessionCounter();
-        DisablePlay();
+        //DisablePlay();
     }
     public void observesessionCounter()
     {

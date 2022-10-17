@@ -93,6 +93,8 @@ public class BearAnimation : MonoBehaviour
 
         playerRBody.AddForce((new Vector3(0, 1, 0)) * pushBackForce / 2, ForceMode2D.Impulse);
 
+        AudioManager.Instance.PlayPushBackSound();
+
         yield return new WaitForSeconds(secs);
 
         bearAnimator.SetBool("bearAttack", false);

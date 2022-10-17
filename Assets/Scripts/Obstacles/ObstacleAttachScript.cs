@@ -25,6 +25,8 @@ namespace StarterAssets
 
         private GameObject previousHandleObject;
 
+        private GameObject ropeClimbObject;
+
         private bool addJumpForce;
 
         private bool addClimbJumpForce;
@@ -314,6 +316,8 @@ namespace StarterAssets
                     playerCollision = true;
 
                     rockClimbObstacle = true;
+
+                    ropeClimbObject = collision.gameObject;
                 }
             }
             else
@@ -350,6 +354,8 @@ namespace StarterAssets
                     playerAttached = false;
 
                     rockClimbObstacle = false;
+
+                    ropeClimbObject = null;
                 }
             }
         }
@@ -409,6 +415,8 @@ namespace StarterAssets
             */
 
             playerAttached = false;
+
+            AudioManager.Instance.PlayJumpSound();
         }
 
         private void RockClimbAttach()
@@ -416,6 +424,11 @@ namespace StarterAssets
             ThirdPersonController.canApplyGravity = false;
 
             ThirdPersonController.movementAllowed = false;
+
+            if(ropeClimbObject != null)
+            {
+                gameObject.transform.position = new Vector3(ropeClimbObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z);
+            }
 
             playerRBody2D.bodyType = RigidbodyType2D.Static;
 
@@ -448,6 +461,8 @@ namespace StarterAssets
                 StartCoroutine(ropeDetachWait(0.05f));
             }
             */
+
+            AudioManager.Instance.PlayJumpSound();
         }
 
         /*

@@ -107,7 +107,7 @@ public class GameOverScript : MonoBehaviour
         ad.Play();
         //characters = spawner.GetCharacterList();
         Destroy(GameObject.FindGameObjectWithTag("Player"));
-        GameObject displayChar = Resources.Load(Path.Combine("SinglePlayerPrefabs/Characters", NameToSlugConvert(currentNFT.name))) as GameObject;
+        GameObject displayChar = Resources.Load(Path.Combine("SinglePlayerPrefabs/FIGHTERS2.0Redone/" + currentNFT.name, NameToSlugConvert(currentNFT.name))) as GameObject;
         var temp = Instantiate(displayChar, characterDisplay.position, Quaternion.identity, characterDisplay);
 
         //destroying all player related components

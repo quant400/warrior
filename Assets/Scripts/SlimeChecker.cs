@@ -182,7 +182,7 @@ namespace StarterAssets
                     AudioManager.Instance.OutSlimeSoundEffect();
                 }
 
-                AudioManager.Instance.ExitSlimeSound();
+                //AudioManager.Instance.ExitSlimeSound();
             }
 
 

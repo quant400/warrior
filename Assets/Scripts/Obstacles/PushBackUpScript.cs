@@ -20,6 +20,8 @@ namespace StarterAssets
 
         private StarterAssetsInputs _input;
 
+        private bool playPushBackDelayCoroutine;
+
         // Start is called before the first frame update
         void Start()
         {
@@ -30,6 +32,8 @@ namespace StarterAssets
             forceActive = false;
 
             //canForceActCoroutine = false;
+
+            playPushBackDelayCoroutine = false;
         }
 
         // Update is called once per frame
@@ -42,6 +46,11 @@ namespace StarterAssets
                     playerRBody.AddForce((new Vector3(-1, 0, 0)) * pushBackForce, ForceMode2D.Impulse);
 
                     playerRBody.AddForce((new Vector3(0, 1, 0)) * pushBackForce/2, ForceMode2D.Impulse);
+
+                    if (!playPushBackDelayCoroutine)
+                    {
+                        StartCoroutine(PlayPushBackDelay(0.5f));
+                    }
                 }
                 else
                 {
@@ -50,12 +59,22 @@ namespace StarterAssets
                         playerRBody.AddForce(new Vector3(-1, 0, 0) * pushBackForce * 2, ForceMode2D.Force);
 
                         playerRBody.AddForce(new Vector3(-1, 0, 0) * pushBackForce / 10, ForceMode2D.Impulse);
+
+                        if (!playPushBackDelayCoroutine)
+                        {
+                            StartCoroutine(PlayPushBackDelay(0.5f));
+                        }
                     }
                     else
                     {
                         playerRBody.AddForce(new Vector3(-1, 0, 0) * pushBackForce * 2, ForceMode2D.Force);
 
                         //playerRBody.AddForce(new Vector3(-1, 0, 0) * pushBackForce / 10, ForceMode2D.Impulse);
+
+                        if (!playPushBackDelayCoroutine)
+                        {
+                            StartCoroutine(PlayPushBackDelay(0.5f));
+                        }
                     }
 
 
@@ -115,5 +134,16 @@ namespace StarterAssets
             canForceActCoroutine = false;
         }
         */
+
+        IEnumerator PlayPushBackDelay(float secs)
+        {
+            playPushBackDelayCoroutine = true;
+
+            AudioManager.Instance.PlayPushBackSound();
+
+            yield return new WaitForSeconds(secs);
+
+            playPushBackDelayCoroutine = false;
+        }
     }
 }

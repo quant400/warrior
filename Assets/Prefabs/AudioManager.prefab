@@ -51,8 +51,8 @@ MonoBehaviour:
   sfxAudioSource: {fileID: 7799155963630459619}
   bgMusic: {fileID: 8300000, guid: 6d9b5ee415d0a7b4e9180dae170faf40, type: 3}
   bgMusicLowPass: {fileID: 8300000, guid: d65ea76580382424d946da37533b4f79, type: 3}
-  checkpointSound: {fileID: 8300000, guid: 52320e590bf774734a288886eba557ba, type: 3}
-  jumpSound: {fileID: 8300000, guid: 1ba99b6dac31ee54a95c099f3a626230, type: 3}
+  checkpointSound: {fileID: 8300000, guid: f0f768f966435a8409acd6ff20816bdc, type: 3}
+  jumpSound: {fileID: 8300000, guid: d5b72955cc066f743bbdbd29d894871a, type: 3}
   runSound:
   - {fileID: 8300000, guid: b25225c72201cd740b16b95b86d57940, type: 3}
   - {fileID: 8300000, guid: 5e8e6e435e65fe146b588b8a9d2df461, type: 3}
@@ -84,19 +84,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: d51df139d4e50794993d2130348b08d9, type: 3}
   - {fileID: 8300000, guid: 39ca7e88dc461e8458d02a2284708c0d, type: 3}
   - {fileID: 8300000, guid: d772d1b334ef5f148bf1308d5fb3e4b0, type: 3}
-  enterSlimeSound:
-  - {fileID: 8300000, guid: 3992630b0c74ca045bca8125f360aa4a, type: 3}
-  - {fileID: 8300000, guid: 0c65c34d499c17a42a643d5727eff438, type: 3}
-  - {fileID: 8300000, guid: e8c82818ac04cf94c9c3a816122e9c4d, type: 3}
-  - {fileID: 8300000, guid: f08d12f8f068e5d4fb60a2683da4372f, type: 3}
-  - {fileID: 8300000, guid: 21ef2d961a0c7ad458ddeb2734ff319a, type: 3}
-  - {fileID: 8300000, guid: 8ff708c2ef19b434aa3ee5ab814e5723, type: 3}
-  exitSlimeSound:
-  - {fileID: 8300000, guid: 518cdd508d673124da33c3a5cdd93f05, type: 3}
-  - {fileID: 8300000, guid: 0fb11b2e4f3de6746ba2c3f528d9b01a, type: 3}
-  - {fileID: 8300000, guid: 352456aba9356534c84a656a5e94ce1d, type: 3}
-  - {fileID: 8300000, guid: a86f0a1ad946e34429c0e3caac1a484c, type: 3}
-  - {fileID: 8300000, guid: 7b6895e4d3b50784daa1c49222e8eac5, type: 3}
+  enterSlimeSound: {fileID: 8300000, guid: a4d6fae0a761cbe42b1e6b6a5abb23bc, type: 3}
+  pushBackSound: {fileID: 8300000, guid: 00079301be4f72b4fac3e6b70976e67e, type: 3}
 --- !u!82 &7799155963630459616
 AudioSource:
   m_ObjectHideFlags: 0

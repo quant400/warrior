@@ -50,10 +50,12 @@ public class gameplayView : MonoBehaviour
         {
             instance = this;
            
+            /*
             if (isRestApi)
             {
                 observeReactiveSession();
             }
+            */
         }
         if(PlayerPrefs.HasKey("SFX"))
         {

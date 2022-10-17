@@ -604,6 +604,7 @@ namespace StarterAssets
 				transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
 				//transform.GetChild(1).transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
 				
+				/*
 				if(_input.move.x > 0)
                 {
 					if(canApplyGravity)
@@ -647,7 +648,7 @@ namespace StarterAssets
 
 
 				}
-				
+				*/
 
 				//transform.Rotate(0.0f, rotation, 0.0f, Space.Self);
 

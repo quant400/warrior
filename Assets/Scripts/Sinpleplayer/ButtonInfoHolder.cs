@@ -72,7 +72,7 @@ public class ButtonInfoHolder : MonoBehaviour
             display.sprite = Resources.Load(Path.Combine("SinglePlayerPrefabs/DisplaySprites/Display", charName), typeof(Sprite)) as Sprite;
             display.color = new Color(225, 225, 225, 225);
             displayBG.sprite = selectedCharBG[int.Parse(background.sprite.name)];
-            CSV.DisablePlay();
+            //CSV.DisablePlay();
             CSV.UpdateSelected(transform.GetSiblingIndex());
             UpdateInfo();
             //currentSelected.SetCurrent(charPic.sprite, bgIndex);

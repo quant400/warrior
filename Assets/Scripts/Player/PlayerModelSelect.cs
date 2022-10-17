@@ -30,6 +30,8 @@ public class PlayerModelSelect : MonoBehaviour
 
     private GameObject groundCheck;
 
+    private GameObject armature;
+
     //private int selectedModel;
 
     // Start is called before the first frame update
@@ -38,15 +40,20 @@ public class PlayerModelSelect : MonoBehaviour
         parentCollider = gameObject.transform.parent.gameObject.GetComponent<PolygonCollider2D>();
 
         groundCheck = GameObject.FindGameObjectWithTag("GroundCheck");
+        
         /*
         defaultNFTName = "a-rod";
 
-        GameObject defaultGameObject = (Resources.Load(Path.Combine("SinglePlayerPrefabs/DisplayModels", defaultNFTName)) as GameObject);
+        GameObject defaultGameObject = (Resources.Load(Path.Combine(("SinglePlayerPrefabs/FIGHTERS2.0Redone/" + chosenNFTName), chosenNFTName)) as GameObject);
 
-        defaultGameObject.transform.localScale = new Vector3(2, 2, defaultGameObject.transform.localScale.z);
+        defaultGameObject.transform.localScale = new Vector3(gameObject.transform.parent.transform.localScale.y / 10, gameObject.transform.parent.transform.localScale.y / 10, gameObject.transform.parent.transform.localScale.z / 10);
 
-        defaultModelSMR = defaultGameObject.transform.GetChild(1).gameObject.transform.GetChild(0).gameObject.GetComponent<SkinnedMeshRenderer>();
+        armature = Instantiate(defaultGameObject.transform.GetChild(0).gameObject);
+        armature.name = "Armature";
         */
+
+        //defaultModelSMR = defaultGameObject.transform.GetChild(1).gameObject.transform.GetChild(0).gameObject.GetComponent<SkinnedMeshRenderer>();
+
 
         try
         {
@@ -91,7 +98,7 @@ public class PlayerModelSelect : MonoBehaviour
 
         //playerModelFBX = Resources.Load(Path.Combine("SinglePlayerPrefabs/DisplayModels", chosenNFTName)) as GameObject;
 
-        playerModelFBX = Resources.Load(Path.Combine(("SinglePlayerPrefabs/Fighters2.0/" + chosenNFTName), chosenNFTName)) as GameObject;
+        playerModelFBX = Resources.Load(Path.Combine(("SinglePlayerPrefabs/FIGHTERS2.0Redone/" + chosenNFTName), chosenNFTName)) as GameObject;
 
         /*
         int randomNum;
@@ -112,9 +119,6 @@ public class PlayerModelSelect : MonoBehaviour
 
     private void SpawnModel()
     {
-        Debug.Log(playerModelFBX.name);
-
-        
         playerModelFBX.transform.localScale = new Vector3(gameObject.transform.parent.transform.localScale.y / 10, gameObject.transform.parent.transform.localScale.y / 10, gameObject.transform.parent.transform.localScale.z / 10);
 
         playerModelFBX.transform.position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.x, gameObject.transform.position.x);
@@ -132,24 +136,46 @@ public class PlayerModelSelect : MonoBehaviour
 
         //Debug.Log(playerModel.gameObject.transform.GetChild(0).name + "position: " + playerModel.gameObject.transform.GetChild(0).transform.position);
 
+
+
         playerModel.gameObject.transform.GetChild(0).SetParent(gameObject.transform);
 
-        
+
+        //armature.transform.SetParent(gameObject.transform);
+
+
 
         //geometry = playerModel.gameObject.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject;
 
+
         geometry = playerModel.gameObject.transform.GetChild(0).gameObject;
+
+
+        //geometry = playerModel.gameObject.transform.GetChild(1).gameObject;
+
+        //geometry.GetComponent<SkinnedMeshRenderer>().rootBone = armature.transform.GetChild(0);
 
         //geometry.transform.position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z);
 
 
-        playerModel.gameObject.transform.GetChild(0).SetParent(gameObject.transform);
+        geometry.transform.SetParent(gameObject.transform);
 
         playerAnimator.avatar = playerModelFBX.GetComponent<Animator>().avatar;
 
         //Debug.Log(gameObject.transform.GetChild(0).name + "position: " + gameObject.transform.GetChild(0).transform.position);
 
         Destroy(playerModel);
+
+        if(gameObject.transform.GetChild(0).transform.localPosition.z != 0)
+        {
+            Debug.Log(playerModelFBX.name + " pivot NOT centered");
+
+            gameObject.transform.parent.transform.GetChild(5).gameObject.SetActive(true);
+        }
+        else
+        {
+            Debug.Log(playerModelFBX.name + " pivot centered");
+        }
         
     }
 

@@ -58,6 +58,7 @@ public class DatabaseManagerRestApi : MonoBehaviour
     }
     public void setScoreWithRestApi(int assetID,int score)
     {
+        /*
         if (sessionCounterReactive.Value <= 10)
         {
             //StartCoroutine(setScoreInLeaderBoeardRestApi(assetID, score));
@@ -68,6 +69,9 @@ public class DatabaseManagerRestApi : MonoBehaviour
         {
             Debug.Log("you reach daily Limits");
         }
+        */
+
+        StartCoroutine(KeyMaker.instance.endSessionApi(assetID, score));
     }
   
     public void startSessionFromRestApi(int _assetID)

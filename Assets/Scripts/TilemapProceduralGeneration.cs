@@ -63,6 +63,8 @@ public class TilemapProceduralGeneration : MonoBehaviour
     [SerializeField] Camera mainCamera;
     [Tooltip("Path blocking start tiles")]
     [SerializeField] GameObject startTiles;
+    [Tooltip("Path blocking end tiles")]
+    [SerializeField] GameObject endTiles;
     /*
     [Tooltip("Add World Space Canvas here")]
     [SerializeField] GameObject canvasWorldSpace;
@@ -284,6 +286,8 @@ public class TilemapProceduralGeneration : MonoBehaviour
                         {
                             //Debug.Log("Easy Only");
 
+                            endTiles.SetActive(false);
+
                             FirstGeneration((width - (checkpointWidthAddition * widthAdditionMultiplier)) * widthAdditionMultiplier, i, i);
                         }
                         else if (SegmentScript.Instance.mediumOnly)
@@ -291,6 +295,8 @@ public class TilemapProceduralGeneration : MonoBehaviour
                             //Debug.Log("Medium Only");
 
                             noOfEasySegments = -1;
+
+                            endTiles.SetActive(false);
 
                             Generation((width - (checkpointWidthAddition * widthAdditionMultiplier)) * widthAdditionMultiplier, i);
                         }
@@ -301,6 +307,8 @@ public class TilemapProceduralGeneration : MonoBehaviour
                             noOfEasySegments = -1;
 
                             noOfMediumSegments = -1;
+
+                            endTiles.SetActive(false);
 
                             Generation((width - (checkpointWidthAddition * widthAdditionMultiplier)) * widthAdditionMultiplier, i);
                         }

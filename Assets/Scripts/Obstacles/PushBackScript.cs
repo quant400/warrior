@@ -21,6 +21,8 @@ namespace StarterAssets
 
         [SerializeField] bool pushOnlyOnOneSideToggle = false;
 
+        private bool playPushBackDelayCoroutine;
+
         private StarterAssetsInputs _input;
 
         // Start is called before the first frame update
@@ -31,6 +33,8 @@ namespace StarterAssets
             firstTimeCollision = false;
 
             forceActive = false;
+
+            playPushBackDelayCoroutine = false;
         }
 
         // Update is called once per frame
@@ -43,6 +47,11 @@ namespace StarterAssets
                     playerRBody.AddForce((new Vector3(-1, 0, 0)) * pushBackForce, ForceMode2D.Impulse);
 
                     //playerRBody.AddForce((new Vector3(0, 1, 0)) * pushBackForce, ForceMode2D.Impulse);
+
+                    if(!playPushBackDelayCoroutine)
+                    {
+                        StartCoroutine(PlayPushBackDelay(0.5f));
+                    }
                 }
                 else
                 {
@@ -55,6 +64,11 @@ namespace StarterAssets
                                 playerRBody.AddForce(new Vector3(-1, 0, 0) * pushBackForce * 2, ForceMode2D.Force);
 
                                 playerRBody.AddForce(new Vector3(-1, 0, 0) * pushBackForce / 10, ForceMode2D.Impulse);
+
+                                if (!playPushBackDelayCoroutine)
+                                {
+                                    StartCoroutine(PlayPushBackDelay(0.5f));
+                                }
                             }
                         }
                         else
@@ -62,6 +76,11 @@ namespace StarterAssets
                             playerRBody.AddForce(new Vector3(-1, 0, 0) * pushBackForce * 2, ForceMode2D.Force);
 
                             playerRBody.AddForce(new Vector3(-1, 0, 0) * pushBackForce / 10, ForceMode2D.Impulse);
+
+                            if (!playPushBackDelayCoroutine)
+                            {
+                                StartCoroutine(PlayPushBackDelay(0.5f));
+                            }
                         }
 
 
@@ -74,11 +93,21 @@ namespace StarterAssets
                             if (playerObject.transform.position.x < (gameObject.transform.position.x + 0.7f))
                             {
                                 playerRBody.AddForce(new Vector3(-1, 0, 0) * pushBackForce * 2, ForceMode2D.Force);
+
+                                if (!playPushBackDelayCoroutine)
+                                {
+                                    StartCoroutine(PlayPushBackDelay(0.5f));
+                                }
                             }
                         }
                         else
                         {
                             playerRBody.AddForce(new Vector3(-1, 0, 0) * pushBackForce * 2, ForceMode2D.Force);
+
+                            if (!playPushBackDelayCoroutine)
+                            {
+                                StartCoroutine(PlayPushBackDelay(0.5f));
+                            }
                         }
                         //playerRBody.AddForce(new Vector3(-1, 0, 0) * pushBackForce / 10, ForceMode2D.Impulse);
                     }
@@ -132,6 +161,17 @@ namespace StarterAssets
             {
                 forceActive = false;
             }
+        }
+
+        IEnumerator PlayPushBackDelay(float secs)
+        {
+            playPushBackDelayCoroutine = true;
+
+            AudioManager.Instance.PlayPushBackSound();
+
+            yield return new WaitForSeconds(secs);
+
+            playPushBackDelayCoroutine = false;
         }
     }
 }

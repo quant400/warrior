@@ -13,7 +13,9 @@ public class restApiDataView : MonoBehaviour
     public List<leaderboardModel.assetClass> leaderboadData;
     public leaderboardModel.assetClass[] leaderboardArray;
     public List<leaderboardModel.assetClass> dailyLeaderboadData;
+    public List<leaderboardModel.assetClass> weeklyLeaderboadData;
     public leaderboardModel.assetClass[] dailyLeaderboardArray;
+    public leaderboardModel.assetClass[] weeklyLeaderboardArray;
     [SerializeField] LeaderBoardControllerRestApi leaderboardControllerRestApi;
     private void Awake()
     {
@@ -41,19 +43,37 @@ public class restApiDataView : MonoBehaviour
         getDailyLeaderboardFronRestApi();
         
     }
+    public void DisplayWeeklyLeaderboardRestApi()
+    {
+        //Debug.Log("DisplayWeeklyLeaderboardRestApi");
+
+        getWeeklyLeaderboardFronRestApi();
+
+    }
     public  void DisplayLeaderboardRestApi()
     {
+        //Debug.Log("DisplayAlltimeLeaderboardRestApi");
+
         getLeaderboardFronRestApi();
-      
 
     }
     public void getLeaderboardFronRestApi()
     {
+        //Debug.Log("getAllTimeLeaderboardFronRestApi");
+
         StartCoroutine(getLeaderboardFromApi("https://api.cryptofightclub.io/game/sdk/warrior/leaderboard/alltime", "all"));
     }
     public void getDailyLeaderboardFronRestApi()
     {
+        //Debug.Log("getDailyLeaderboardFronRestApi");
+
         StartCoroutine(getLeaderboardFromApi("https://api.cryptofightclub.io/game/sdk/warrior/leaderboard/daily", "daily"));
+    }
+    public void getWeeklyLeaderboardFronRestApi()
+    {
+        //Debug.Log("getWeeklyLeaderboardFronRestApi");
+
+        StartCoroutine(getLeaderboardFromApi("https://api.cryptofightclub.io/game/sdk/warrior/leaderboard/weekly", "weekly"));
     }
     public IEnumerator getLeaderboardFromApi(string url,string type)
     {
@@ -69,6 +89,12 @@ public class restApiDataView : MonoBehaviour
                     checkLeadboardDaily(request.downloadHandler.text);
 
                 }
+                else if(type == "weekly")
+                {
+                    //Debug.Log("getLeaderboardFromApi");
+
+                    checkLeadboardWeekly(request.downloadHandler.text);
+                }
                 else
                 {
                     checkLeadboardAllTime(request.downloadHandler.text);
@@ -82,10 +108,6 @@ public class restApiDataView : MonoBehaviour
                 Debug.Log("error in server");
             }
         }
-
-
-
-
 
     }
  
@@ -131,6 +153,29 @@ public class restApiDataView : MonoBehaviour
         //displayLeaderBoard("Daily LEADERBOARD");
         if(leaderboardControllerRestApi!=null)
         leaderboardControllerRestApi.UpDateLeaderBoardDailyRestApi(dailyLeaderboardArray, "Daily LEADERBOARD");
+
+    }
+    public void checkLeadboardWeekly(string url)
+    {
+        //Debug.Log("checkLeadboardWeekly");
+
+        string MatchData = fixJsonName(url);
+        Debug.Log(MatchData);
+        weeklyLeaderboardArray = JsonUtil.fromJson<leaderboardModel.assetClass[]>(url);
+        if (weeklyLeaderboardArray != null)
+        {
+            if (weeklyLeaderboardArray.Length > 0)
+            {
+                weeklyLeaderboadData.Clear();
+                for (int i = 0; i < weeklyLeaderboardArray.Length; i++)
+                {
+                    weeklyLeaderboadData.Add(weeklyLeaderboardArray[i]);
+                }
+            }
+        }
+        //displayLeaderBoard("Daily LEADERBOARD");
+        if (leaderboardControllerRestApi != null)
+            leaderboardControllerRestApi.UpDateLeaderBoardWeeklyRestApi(weeklyLeaderboardArray, "Weekly LEADERBOARD");
 
     }
     public void displayLeaderBoard(string type)

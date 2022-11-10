@@ -55,6 +55,9 @@ public class TilemapProceduralGeneration : MonoBehaviour
     */
     [Tooltip("Enter value of time that will be added every time a checkpoint is crossed")]
     [SerializeField] float timeCheckpointAddition;
+    [SerializeField] GameObject timeAddPrompt;
+    [SerializeField] TextMeshProUGUI timeCheckpointAdditionRedText;
+    [SerializeField] TextMeshProUGUI timeCheckpointAdditionWhiteText;
     [Tooltip("Player Gameobject")]
     [SerializeField] GameObject player;
     [Tooltip("Grid Gameobject")]
@@ -65,6 +68,8 @@ public class TilemapProceduralGeneration : MonoBehaviour
     [SerializeField] GameObject startTiles;
     [Tooltip("Path blocking end tiles")]
     [SerializeField] GameObject endTiles;
+    [SerializeField] GameObject longestDistanceGameObject;
+    [SerializeField] float longestDistance;
     /*
     [Tooltip("Add World Space Canvas here")]
     [SerializeField] GameObject canvasWorldSpace;
@@ -149,6 +154,8 @@ public class TilemapProceduralGeneration : MonoBehaviour
         //Debug.Log("currentPlayerTilemap = " + currentPlayerTilemap);
 
         instantiateAllMaps();
+         
+        longestDistanceGameObject.transform.position = new Vector3(longestDistanceGameObject.transform.position.x + (longestDistance * 1.28f) - (Mathf.Round(longestDistance/10) - 1), longestDistanceGameObject.transform.position.y, longestDistanceGameObject.transform.position.z);
 
         /*
         if (obstacleMaps.Length > 3)
@@ -220,7 +227,7 @@ public class TilemapProceduralGeneration : MonoBehaviour
         }
         */
 
-        
+
 
         if ((easyObstacleSegments.Length + mediumObstacleSegments.Length + hardObstacleSegments.Length) > 3)
         {
@@ -1107,6 +1114,12 @@ public class TilemapProceduralGeneration : MonoBehaviour
 
             checkpointCrossed = false;
 
+            timeCheckpointAdditionRedText.text = "+" + timeCheckpointAddition.ToString() + " SECONDS";
+
+            timeCheckpointAdditionWhiteText.text = "+" + timeCheckpointAddition.ToString() + " SECONDS";
+
+            StartCoroutine(TimeAdditionPrompt(1.5f));
+
             PlayerStats.Instance.timeLeft += timeCheckpointAddition;
         }
     }
@@ -1165,5 +1178,14 @@ public class TilemapProceduralGeneration : MonoBehaviour
         yield return new WaitForSeconds(5f);
 
         Destroy(tileMapToDestroy);
+    }
+
+    IEnumerator TimeAdditionPrompt(float secs)
+    {
+        timeAddPrompt.SetActive(true);
+
+        yield return new WaitForSeconds(secs);
+
+        timeAddPrompt.SetActive(false);
     }
 }

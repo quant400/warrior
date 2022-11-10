@@ -241,9 +241,10 @@ public class DatabaseManagerRestApi : MonoBehaviour
             gameplayView.instance.dailyScore = playerData.dailyScore;
             gameplayView.instance.sessions = playerData.dailySessionPlayed;
             gameplayView.instance.AlltimeScore = playerData.allTimeScore;
+            gameplayView.instance.weeklyScore = playerData.weeklyScore;
             gameplayView.instance.dailysessionReactive.Value = playerData.dailySessionPlayed;
 
-
+            //Debug.Log("weeklyScore = " + gameplayView.instance.weeklyScore);
 
         }
 
@@ -257,6 +258,7 @@ public class DatabaseManagerRestApi : MonoBehaviour
         gameplayView.instance.dailyScore = -1;
         gameplayView.instance.sessions = -1;
         gameplayView.instance.AlltimeScore = -1;
+        gameplayView.instance.weeklyScore = -1;
         gameplayView.instance.dailysessionReactive.Value = -1;
 
     }

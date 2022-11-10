@@ -148,7 +148,19 @@ public class PlayerModelSelect : MonoBehaviour
         //geometry = playerModel.gameObject.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject;
 
 
-        geometry = playerModel.gameObject.transform.GetChild(0).gameObject;
+        try
+        {
+            geometry = playerModel.gameObject.transform.GetChild(0).gameObject;
+        }
+        catch (Exception e)
+        {
+            geometry = gameObject.transform.GetChild(0).transform.transform.GetChild(0).gameObject;
+
+            Debug.Log(e);
+
+        }
+
+        
 
 
         //geometry = playerModel.gameObject.transform.GetChild(1).gameObject;
@@ -165,7 +177,7 @@ public class PlayerModelSelect : MonoBehaviour
         //Debug.Log(gameObject.transform.GetChild(0).name + "position: " + gameObject.transform.GetChild(0).transform.position);
 
         Destroy(playerModel);
-
+        /*
         if(gameObject.transform.GetChild(0).transform.localPosition.z != 0)
         {
             Debug.Log(playerModelFBX.name + " pivot NOT centered");
@@ -176,7 +188,7 @@ public class PlayerModelSelect : MonoBehaviour
         {
             Debug.Log(playerModelFBX.name + " pivot centered");
         }
-        
+        */
     }
 
     string NameToSlugConvert(string name)

@@ -229,7 +229,6 @@ namespace StarterAssets
 				StartCoroutine(LockCursorAfter(1));
 			}
 
-
 			//CollisionChecker("Links", LayerMask.GetMask("Default"));
 
 			//Debug.Log("Links = " + CollisionChecker("Links", LayerMask.GetMask("Default")));
@@ -337,6 +336,8 @@ namespace StarterAssets
 				
 
 				origVelocity.y = _verticalVelocity;
+
+				//Debug.Log("Vertical Velocity = " + origVelocity.y);
 			}
 
 			//GravityFixedUpdate();

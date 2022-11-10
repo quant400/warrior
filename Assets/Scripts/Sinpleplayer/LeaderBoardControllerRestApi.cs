@@ -23,6 +23,10 @@ public class LeaderBoardControllerRestApi : MonoBehaviour
         if (b==true)
         {
             //restApiView.DisplayDailyLeaderboardRestApi();
+
+            //Debug.Log("Called DisplayWeeklyLeaderboardRestApi");
+            restApiView.DisplayWeeklyLeaderboardRestApi();
+            //Debug.Log("Called DisplayAlltimeLeaderboardRestApi");
             restApiView.DisplayLeaderboardRestApi();
             leaderBoard.GetComponent<LeaderBoardScript>().Activate();
         }
@@ -57,14 +61,48 @@ public class LeaderBoardControllerRestApi : MonoBehaviour
             {
                 score = _user.dailyScore;
             }
+            else if (_leaderboardHeader == "Weekly LEADERBOARD")
+            {
+                score = _user.weeklyScore;
+            }
             else
             {
                 score = _user.allTimeScore;
             }
-           
-                var temp = Instantiate(leaderboardEntryPrefab, layoutGroup);
+
+            var temp = Instantiate(leaderboardEntryPrefab, layoutGroup);
                 temp.GetComponent<LeaderBoardEntry>().Set(rank.ToString(), _user.name, _user.id.ToString(), _user.dailyScore.ToString());
             
+            rank++;
+        }
+    }
+    public void UpDateLeaderBoardWeeklyRestApi(leaderboardModel.assetClass[] _leaderboardObject, string _leaderboardHeader)
+    {
+        Clean();
+
+        var query = new Dictionary<string, object>();
+        query.Add("NumResults", 15);
+        Clean();
+        int score;
+        int rank = 1;
+        foreach (leaderboardModel.assetClass _user in _leaderboardObject)
+        {
+            if (_leaderboardHeader == "Daily LEADERBOARD")
+            {
+                score = _user.dailyScore;
+            }
+            else if(_leaderboardHeader == "Weekly LEADERBOARD")
+            {
+                score = _user.weeklyScore;
+            }
+            else
+            {
+                score = _user.allTimeScore;
+            }
+
+            var temp = Instantiate(leaderboardEntryPrefab, layoutGroup);
+            temp.GetComponent<LeaderBoardEntry>().Set(rank.ToString(), _user.name, _user.id.ToString(), _user.weeklyScore.ToString());
+
             rank++;
         }
     }
@@ -83,12 +121,16 @@ public class LeaderBoardControllerRestApi : MonoBehaviour
             {
                 score = _user.dailyScore;
             }
+            else if (_leaderboardHeader == "Weekly LEADERBOARD")
+            {
+                score = _user.weeklyScore;
+            }
             else
             {
                 score = _user.allTimeScore;
             }
-           
-                var temp = Instantiate(leaderboardEntryPrefab, layoutGroup);
+
+            var temp = Instantiate(leaderboardEntryPrefab, layoutGroup);
                 temp.GetComponent<LeaderBoardEntry>().Set(rank.ToString(), _user.name, _user.id.ToString(), _user.allTimeScore.ToString());
             
             rank++;

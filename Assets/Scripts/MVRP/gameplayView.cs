@@ -28,7 +28,7 @@ public class gameplayView : MonoBehaviour
 
     public NFTInfo chosenNFT;
 
-    public int dailyScore, AlltimeScore, sessions;
+    public int dailyScore, AlltimeScore, weeklyScore, sessions;
     public bool isRestApi;
     public ReactiveProperty<int> dailysessionReactive = new ReactiveProperty<int>();
     public static NFTInfo[] nftDataArray;
@@ -125,6 +125,12 @@ public class gameplayView : MonoBehaviour
         if (dailyScore == -1)
             return 0;
         return dailyScore;
+    }
+    public int GetWeeklyScore()
+    {
+        if (weeklyScore == -1)
+            return 0;
+        return weeklyScore;
     }
     public int GetAllTimeScore()
     {

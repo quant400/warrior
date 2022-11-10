@@ -56,21 +56,23 @@ namespace StarterAssets
 
         private void OnCollisionEnter2D(Collision2D collision)
         {
-            if(_input.move.x == 0)
+            if(_input)
             {
-                if (collision.transform.CompareTag("PlayerBody") && isFollowingPlayerPlatform)
+                if (_input.move.x == 0)
                 {
-                    collision.transform.SetParent(gameObject.transform);
+                    if (collision.transform.CompareTag("PlayerBody") && isFollowingPlayerPlatform)
+                    {
+                        collision.transform.SetParent(gameObject.transform);
+                    }
+                }
+                else
+                {
+                    if (collision.transform.CompareTag("PlayerBody") && isFollowingPlayerPlatform)
+                    {
+                        collision.transform.SetParent(null);
+                    }
                 }
             }
-            else
-            {
-                if (collision.transform.CompareTag("PlayerBody") && isFollowingPlayerPlatform)
-                {
-                    collision.transform.SetParent(null);
-                }
-            }
-
         }
 
         private void OnCollisionStay2D(Collision2D collision)

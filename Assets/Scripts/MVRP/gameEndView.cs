@@ -16,7 +16,7 @@ public class gameEndView : MonoBehaviour
     Transform characterDisplay;
     GameObject[] characters;
     [SerializeField]
-    TMP_Text currentScore, dailyScore, allTimeScore, sessionCounterText;
+    TMP_Text currentScore, dailyScore, allTimeScore, weeklyScore, sessionCounterText;
     [SerializeField]
     GameObject canvasToDisable;
     [SerializeField]
@@ -54,6 +54,7 @@ public class gameEndView : MonoBehaviour
             //Debug.Log(SinglePlayerScoreBoardScript.instance.GetScore().ToString());
             currentScore.text = "DISTANCE TRAVELED : " + PlayerStats.Instance.GetScore().ToString();
             dailyScore.text = "DAILY SCORE : " + 0;
+            weeklyScore.text = "WEEKLY SCORE : " + 0;
             allTimeScore.text = "ALL TIME SCORE : " + 0;
             //sessionCounterText.text = "NFT DAILY RUNS : " + 0 + "/10";
             sessionCounterText.text = "NFT DAILY RUNS : " + 0;
@@ -171,6 +172,7 @@ public class gameEndView : MonoBehaviour
         //currentScore.text = "CHICKENS CAUGHT : " + SinglePlayerScoreBoardScript.instance.GetScore().ToString();
         currentScore.text = "DISTANCE TRAVELED : " + PlayerStats.Instance.GetScore().ToString();
         dailyScore.text = "DAILY SCORE : " + (gameplayView.instance.GetDailyScore());
+        weeklyScore.text = "WEEKLY SCORE : " + (gameplayView.instance.GetWeeklyScore());
         allTimeScore.text = "ALL TIME SCORE : " + (gameplayView.instance.GetAllTimeScore());
         //sessionCounterText.text = "NFT DAILY RUNS : " + (gameplayView.instance.GetSessions()) + "/10";
         sessionCounterText.text = "NFT DAILY RUNS : " + (gameplayView.instance.GetSessions());
@@ -208,6 +210,7 @@ public class gameEndView : MonoBehaviour
         //currentScore.text = "CHICKENS CAUGHT : " + SinglePlayerScoreBoardScript.instance.GetScore().ToString();
         currentScore.text = "DISTANCE TRAVELED : " + PlayerStats.Instance.GetScore().ToString();
         dailyScore.text = "DAILY SCORE : " + (gameplayView.instance.GetDailyScore());
+        weeklyScore.text = "WEEKLY SCORE : " + (gameplayView.instance.GetWeeklyScore());
         allTimeScore.text = "ALL TIME SCORE : " + (gameplayView.instance.GetAllTimeScore());
         //sessionCounterText.text = "NFT DAILY RUNS : " + (gameplayView.instance.GetSessions()) + "/10";
         sessionCounterText.text = "NFT DAILY RUNS : " + (gameplayView.instance.GetSessions());
@@ -330,6 +333,7 @@ public class gameEndView : MonoBehaviour
         //currentScore.text = "CHICKENS CAUGHT : " + SinglePlayerScoreBoardScript.instance.GetScore().ToString();
         currentScore.text = "DISTANCE TRAVELED : " + PlayerStats.Instance.GetScore().ToString();
         dailyScore.text = "DAILY SCORE : " + (gameplayView.instance.GetDailyScore());
+        weeklyScore.text = "WEEKLY SCORE : " + (gameplayView.instance.GetWeeklyScore());
         allTimeScore.text = "ALL TIME SCORE : " + (gameplayView.instance.GetAllTimeScore());
         //sessionCounterText.text = "NFT DAILY RUNS : " + (gameplayView.instance.GetSessions()) + "/10";
         sessionCounterText.text = "NFT DAILY RUNS : " + (gameplayView.instance.GetSessions());

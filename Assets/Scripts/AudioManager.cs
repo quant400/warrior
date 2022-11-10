@@ -59,7 +59,11 @@ public class AudioManager : MonoBehaviour
     {
         normal = audioMixer.FindSnapshot("NormalSound");
 
-        inSlime = audioMixer.FindSnapshot("SlimeSound"); 
+        inSlime = audioMixer.FindSnapshot("SlimeSound");
+
+        audioMixer.SetFloat(MIXER_SFX, 5);
+
+        audioMixer.SetFloat(MIXER_MUSIC, -5);
     }
 
     // Update is called once per frame
@@ -158,7 +162,7 @@ public class AudioManager : MonoBehaviour
         }
         else
         {
-            audioMixer.SetFloat(MIXER_MUSIC, 0);
+            audioMixer.SetFloat(MIXER_MUSIC, -5);
         }
         
     }
@@ -178,7 +182,7 @@ public class AudioManager : MonoBehaviour
         }
         else
         {
-            audioMixer.SetFloat(MIXER_SFX, 0);
+            audioMixer.SetFloat(MIXER_SFX, 5);
         }
     }
 

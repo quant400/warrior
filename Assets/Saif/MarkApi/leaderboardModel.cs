@@ -16,7 +16,6 @@ namespace leaderboardModel
     [System.Serializable]
     public class allTimeLEaderBoard
     {
-
         public List<assetClass> allTimeLeadboeardClass;
     }
     [System.Serializable]
@@ -26,6 +25,7 @@ namespace leaderboardModel
         public int id;
         public int dailyScore;
         public int allTimeScore;
+        public int weeklyScore;
         public int dailySessionPlayed;
         public int totalSessionPlayed;
         public DateTime updatedAt;

@@ -14,13 +14,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Menu.unity
     guid: b9c375d4dfd4c144cb30ebf36c37d195
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/MapSelect.unity
     guid: ce5e4de46a7e76446950d3f892f48274
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/GameScene.unity
     guid: f018fcdc03a0c83419a7aa8316cfa247
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/ModelTest.unity
     guid: ae6a2c3ae42862c438f9b49cf67ec6ae
   - enabled: 1

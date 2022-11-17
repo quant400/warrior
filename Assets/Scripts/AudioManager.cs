@@ -61,9 +61,29 @@ public class AudioManager : MonoBehaviour
 
         inSlime = audioMixer.FindSnapshot("SlimeSound");
 
-        audioMixer.SetFloat(MIXER_SFX, 5);
 
-        audioMixer.SetFloat(MIXER_MUSIC, -5);
+        //Debug.Log(PlayerPrefs.GetInt(MIXER_SFX));
+
+        //Debug.Log(PlayerPrefs.GetInt(MIXER_MUSIC));
+
+
+        /*
+        audioMixer.SetFloat(MIXER_SFX, PlayerPrefs.GetInt(MIXER_SFX));
+
+        audioMixer.SetFloat(MIXER_MUSIC, PlayerPrefs.GetInt(MIXER_MUSIC));
+        */
+
+        
+        if(PlayerPrefs.GetInt(MIXER_SFX) != 0)
+        {
+            audioMixer.SetFloat(MIXER_SFX, PlayerPrefs.GetInt(MIXER_SFX));
+        }
+
+        if (PlayerPrefs.GetInt(MIXER_MUSIC) != 0)
+        {
+            audioMixer.SetFloat(MIXER_MUSIC, PlayerPrefs.GetInt(MIXER_MUSIC));
+        }
+        
     }
 
     // Update is called once per frame
@@ -159,10 +179,14 @@ public class AudioManager : MonoBehaviour
         if (volume != -80)
         {
             audioMixer.SetFloat(MIXER_MUSIC, -80);
+
+            PlayerPrefs.SetInt(MIXER_MUSIC, -80);
         }
         else
         {
             audioMixer.SetFloat(MIXER_MUSIC, -5);
+
+            PlayerPrefs.SetInt(MIXER_MUSIC, -5);
         }
         
     }
@@ -179,10 +203,14 @@ public class AudioManager : MonoBehaviour
         if (volume != -80)
         {
             audioMixer.SetFloat(MIXER_SFX, -80);
+
+            PlayerPrefs.SetInt(MIXER_SFX, -80);
         }
         else
         {
             audioMixer.SetFloat(MIXER_SFX, 5);
+
+            PlayerPrefs.SetInt(MIXER_SFX, 5);
         }
     }
 

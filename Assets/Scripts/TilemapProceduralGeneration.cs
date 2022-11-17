@@ -68,7 +68,7 @@ public class TilemapProceduralGeneration : MonoBehaviour
     [SerializeField] GameObject startTiles;
     [Tooltip("Path blocking end tiles")]
     [SerializeField] GameObject endTiles;
-    [SerializeField] GameObject longestDistanceGameObject;
+    //[SerializeField] GameObject longestDistanceGameObject;
     [SerializeField] float longestDistance;
     /*
     [Tooltip("Add World Space Canvas here")]
@@ -155,7 +155,7 @@ public class TilemapProceduralGeneration : MonoBehaviour
 
         instantiateAllMaps();
          
-        longestDistanceGameObject.transform.position = new Vector3(longestDistanceGameObject.transform.position.x + (longestDistance * 1.28f) - (Mathf.Round(longestDistance/10) - 1), longestDistanceGameObject.transform.position.y, longestDistanceGameObject.transform.position.z);
+        //longestDistanceGameObject.transform.position = new Vector3(longestDistanceGameObject.transform.position.x + (longestDistance * 1.28f) - (Mathf.Round(longestDistance/10) - 1), longestDistanceGameObject.transform.position.y, longestDistanceGameObject.transform.position.z);
 
         /*
         if (obstacleMaps.Length > 3)
@@ -1182,9 +1182,35 @@ public class TilemapProceduralGeneration : MonoBehaviour
 
     IEnumerator TimeAdditionPrompt(float secs)
     {
+        GameObject parentObject;
+        
+        Vector3 parentPosition;
+
+        GameObject playerObject;
+
+        Vector3 playerObjectPosition;
+
+        playerObject = GameObject.FindGameObjectWithTag("PlayerBody");
+
+        parentObject = timeAddPrompt.transform.parent.gameObject;
+
+        parentPosition = parentObject.transform.localPosition;
+
+        playerObjectPosition = parentObject.transform.position;
+
+        parentObject.transform.SetParent(null);
+
+        parentObject.transform.position = playerObjectPosition + parentPosition;
+
         timeAddPrompt.SetActive(true);
 
+
         yield return new WaitForSeconds(secs);
+
+
+        parentObject.transform.SetParent(playerObject.transform);
+
+        parentObject.transform.localPosition = parentPosition;
 
         timeAddPrompt.SetActive(false);
     }

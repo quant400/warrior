@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class RotatingObstacleScript : MonoBehaviour
 {
@@ -20,7 +21,7 @@ public class RotatingObstacleScript : MonoBehaviour
 
         obstacleCollider = gameObject.GetComponent<Collider2D>();
 
-        originalPosition = gameObject.transform.localPosition;
+        //originalPosition = gameObject.transform.localPosition;
     }
 
     private void OnEnable()

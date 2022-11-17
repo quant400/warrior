@@ -85,6 +85,8 @@ public class DatabaseManagerRestApi : MonoBehaviour
     public void getDataFromRestApi(int assetId)
     {
         StartCoroutine(getDataRestApi(assetId));
+
+        //StartCoroutine(getDataRestApi2(assetId));
     }
     public IEnumerator getSessionCounterAndSetScoreFromApi(string url,int assetId, int score)
     {
@@ -173,6 +175,7 @@ public class DatabaseManagerRestApi : MonoBehaviour
         localID = assetId;
         string idJsonData = JsonUtility.ToJson(idData);
         Debug.Log(idData);
+        
         using (UnityWebRequest request = UnityWebRequest.Put("https://api.cryptofightclub.io/game/sdk/warrior/score", idJsonData))
         {
             byte[] bodyRaw = Encoding.UTF8.GetBytes(idJsonData);
@@ -198,6 +201,46 @@ public class DatabaseManagerRestApi : MonoBehaviour
 
         }
     }
+
+    public IEnumerator getDataRestApi2(int assetId)
+    {
+        leaderboardModel.userGetDataModel idData = new leaderboardModel.userGetDataModel();
+        idData.id = assetId;
+        //localID = assetId;
+        string idJsonData = JsonUtility.ToJson(idData);
+
+        Debug.Log(idJsonData);
+        
+        using (UnityWebRequest request = UnityWebRequest.Get("https://staging-api.cryptofightclub.io/game/sdk/warrior/longest"))
+        {
+            byte[] bodyRaw = Encoding.UTF8.GetBytes(idJsonData);
+            //request.method = "POST";
+            request.SetRequestHeader("Accept", "application/json");
+            request.SetRequestHeader("Content-Type", "application/json");
+
+            yield return request.SendWebRequest();
+
+            Debug.Log(request.downloadHandler.text);
+
+            if (request.error == null)
+            {
+                string result = Encoding.UTF8.GetString(request.downloadHandler.data);
+
+                //checkSessionCounter(result);
+
+
+                Debug.Log(request.downloadHandler.text);
+
+            }
+            else
+            {
+                Debug.Log("error in server");
+            }
+
+
+        }
+    }
+
     public IEnumerator startSessionApi(string url, int assetId)
     {
         leaderboardModel.userGetDataModel idData = new leaderboardModel.userGetDataModel();
@@ -242,6 +285,7 @@ public class DatabaseManagerRestApi : MonoBehaviour
             gameplayView.instance.sessions = playerData.dailySessionPlayed;
             gameplayView.instance.AlltimeScore = playerData.allTimeScore;
             gameplayView.instance.weeklyScore = playerData.weeklyScore;
+            gameplayView.instance.longestDistance = playerData.longestDistance;
             gameplayView.instance.dailysessionReactive.Value = playerData.dailySessionPlayed;
 
             //Debug.Log("weeklyScore = " + gameplayView.instance.weeklyScore);
@@ -259,6 +303,7 @@ public class DatabaseManagerRestApi : MonoBehaviour
         gameplayView.instance.sessions = -1;
         gameplayView.instance.AlltimeScore = -1;
         gameplayView.instance.weeklyScore = -1;
+        gameplayView.instance.longestDistance = -1;
         gameplayView.instance.dailysessionReactive.Value = -1;
 
     }

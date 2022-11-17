@@ -12,6 +12,7 @@ public class TimeAdditionPrompt : MonoBehaviour
 
     private void OnEnable()
     {
+
         startingPosition = gameObject.transform.localPosition;
 
         //transform.DOMoveY(gameObject.transform.position.y + distance, duration);

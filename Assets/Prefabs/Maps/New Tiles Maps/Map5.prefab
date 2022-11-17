@@ -9880,7 +9880,7 @@ Tilemap:
       - {fileID: 21300000, guid: 373d988ecd370fc4988c742d8009b820, type: 3}
       - {fileID: 21300000, guid: 093a2de84c8e3174299f8b7dcbdd2b79, type: 3}
       - {fileID: 21300000, guid: 593dd72b7bfdcc64ba2b67aa651b38c4, type: 3}
-      m_AnimationSpeed: 10.000001
+      m_AnimationSpeed: 10
       m_AnimationTimeOffset: 0
       m_IsLooping: 1
   - first: {x: 62, y: -1, z: 0}
@@ -11486,6 +11486,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8635802984400007317}
     m_Modifications:
+    - target: {fileID: 3730161123029369238, guid: a31ac2cb29add7840a2df4611e33db8a, type: 3}
+      propertyPath: m_Size.x
+      value: 1.198614
+      objectReference: {fileID: 0}
+    - target: {fileID: 3730161123029369238, guid: a31ac2cb29add7840a2df4611e33db8a, type: 3}
+      propertyPath: m_Size.y
+      value: 0.5655365
+      objectReference: {fileID: 0}
+    - target: {fileID: 3730161123029369238, guid: a31ac2cb29add7840a2df4611e33db8a, type: 3}
+      propertyPath: m_Offset.x
+      value: 0.041607916
+      objectReference: {fileID: 0}
     - target: {fileID: 3730161123029369239, guid: a31ac2cb29add7840a2df4611e33db8a, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -11533,6 +11545,14 @@ PrefabInstance:
     - target: {fileID: 3730161123029369240, guid: a31ac2cb29add7840a2df4611e33db8a, type: 3}
       propertyPath: m_Name
       value: HorizontalMovingObstacle
+      objectReference: {fileID: 0}
+    - target: {fileID: 7127716784754436272, guid: a31ac2cb29add7840a2df4611e33db8a, type: 3}
+      propertyPath: m_Size.x
+      value: 0.8749662
+      objectReference: {fileID: 0}
+    - target: {fileID: 7127716784754436272, guid: a31ac2cb29add7840a2df4611e33db8a, type: 3}
+      propertyPath: m_Offset.x
+      value: 0.13259545
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a31ac2cb29add7840a2df4611e33db8a, type: 3}

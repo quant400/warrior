@@ -824,7 +824,7 @@ Tilemap:
       - {fileID: 21300000, guid: 373d988ecd370fc4988c742d8009b820, type: 3}
       - {fileID: 21300000, guid: 093a2de84c8e3174299f8b7dcbdd2b79, type: 3}
       - {fileID: 21300000, guid: 593dd72b7bfdcc64ba2b67aa651b38c4, type: 3}
-      m_AnimationSpeed: 10.000001
+      m_AnimationSpeed: 10
       m_AnimationTimeOffset: 0
       m_IsLooping: 1
   - first: {x: 67, y: -3, z: 0}
@@ -1396,7 +1396,7 @@ Tilemap:
       - {fileID: 21300000, guid: 373d988ecd370fc4988c742d8009b820, type: 3}
       - {fileID: 21300000, guid: 093a2de84c8e3174299f8b7dcbdd2b79, type: 3}
       - {fileID: 21300000, guid: 593dd72b7bfdcc64ba2b67aa651b38c4, type: 3}
-      m_AnimationSpeed: 10
+      m_AnimationSpeed: 10.000001
       m_AnimationTimeOffset: 0
       m_IsLooping: 1
   - first: {x: 25, y: -1, z: 0}
@@ -11150,11 +11150,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2106710910508879210, guid: 4bf83898802f2404abf878f1771d51df, type: 3}
       propertyPath: distance
-      value: 6
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 2106710910508879210, guid: 4bf83898802f2404abf878f1771d51df, type: 3}
       propertyPath: duration
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2106710910508879210, guid: 4bf83898802f2404abf878f1771d51df, type: 3}
       propertyPath: isFollowingPlayerPlatform
@@ -11174,7 +11174,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5930240565321549727, guid: 4bf83898802f2404abf878f1771d51df, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.23173833
+      value: 0.71
       objectReference: {fileID: 0}
     - target: {fileID: 5930240565321549727, guid: 4bf83898802f2404abf878f1771d51df, type: 3}
       propertyPath: m_LocalPosition.z
@@ -11954,7 +11954,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8887344841633894432, guid: 10f99ac32d8905542af47eca132e6f60, type: 3}
       propertyPath: m_ConnectedAnchor.y
-      value: 6.472431
+      value: 5.85
       objectReference: {fileID: 0}
     - target: {fileID: 8887344841633894435, guid: 10f99ac32d8905542af47eca132e6f60, type: 3}
       propertyPath: m_RootOrder
@@ -11966,7 +11966,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8887344841633894435, guid: 10f99ac32d8905542af47eca132e6f60, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 6.472431
+      value: 5.85
       objectReference: {fileID: 0}
     - target: {fileID: 8887344841633894435, guid: 10f99ac32d8905542af47eca132e6f60, type: 3}
       propertyPath: m_LocalPosition.z

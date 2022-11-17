@@ -20,7 +20,9 @@ namespace StarterAssets
         {
             _input = GameObject.FindGameObjectWithTag("Player").GetComponent<StarterAssetsInputs>();
 
-            transform.DOMoveY(gameObject.transform.position.y + distance, duration).SetLoops(-1, LoopType.Yoyo);
+            //transform.DOMoveY(gameObject.transform.position.y + distance, duration).SetLoops(-1, LoopType.Yoyo);
+
+            transform.DOLocalMoveY(gameObject.transform.position.y + distance, duration).SetLoops(-1, LoopType.Yoyo);
 
         }
 
@@ -30,6 +32,7 @@ namespace StarterAssets
 
         }
 
+        /*
         private void MoveUp()
         {
             Vector3 localPosition = transform.localPosition;
@@ -48,6 +51,8 @@ namespace StarterAssets
 
             transform.DOLocalMove(localPosition, duration).OnComplete(() => MoveUp()).SetEase(Ease.Linear);
         }
+        */
+
 
         void OnDestroy()
         {

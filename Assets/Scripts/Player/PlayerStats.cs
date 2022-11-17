@@ -27,12 +27,27 @@ public class PlayerStats : MonoBehaviour
 
     public float playerScore = 0.0f;
 
+    public int longestRun = 0;
+
+    private bool highscoreChanged;
+
     // Start is called before the first frame update
     void Start()
     {
-        playerScore = 0.0f;
+        //playerScore = 0.0f;
 
         checkpointDistance = 0.0f;
+
+        try
+        {
+            longestRun = gameplayView.instance.GetLongestDistanceScore();
+        }
+        catch
+        {
+            longestRun = 0;
+        }
+
+        highscoreChanged = false;
     }
 
     // Update is called once per frame
@@ -42,10 +57,23 @@ public class PlayerStats : MonoBehaviour
         {
             warriorGameModel.gameCurrentStep.Value = warriorGameModel.GameSteps.OnGameEnded;
         }
+
+        if(!highscoreChanged)
+        {
+            if (playerScore > longestRun)
+            {
+                Debug.Log("New Highscore");
+
+                highscoreChanged = true;
+            }
+        }
+
     }
 
     public int GetScore()
     {
         return (int)playerScore;
     }
+
+
 }

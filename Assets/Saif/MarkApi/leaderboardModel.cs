@@ -25,7 +25,9 @@ namespace leaderboardModel
         public int id;
         public int dailyScore;
         public int allTimeScore;
+        public int score;
         public int weeklyScore;
+        public int longestDistance;
         public int dailySessionPlayed;
         public int totalSessionPlayed;
         public DateTime updatedAt;
@@ -44,6 +46,11 @@ namespace leaderboardModel
     public class userGetDataModel
     {
         public int id;
+    }
+
+    public class userGetDataModelSecond
+    {
+        public int userid;
     }
 
 }

@@ -38,9 +38,9 @@ public class setFollowSettings : MonoBehaviour
 
             
             thirdperson = followCameraSettings.GetCinemachineComponent<CinemachineFramingTransposer>();
-            thirdperson.m_YDamping = 10;
+            thirdperson.m_YDamping = 5;
 
-            thirdperson.m_DeadZoneHeight = 0;
+            //thirdperson.m_DeadZoneHeight = 0.2f;
             thirdperson.m_SoftZoneHeight = 2;
 
 
@@ -72,6 +72,30 @@ public class setFollowSettings : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
+        if(player.transform.parent.transform.position.y > 15)
+        {
+            if(thirdperson.m_TrackedObjectOffset.y > -2)
+            {
+                thirdperson.m_TrackedObjectOffset.y -= Time.deltaTime;
+            }
+            
+        }
+        else if (player.transform.parent.transform.position.y > 5)
+        {
+            if (thirdperson.m_TrackedObjectOffset.y > 0)
+            {
+                thirdperson.m_TrackedObjectOffset.y -= Time.deltaTime;
+            }
+        }
+        else
+        {
+            if (thirdperson.m_TrackedObjectOffset.y < 2)
+            {
+                thirdperson.m_TrackedObjectOffset.y += Time.deltaTime;
+            }
+        }
+
         /*
         if (followCameraSettings != null)
         {

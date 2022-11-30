@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace StarterAssets
 {
-    public class PushBackIsTrriggerScript1 : MonoBehaviour
+    public class PushBackScript1 : MonoBehaviour
     {
         [SerializeField] float pushBackForce = 2.0f;
 
@@ -13,9 +13,15 @@ namespace StarterAssets
 
         private Rigidbody2D playerRBody;
 
+        private GameObject playerObject;
+
         private bool forceActive;
 
         [SerializeField] bool impusleOnlyToggle = false;
+
+        [SerializeField] bool pushOnlyOnOneSideToggle = false;
+
+        private bool playPushBackDelayCoroutine;
 
         private StarterAssetsInputs _input;
 
@@ -27,6 +33,8 @@ namespace StarterAssets
             firstTimeCollision = false;
 
             forceActive = false;
+
+            playPushBackDelayCoroutine = false;
         }
 
         // Update is called once per frame
@@ -39,19 +47,68 @@ namespace StarterAssets
                     playerRBody.AddForce((new Vector3(-1, 0, 0)) * pushBackForce, ForceMode2D.Impulse);
 
                     //playerRBody.AddForce((new Vector3(0, 1, 0)) * pushBackForce, ForceMode2D.Impulse);
+
+                    if (!playPushBackDelayCoroutine)
+                    {
+                        StartCoroutine(PlayPushBackDelay(0.5f));
+                    }
                 }
                 else
                 {
-                    if(_input.move.x != 0)
+                    if (_input.move.x != 0)
                     {
-                        playerRBody.AddForce(new Vector3(-1, 0, 0) * pushBackForce * 2, ForceMode2D.Force);
+                        if (pushOnlyOnOneSideToggle)
+                        {
+                            if (playerObject.transform.position.x < (gameObject.transform.position.x + 0.7f))
+                            {
+                                playerRBody.AddForce(new Vector3(-1, 0, 0) * pushBackForce * 2, ForceMode2D.Force);
 
-                        playerRBody.AddForce(new Vector3(-1, 0, 0) * pushBackForce / 10, ForceMode2D.Impulse);
+                                playerRBody.AddForce(new Vector3(-1, 0, 0) * pushBackForce / 10, ForceMode2D.Impulse);
+
+                                if (!playPushBackDelayCoroutine)
+                                {
+                                    StartCoroutine(PlayPushBackDelay(0.5f));
+                                }
+                            }
+                        }
+                        else
+                        {
+                            playerRBody.AddForce(new Vector3(-1, 0, 0) * pushBackForce * 2, ForceMode2D.Force);
+
+                            playerRBody.AddForce(new Vector3(-1, 0, 0) * pushBackForce / 10, ForceMode2D.Impulse);
+
+                            if (!playPushBackDelayCoroutine)
+                            {
+                                StartCoroutine(PlayPushBackDelay(0.5f));
+                            }
+                        }
+
+
                     }
                     else
                     {
-                        playerRBody.AddForce(new Vector3(-1, 0, 0) * pushBackForce * 2, ForceMode2D.Force);
 
+                        if (pushOnlyOnOneSideToggle)
+                        {
+                            if (playerObject.transform.position.x < (gameObject.transform.position.x + 0.7f))
+                            {
+                                playerRBody.AddForce(new Vector3(-1, 0, 0) * pushBackForce * 2, ForceMode2D.Force);
+
+                                if (!playPushBackDelayCoroutine)
+                                {
+                                    StartCoroutine(PlayPushBackDelay(0.5f));
+                                }
+                            }
+                        }
+                        else
+                        {
+                            playerRBody.AddForce(new Vector3(-1, 0, 0) * pushBackForce * 2, ForceMode2D.Force);
+
+                            if (!playPushBackDelayCoroutine)
+                            {
+                                StartCoroutine(PlayPushBackDelay(0.5f));
+                            }
+                        }
                         //playerRBody.AddForce(new Vector3(-1, 0, 0) * pushBackForce / 10, ForceMode2D.Impulse);
                     }
 
@@ -61,7 +118,6 @@ namespace StarterAssets
             }
         }
 
-
         private void OnTriggerEnter2D(Collider2D collision)
         {
             if (collision.transform.CompareTag("PlayerBody"))
@@ -70,10 +126,13 @@ namespace StarterAssets
                 {
                     playerRBody = collision.transform.GetComponent<Rigidbody2D>();
 
+                    playerObject = collision.gameObject;
+
                     firstTimeCollision = true;
                 }
 
                 forceActive = true;
+
 
             }
         }
@@ -87,6 +146,8 @@ namespace StarterAssets
                 {
                     playerRBody = collision.transform.GetComponent<Rigidbody2D>();
 
+                    playerObject = collision.gameObject;
+
                     firstTimeCollision = true;
                 }
 
@@ -94,13 +155,23 @@ namespace StarterAssets
             }
         }
 
-
         private void OnTriggerExit2D(Collider2D collision)
         {
             if (collision.transform.CompareTag("PlayerBody"))
             {
                 forceActive = false;
             }
+        }
+
+        IEnumerator PlayPushBackDelay(float secs)
+        {
+            playPushBackDelayCoroutine = true;
+
+            AudioManager.Instance.PlayPushBackSound();
+
+            yield return new WaitForSeconds(secs);
+
+            playPushBackDelayCoroutine = false;
         }
 
 

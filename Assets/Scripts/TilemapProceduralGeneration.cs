@@ -29,6 +29,8 @@ public class TilemapProceduralGeneration : MonoBehaviour
 
     [Tooltip("Add prefab hard difficulty map segments here")]
     [SerializeField] GameObject[] hardObstacleSegments;
+    [SerializeField]
+    private int noOfHardSegments;
 
     private GameObject[] tilemaps;
     private int[] currentActiveTilemaps;
@@ -105,6 +107,16 @@ public class TilemapProceduralGeneration : MonoBehaviour
 
     bool firstTestSpawn;
 
+    private int[] easyMapOrder;
+    private int[] mediumMapOrder;
+    private int[] hardMapOrder;
+
+    private int easyMapItr;
+    private int mediumMapItr;
+    private int hardMapItr;
+
+    private GameObject mapTurnedOn;
+
     //private float playerScore;
 
     /*
@@ -153,81 +165,87 @@ public class TilemapProceduralGeneration : MonoBehaviour
 
         //Debug.Log("currentPlayerTilemap = " + currentPlayerTilemap);
 
-        instantiateAllMaps();
-         
-        //longestDistanceGameObject.transform.position = new Vector3(longestDistanceGameObject.transform.position.x + (longestDistance * 1.28f) - (Mathf.Round(longestDistance/10) - 1), longestDistanceGameObject.transform.position.y, longestDistanceGameObject.transform.position.z);
 
-        /*
-        if (obstacleMaps.Length > 3)
+        if(SegmentScript.Instance)
         {
-            tilemaps = new GameObject[3];
-
-            currentActiveTilemaps = new int[3];
-
-            checkpoints = new GameObject[3];
-
-            checkpointCheck = new bool[3];
-
-            //distanceCovered = new GameObject[3];
-
-            for (int i = 0; i < checkpointCheck.Length; i++)
+            if (SegmentScript.Instance.segmentSelected == -5)
             {
-                checkpointCheck[i] = true;
-            }
+                easyMapOrder = new int[noOfEasySegments];
+                mediumMapOrder = new int[noOfMediumSegments];
+                hardMapOrder = new int[noOfHardSegments];
 
-            mapColliders = new Collider2D[3];
+                for (int i = 0; i < easyMapOrder.Length; i++)
+                {
+                    easyMapOrder[i] = i;
+                }
 
-            for (int i = 0; i < currentActiveTilemaps.Length; i++)
-            {
-                currentActiveTilemaps[i] = -1;
-            }
-        }
-        else
-        {
-            tilemaps = new GameObject[obstacleMaps.Length];
+                for (int i = 0; i < mediumMapOrder.Length; i++)
+                {
+                    mediumMapOrder[i] = i;
+                }
 
-            currentActiveTilemaps = new int[obstacleMaps.Length];
-
-            checkpoints = new GameObject[obstacleMaps.Length];
-
-            checkpointCheck = new bool[obstacleMaps.Length];
-
-            //distanceCovered = new GameObject[obstacleMaps.Length];
-
-            for (int i = 0; i < checkpointCheck.Length; i++)
-            {
-                checkpointCheck[i] = true;
-            }
-
-            mapColliders = new Collider2D[obstacleMaps.Length];
-
-            for (int i = 0; i < currentActiveTilemaps.Length; i++)
-            {
-                currentActiveTilemaps[i] = -1;
-            }
-        }
-        
-
-        for (int i = 0; i < tilemaps.Length; i++)
-        {
-            if(i == 0)
-            {
-                tilemaps[i] = Generation((width - (checkpointWidthAddition * widthAdditionMultiplier)) * widthAdditionMultiplier, i);
-
-                checkpoints[i] = Instantiate(checkpointPrefab, new Vector3(checkpointPrefab.transform.position.x + (width - checkpointWidthAddition) + tilemapDistance - 9.05f, 5, checkpointPrefab.transform.position.z), checkpointPrefab.transform.rotation);
+                for (int i = 0; i < hardMapOrder.Length; i++)
+                {
+                    hardMapOrder[i] = i;
+                }
             }
             else
             {
-                tilemaps[i] = Generation((width - (checkpointWidthAddition * widthAdditionMultiplier)) * widthAdditionMultiplier + (tilemapDistance * widthAdditionMultiplier), i);
+                easyMapOrder = new int[easyObstacleSegments.Length];
+                mediumMapOrder = new int[mediumObstacleSegments.Length];
+                hardMapOrder = new int[hardObstacleSegments.Length];
 
-                checkpoints[i] = Instantiate(checkpointPrefab, new Vector3(checkpoints[i - 1].transform.position.x + (width - checkpointWidthAddition) + tilemapDistance, 5, checkpointPrefab.transform.position.z), checkpointPrefab.transform.rotation);
+                for (int i = 0; i < easyMapOrder.Length; i++)
+                {
+                    easyMapOrder[i] = i;
+                }
 
+                for (int i = 0; i < mediumMapOrder.Length; i++)
+                {
+                    mediumMapOrder[i] = i;
+                }
+
+                for (int i = 0; i < hardMapOrder.Length; i++)
+                {
+                    hardMapOrder[i] = i;
+                }
             }
 
         }
-        */
+        else
+        {
+            easyMapOrder = new int[noOfEasySegments];
+            mediumMapOrder = new int[noOfMediumSegments];
+            hardMapOrder = new int[noOfHardSegments];
+
+            for (int i = 0; i < easyMapOrder.Length; i++)
+            {
+                easyMapOrder[i] = i;
+            }
+
+            for (int i = 0; i < mediumMapOrder.Length; i++)
+            {
+                mediumMapOrder[i] = i;
+            }
+
+            for (int i = 0; i < hardMapOrder.Length; i++)
+            {
+                hardMapOrder[i] = i;
+            }
+        }
+
+        easyMapOrder = Shuffle(easyMapOrder, true);
+        mediumMapOrder = Shuffle(mediumMapOrder, false);
+        hardMapOrder = Shuffle(hardMapOrder, false);
+
+        easyMapItr = 1;
+        mediumMapItr = 0;
+        hardMapItr = 0;
 
 
+        instantiateAllMaps();
+         
+        //longestDistanceGameObject.transform.position = new Vector3(longestDistanceGameObject.transform.position.x + (longestDistance * 1.28f) - (Mathf.Round(longestDistance/10) - 1), longestDistanceGameObject.transform.position.y, longestDistanceGameObject.transform.position.z);
 
         if ((easyObstacleSegments.Length + mediumObstacleSegments.Length + hardObstacleSegments.Length) > 3)
         {
@@ -478,14 +496,15 @@ public class TilemapProceduralGeneration : MonoBehaviour
 
         int difficultyNum;
 
+        int itrNum;
 
         if(noOfEasySegments > 0)
         {
             difficultyNum = 1;
 
-            currentActiveTilemaps[iterationNum] = randomObstacleMapIndex(difficultyNum);
+            itrNum = randomObstacleMapIndex(difficultyNum);
 
-            if(SegmentScript.Instance)
+            if (SegmentScript.Instance)
             {
                 if (SegmentScript.Instance.segmentSelected == -5)
                 {
@@ -497,13 +516,13 @@ public class TilemapProceduralGeneration : MonoBehaviour
                 noOfEasySegments--;
             }
 
-                
+            currentActiveTilemaps[iterationNum] = itrNum;
         }
         else if (noOfMediumSegments > 0)
         {
             difficultyNum = 2;
 
-            currentActiveTilemaps[iterationNum] = randomObstacleMapIndex(difficultyNum);
+            itrNum = randomObstacleMapIndex(difficultyNum);
 
             if (SegmentScript.Instance)
             {
@@ -517,22 +536,27 @@ public class TilemapProceduralGeneration : MonoBehaviour
                 noOfMediumSegments--;
             }
 
-                
+            currentActiveTilemaps[iterationNum] = itrNum + easyObstacleSegments.Length;
         }
         else
         {
             difficultyNum = 3;
 
-            currentActiveTilemaps[iterationNum] = randomObstacleMapIndex(difficultyNum);
+            itrNum = randomObstacleMapIndex(difficultyNum);
+
+            currentActiveTilemaps[iterationNum] = itrNum + easyObstacleSegments.Length + mediumObstacleSegments.Length;
         }
 
 
         mapColliders[iterationNum] = tilemaps[currentActiveTilemaps[iterationNum]].transform.GetChild(0).GetComponent<Collider2D>();
 
-
         //GameObject obstacleMap = tilemaps[currentActiveTilemaps[iterationNum]];
 
         tilemaps[currentActiveTilemaps[iterationNum]].SetActive(true);
+
+        mapTurnedOn = tilemaps[currentActiveTilemaps[iterationNum]];
+
+        //Debug.Log("Turned ON: " + tilemaps[currentActiveTilemaps[iterationNum]].name);
 
         tilemaps[currentActiveTilemaps[iterationNum]].transform.position = new Vector3(xAdd, tilemaps[currentActiveTilemaps[iterationNum]].transform.position.y, tilemaps[currentActiveTilemaps[iterationNum]].transform.position.z);
 
@@ -540,21 +564,29 @@ public class TilemapProceduralGeneration : MonoBehaviour
         {
             if(difficultyNum == 1)
             {
-                tilemaps[currentActiveTilemaps[iterationNum]].transform.GetChild(i).transform.localPosition = easyObstacleSegments[currentActiveTilemaps[iterationNum]].transform.GetChild(i).transform.localPosition;
+                tilemaps[currentActiveTilemaps[iterationNum]].transform.GetChild(i).transform.localPosition = easyObstacleSegments[itrNum].transform.GetChild(i).transform.localPosition;
 
-                tilemaps[currentActiveTilemaps[iterationNum]].transform.GetChild(i).transform.localRotation = easyObstacleSegments[currentActiveTilemaps[iterationNum]].transform.GetChild(i).transform.localRotation;
+                tilemaps[currentActiveTilemaps[iterationNum]].transform.GetChild(i).transform.localRotation = easyObstacleSegments[itrNum].transform.GetChild(i).transform.localRotation;
             }
             else if(difficultyNum == 2)
             {
-                tilemaps[currentActiveTilemaps[iterationNum]].transform.GetChild(i).transform.localPosition = mediumObstacleSegments[currentActiveTilemaps[iterationNum] - easyObstacleSegments.Length].transform.GetChild(i).transform.localPosition;
+                //tilemaps[currentActiveTilemaps[iterationNum]].transform.GetChild(i).transform.localPosition = mediumObstacleSegments[currentActiveTilemaps[iterationNum] - easyObstacleSegments.Length].transform.GetChild(i).transform.localPosition;
 
-                tilemaps[currentActiveTilemaps[iterationNum]].transform.GetChild(i).transform.localRotation = mediumObstacleSegments[currentActiveTilemaps[iterationNum] - easyObstacleSegments.Length].transform.GetChild(i).transform.localRotation;
+                //tilemaps[currentActiveTilemaps[iterationNum]].transform.GetChild(i).transform.localRotation = mediumObstacleSegments[currentActiveTilemaps[iterationNum] - easyObstacleSegments.Length].transform.GetChild(i).transform.localRotation;
+
+                tilemaps[currentActiveTilemaps[iterationNum]].transform.GetChild(i).transform.localPosition = mediumObstacleSegments[itrNum].transform.GetChild(i).transform.localPosition;
+
+                tilemaps[currentActiveTilemaps[iterationNum]].transform.GetChild(i).transform.localRotation = mediumObstacleSegments[itrNum].transform.GetChild(i).transform.localRotation;
             }
             else
             {
-                tilemaps[currentActiveTilemaps[iterationNum]].transform.GetChild(i).transform.localPosition = hardObstacleSegments[currentActiveTilemaps[iterationNum] - (easyObstacleSegments.Length + mediumObstacleSegments.Length)].transform.GetChild(i).transform.localPosition;
+                //tilemaps[currentActiveTilemaps[iterationNum]].transform.GetChild(i).transform.localPosition = hardObstacleSegments[currentActiveTilemaps[iterationNum] - (easyObstacleSegments.Length + mediumObstacleSegments.Length)].transform.GetChild(i).transform.localPosition;
 
-                tilemaps[currentActiveTilemaps[iterationNum]].transform.GetChild(i).transform.localRotation = hardObstacleSegments[currentActiveTilemaps[iterationNum] - (easyObstacleSegments.Length + mediumObstacleSegments.Length)].transform.GetChild(i).transform.localRotation;
+                //tilemaps[currentActiveTilemaps[iterationNum]].transform.GetChild(i).transform.localRotation = hardObstacleSegments[currentActiveTilemaps[iterationNum] - (easyObstacleSegments.Length + mediumObstacleSegments.Length)].transform.GetChild(i).transform.localRotation;
+
+                tilemaps[currentActiveTilemaps[iterationNum]].transform.GetChild(i).transform.localPosition = hardObstacleSegments[itrNum].transform.GetChild(i).transform.localPosition;
+
+                tilemaps[currentActiveTilemaps[iterationNum]].transform.GetChild(i).transform.localRotation = hardObstacleSegments[itrNum].transform.GetChild(i).transform.localRotation;
             }
 
 
@@ -566,21 +598,29 @@ public class TilemapProceduralGeneration : MonoBehaviour
                     {
                         if (difficultyNum == 1)
                         {
-                            tilemaps[currentActiveTilemaps[iterationNum]].transform.GetChild(i).transform.GetChild(j).transform.localPosition = easyObstacleSegments[currentActiveTilemaps[iterationNum]].transform.GetChild(i).transform.GetChild(j).transform.localPosition;
+                            tilemaps[currentActiveTilemaps[iterationNum]].transform.GetChild(i).transform.GetChild(j).transform.localPosition = easyObstacleSegments[itrNum].transform.GetChild(i).transform.GetChild(j).transform.localPosition;
 
-                            tilemaps[currentActiveTilemaps[iterationNum]].transform.GetChild(i).transform.GetChild(j).transform.localRotation = easyObstacleSegments[currentActiveTilemaps[iterationNum]].transform.GetChild(i).transform.GetChild(j).transform.localRotation;
+                            tilemaps[currentActiveTilemaps[iterationNum]].transform.GetChild(i).transform.GetChild(j).transform.localRotation = easyObstacleSegments[itrNum].transform.GetChild(i).transform.GetChild(j).transform.localRotation;
                         }
                         else if (difficultyNum == 2)
                         {
-                            tilemaps[currentActiveTilemaps[iterationNum]].transform.GetChild(i).transform.GetChild(j).transform.localPosition = mediumObstacleSegments[currentActiveTilemaps[iterationNum] - easyObstacleSegments.Length].transform.GetChild(i).transform.GetChild(j).transform.localPosition;
+                            //tilemaps[currentActiveTilemaps[iterationNum]].transform.GetChild(i).transform.GetChild(j).transform.localPosition = mediumObstacleSegments[currentActiveTilemaps[iterationNum] - easyObstacleSegments.Length].transform.GetChild(i).transform.GetChild(j).transform.localPosition;
 
-                            tilemaps[currentActiveTilemaps[iterationNum]].transform.GetChild(i).transform.GetChild(j).transform.localRotation = mediumObstacleSegments[currentActiveTilemaps[iterationNum] - easyObstacleSegments.Length].transform.GetChild(i).transform.GetChild(j).transform.localRotation;
+                            //tilemaps[currentActiveTilemaps[iterationNum]].transform.GetChild(i).transform.GetChild(j).transform.localRotation = mediumObstacleSegments[currentActiveTilemaps[iterationNum] - easyObstacleSegments.Length].transform.GetChild(i).transform.GetChild(j).transform.localRotation;
+
+                            tilemaps[currentActiveTilemaps[iterationNum]].transform.GetChild(i).transform.GetChild(j).transform.localPosition = mediumObstacleSegments[itrNum].transform.GetChild(i).transform.GetChild(j).transform.localPosition;
+
+                            tilemaps[currentActiveTilemaps[iterationNum]].transform.GetChild(i).transform.GetChild(j).transform.localRotation = mediumObstacleSegments[itrNum].transform.GetChild(i).transform.GetChild(j).transform.localRotation;
                         }
                         else
                         {
-                            tilemaps[currentActiveTilemaps[iterationNum]].transform.GetChild(i).transform.GetChild(j).transform.localPosition = hardObstacleSegments[currentActiveTilemaps[iterationNum] - (easyObstacleSegments.Length + mediumObstacleSegments.Length)].transform.GetChild(i).transform.GetChild(j).transform.localPosition;
+                            //tilemaps[currentActiveTilemaps[iterationNum]].transform.GetChild(i).transform.GetChild(j).transform.localPosition = hardObstacleSegments[currentActiveTilemaps[iterationNum] - (easyObstacleSegments.Length + mediumObstacleSegments.Length)].transform.GetChild(i).transform.GetChild(j).transform.localPosition;
 
-                            tilemaps[currentActiveTilemaps[iterationNum]].transform.GetChild(i).transform.GetChild(j).transform.localRotation = hardObstacleSegments[currentActiveTilemaps[iterationNum] - (easyObstacleSegments.Length + mediumObstacleSegments.Length)].transform.GetChild(i).transform.GetChild(j).transform.localRotation;
+                            //tilemaps[currentActiveTilemaps[iterationNum]].transform.GetChild(i).transform.GetChild(j).transform.localRotation = hardObstacleSegments[currentActiveTilemaps[iterationNum] - (easyObstacleSegments.Length + mediumObstacleSegments.Length)].transform.GetChild(i).transform.GetChild(j).transform.localRotation;
+
+                            tilemaps[currentActiveTilemaps[iterationNum]].transform.GetChild(i).transform.GetChild(j).transform.localPosition = hardObstacleSegments[itrNum].transform.GetChild(i).transform.GetChild(j).transform.localPosition;
+
+                            tilemaps[currentActiveTilemaps[iterationNum]].transform.GetChild(i).transform.GetChild(j).transform.localRotation = hardObstacleSegments[itrNum].transform.GetChild(i).transform.GetChild(j).transform.localRotation;
                         }
 
 
@@ -627,6 +667,7 @@ public class TilemapProceduralGeneration : MonoBehaviour
 
         mapColliders[iterationNum] = tilemaps[currentActiveTilemaps[iterationNum]].transform.GetChild(0).GetComponent<Collider2D>();
 
+        
 
         tilemaps[currentActiveTilemaps[iterationNum]].SetActive(true);
 
@@ -725,8 +766,9 @@ public class TilemapProceduralGeneration : MonoBehaviour
     {
         //int loopLimit = currentActiveTilemaps.Length * 2;
 
-        int randomNum;
+        int randomNum = 0;
 
+        /*
         int lowerRange;
 
         int upperRange;
@@ -760,31 +802,124 @@ public class TilemapProceduralGeneration : MonoBehaviour
 
             //Debug.Log("Random Num: " + randomNum);
         }
-
-        /*
-        for (int j = 0; j < currentActiveTilemaps.Length; j++)
-        {
-            if (currentActiveTilemaps[j] == randomNum)
-            {
-                j = -1;
-
-                randomNum = UnityEngine.Random.Range(0, obstacleMaps.Length);
-            }
-
-            loopLimit--;
-
-            if(loopLimit == 0)
-            {
-                j = currentActiveTilemaps.Length;
-            }
-        }
-
-        //Debug.Log("Random Number Generated: " + randomNum);
         */
 
+        
+        if (difficultyNo == 1)
+        {
+            if(easyMapItr >= easyMapOrder.Length)
+            {
+                easyMapItr = 0;
+
+                Shuffle(easyMapOrder, false);
+            }
+
+            randomNum = easyMapOrder[easyMapItr];
+
+            while (tilemaps[randomNum].activeSelf)
+            {
+                if (easyMapItr >= easyMapOrder.Length)
+                {
+                    easyMapItr = 0;
+
+                    Shuffle(easyMapOrder, false);
+                }
+
+                easyMapItr++;
+
+                randomNum = easyMapOrder[easyMapItr];
+            }
+
+            easyMapItr++;
+        }
+        else if (difficultyNo == 2)
+        {
+            if (mediumMapItr >= mediumMapOrder.Length)
+            {
+                mediumMapItr = 0;
+
+                Shuffle(mediumMapOrder, false);
+            }
+
+            
+            randomNum = mediumMapOrder[mediumMapItr];
+
+            while (tilemaps[randomNum + easyObstacleSegments.Length].activeSelf)
+            {
+                if (mediumMapItr >= mediumMapOrder.Length)
+                {
+                    mediumMapItr = 0;
+
+                    Shuffle(mediumMapOrder, false);
+                }
+
+                mediumMapItr++;
+
+                randomNum = mediumMapOrder[mediumMapItr];
+            }
+
+            mediumMapItr++;
+        }
+        else
+        {
+            if (hardMapItr >= hardMapOrder.Length)
+            {
+                hardMapItr = 0;
+
+                Shuffle(hardMapOrder, false);
+            }
+
+            randomNum = hardMapOrder[hardMapItr];
+
+            while (tilemaps[randomNum + easyObstacleSegments.Length + mediumObstacleSegments.Length].activeSelf)
+            {
+                if (hardMapItr >= hardMapOrder.Length)
+                {
+                    hardMapItr = 0;
+
+                    Shuffle(hardMapOrder, false);
+                }
+
+                hardMapItr++;
+
+                randomNum = hardMapOrder[hardMapItr];
+            }
+
+            hardMapItr++;
+        }
+        
 
         return randomNum;
 
+    }
+
+    private int[] Shuffle(int[] numbers, bool firstGenCheck)
+    {
+        int tempGO;
+
+        if(!firstGenCheck)
+        {
+            for (int i = 0; i < numbers.Length - 1; i++)
+            {
+                int rnd = UnityEngine.Random.Range(i, numbers.Length);
+                tempGO = numbers[rnd];
+                numbers[rnd] = numbers[i];
+                numbers[i] = tempGO;
+            }
+        }
+        else
+        {
+            for (int i = 1; i < numbers.Length - 1; i++)
+            {
+                int rnd = UnityEngine.Random.Range(i, numbers.Length);
+                tempGO = numbers[rnd];
+                numbers[rnd] = numbers[i];
+                numbers[i] = tempGO;
+            }
+        }
+
+
+        return numbers;
     }
 
     private bool isMapInCameraView(Vector3 objectCollider)
@@ -845,7 +980,7 @@ public class TilemapProceduralGeneration : MonoBehaviour
 
     private void TilemapSwapping()
     {
-        GameObject mapToTrunOff;
+        GameObject mapToTurnOff;
 
         if (newestMap == 3 && oldestMap == 1)
         {
@@ -864,11 +999,26 @@ public class TilemapProceduralGeneration : MonoBehaviour
 
                 //tilemaps[currentActiveTilemaps[oldestMap - 1]].SetActive(false);
 
-                mapToTrunOff = tilemaps[currentActiveTilemaps[oldestMap - 1]];
+                mapToTurnOff = tilemaps[currentActiveTilemaps[oldestMap - 1]];
+
+                mapToTurnOff.SetActive(false);
+
+                //Debug.Log("Turned OFF: " + mapToTurnOff.name);
 
                 Generation((width - (checkpointWidthAddition * widthAdditionMultiplier)) * widthAdditionMultiplier + (tilemapDistance * widthAdditionMultiplier), oldestMap - 1);
 
-                mapToTrunOff.SetActive(false);
+                /*
+                if(mapTurnedOn != mapToTurnOff)
+                {
+                    mapToTurnOff.SetActive(false);
+
+                    Debug.Log("Turned OFF: " + mapToTurnOff.name);
+                }
+                else
+                {
+                    Debug.Log("NOT Turned OFF: " + mapToTurnOff.name);
+                }
+                */
 
                 startTiles.transform.position = tilemaps[currentActiveTilemaps[oldestMap]].transform.position;
 
@@ -901,11 +1051,26 @@ public class TilemapProceduralGeneration : MonoBehaviour
 
                 //tilemaps[currentActiveTilemaps[oldestMap - 1]].SetActive(false);
 
-                mapToTrunOff = tilemaps[currentActiveTilemaps[oldestMap - 1]];
+                mapToTurnOff = tilemaps[currentActiveTilemaps[oldestMap - 1]];
+
+                mapToTurnOff.SetActive(false);
+
+                //Debug.Log("Turned OFF: " + mapToTurnOff.name);
 
                 Generation((width - (checkpointWidthAddition * widthAdditionMultiplier)) * widthAdditionMultiplier + (tilemapDistance * widthAdditionMultiplier), oldestMap - 1);
 
-                mapToTrunOff.SetActive(false);
+                /*
+                if (mapTurnedOn != mapToTurnOff)
+                {
+                    mapToTurnOff.SetActive(false);
+
+                    Debug.Log("Turned OFF: " + mapToTurnOff.name);
+                }
+                else
+                {
+                    Debug.Log("NOT Turned OFF: " + mapToTurnOff.name);
+                }
+                */
 
                 startTiles.transform.position = tilemaps[currentActiveTilemaps[oldestMap]].transform.position;
 
@@ -938,11 +1103,26 @@ public class TilemapProceduralGeneration : MonoBehaviour
 
                 //tilemaps[currentActiveTilemaps[oldestMap - 1]].SetActive(false);
 
-                mapToTrunOff = tilemaps[currentActiveTilemaps[oldestMap - 1]];
+                mapToTurnOff = tilemaps[currentActiveTilemaps[oldestMap - 1]];
+
+                mapToTurnOff.SetActive(false);
+
+                //Debug.Log("Turned OFF: " + mapToTurnOff.name);
 
                 Generation((width - (checkpointWidthAddition * widthAdditionMultiplier)) * widthAdditionMultiplier + (tilemapDistance * widthAdditionMultiplier), oldestMap - 1);
 
-                mapToTrunOff.SetActive(false);
+                /*
+                if (mapTurnedOn != mapToTurnOff)
+                {
+                    mapToTurnOff.SetActive(false);
+
+                    Debug.Log("Turned OFF: " + mapToTurnOff.name);
+                }
+                else
+                {
+                    Debug.Log("NOT Turned OFF: " + mapToTurnOff.name);
+                }
+                */
 
                 //startTiles.transform.position = tilemaps[currentActiveTilemaps[oldestMap]].transform.position;
 

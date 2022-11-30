@@ -104,7 +104,7 @@ public class gameEndView : MonoBehaviour
         }
         */
 
-        if (gameplayView.instance.isRestApi)
+        if (gameplayView.instance.isRestApi && !gameplayView.instance.isTryout)
         {
             Debug.Log("before Score");
 
@@ -168,6 +168,8 @@ public class gameEndView : MonoBehaviour
         //SinglePlayerScoreBoardScript.instance.gameObject.transform.GetChild(0).gameObject.SetActive(false);
         */
 
+        Debug.Log("1");
+
         sessionsLeft.SetActive(true);
         sessionsNotLeft.SetActive(false);
         //currentScore.text = "CHICKENS CAUGHT : " + SinglePlayerScoreBoardScript.instance.GetScore().ToString();
@@ -206,6 +208,8 @@ public class gameEndView : MonoBehaviour
 
         }
         */
+
+        Debug.Log("2");
 
         sessionsLeft.SetActive(true);
         sessionsNotLeft.SetActive(false);
@@ -295,8 +299,7 @@ public class gameEndView : MonoBehaviour
                 SceneManager.LoadScene("EndScene");
 
                 SegmentScript.Instance.segmentSelected = -5;
-            }
-            
+            };
 
             scorereactive.Value = gameplayView.instance.dailyScore;
             sessions.Value = gameplayView.instance.sessions;
@@ -330,6 +333,8 @@ public class gameEndView : MonoBehaviour
 
         }
         */
+
+        Debug.Log("3");
 
         sessionsLeft.SetActive(true);
         sessionsNotLeft.SetActive(false);

@@ -54307,6 +54307,7 @@ MonoBehaviour:
   - {fileID: 1875009086185209392, guid: 10ce42c6f336ca94a8735629339f6fd9, type: 3}
   - {fileID: 2521521325776999616, guid: a41aa2fefc278474db16a1c43a87b5de, type: 3}
   - {fileID: 4564453818654030, guid: cf4aec1c581e3b641a3a539642a9c08e, type: 3}
+  noOfHardSegments: 0
   checkpointPrefab: {fileID: 2216030331147064486, guid: 1e4329b827399814db71a68cae394c1a, type: 3}
   checkpointText: {fileID: 1563638359}
   checkpointSlider: {fileID: 1862440759}
@@ -54321,7 +54322,6 @@ MonoBehaviour:
   mainCamera: {fileID: 2474441163958323097}
   startTiles: {fileID: 1185730372}
   endTiles: {fileID: 0}
-  longestDistanceGameObject: {fileID: 1774749774}
   longestDistance: 10
 --- !u!1001 &1243473067
 PrefabInstance:
@@ -70300,6 +70300,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 205fc8e84c3382c49b9e5dc4dda5f2e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  timeAddPrompt: {fileID: 0}
 --- !u!60 &1982401531218819233
 PolygonCollider2D:
   m_ObjectHideFlags: 0

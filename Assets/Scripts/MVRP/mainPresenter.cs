@@ -115,7 +115,7 @@ using UnityEngine.SceneManagement;
                     break;
                 case warriorGameModel.GameSteps.OnGameEnded:
                     uiView.goToMenu("results");
-                    if(!gameplayView.instance.isTryout)
+                    //if(!gameplayView.instance.isTryout)
                     gameEndView.setScoreAtStart();
                     gameView.EndGame();
                     break;

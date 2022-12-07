@@ -6,6 +6,8 @@ public class PlayerButtonPrompt : MonoBehaviour
 {
     public GameObject pressEPrompt;
 
+    public GameObject pressEPrompt2;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -24,6 +26,8 @@ public class PlayerButtonPrompt : MonoBehaviour
         if (collision.transform.CompareTag("Climable"))
         {
             pressEPrompt.SetActive(true);
+
+            pressEPrompt2.SetActive(true);
         }
     }
 
@@ -32,6 +36,8 @@ public class PlayerButtonPrompt : MonoBehaviour
         if (collision.transform.CompareTag("Climable"))
         {
             pressEPrompt.SetActive(false);
+
+            pressEPrompt2.SetActive(false);
         }
     }
 }

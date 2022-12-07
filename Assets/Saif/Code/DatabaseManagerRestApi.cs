@@ -15,6 +15,9 @@ public class DatabaseManagerRestApi : MonoBehaviour
     ReactiveProperty<int> sessionCounterReactive = new ReactiveProperty<int>();
     int localID;
     public int scoreUpdateTried=0;
+    private int limit = 20;
+
+
     private void Awake()
     {
         _instance = this;
@@ -36,7 +39,7 @@ public class DatabaseManagerRestApi : MonoBehaviour
     {
         getSessionsCounter(_assetID,ss=>
         {
-            if((int)ss <= 10)
+            if((int)ss <= limit)
             {
                 getLeaderboardScore(_assetID,res=>
                 {
@@ -58,8 +61,8 @@ public class DatabaseManagerRestApi : MonoBehaviour
     }
     public void setScoreWithRestApi(int assetID,int score)
     {
-        /*
-        if (sessionCounterReactive.Value <= 10)
+        
+        if (sessionCounterReactive.Value <= limit)
         {
             //StartCoroutine(setScoreInLeaderBoeardRestApi(assetID, score));
 
@@ -69,9 +72,9 @@ public class DatabaseManagerRestApi : MonoBehaviour
         {
             Debug.Log("you reach daily Limits");
         }
-        */
+        
 
-        StartCoroutine(KeyMaker.instance.endSessionApi(assetID, score));
+        //StartCoroutine(KeyMaker.instance.endSessionApi(assetID, score));
     }
   
     public void startSessionFromRestApi(int _assetID)
@@ -153,7 +156,7 @@ public class DatabaseManagerRestApi : MonoBehaviour
             else
             {
                 //if server responded with an error and resend score 
-                if (gameplayView.instance.GetSessions() <= 10 && scoreUpdateTried<10)
+                if (gameplayView.instance.GetSessions() <= limit && scoreUpdateTried<10)
                 {
                     scoreUpdateTried++;
                     gameplayView.instance.transform.GetComponentInChildren<gameEndView>().Invoke("setScoreAtStart", 6);

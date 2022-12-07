@@ -31,6 +31,8 @@ public class gameEndView : MonoBehaviour
     GameObject localDisplay;
     [SerializeField] private RuntimeAnimatorController playerAnimatorController;
 
+    private int limit = 20;
+
     // [SerializeField]
     //SinglePlayerSpawner spawner;
     [SerializeField]
@@ -57,8 +59,8 @@ public class gameEndView : MonoBehaviour
             weeklyScore.text = "WEEKLY SCORE : " + 0;
             allTimeScore.text = "ALL TIME SCORE : " + 0;
             longestDistance.text = "LONGEST RUN : " + 0;
-            //sessionCounterText.text = "NFT DAILY RUNS : " + 0 + "/10";
-            sessionCounterText.text = "NFT DAILY RUNS : " + 0;
+            sessionCounterText.text = "NFT DAILY RUNS : " + 0 + "/" + limit.ToString();
+            //sessionCounterText.text = "NFT DAILY RUNS : " + 0;
         }
         else
         {
@@ -85,8 +87,8 @@ public class gameEndView : MonoBehaviour
             canvasToDisable = gameplayView.instance.gameObject.transform.GetChild(0).gameObject;
         }
         currentNFT = gameplayView.instance.chosenNFT;
-        /*
-        if (gameplayView.instance.GetSessions() <= 10)
+        
+        if (gameplayView.instance.GetSessions() <= limit)
         {
             if (gameplayView.instance.isRestApi)
             {
@@ -102,8 +104,9 @@ public class gameEndView : MonoBehaviour
 
             }
         }
-        */
+        
 
+        /*
         if (gameplayView.instance.isRestApi && !gameplayView.instance.isTryout)
         //if (gameplayView.instance.isRestApi)
         {
@@ -117,6 +120,7 @@ public class gameEndView : MonoBehaviour
         {
             // DatabaseManager._instance.setScore(currentNFT.id.ToString(), currentNFT.name, SinglePlayerScoreBoardScript.instance.GetScore());
         }
+        */
 
         gameplayView.instance.GetScores();
         setScoreResutls();
@@ -142,8 +146,8 @@ public class gameEndView : MonoBehaviour
     }
     public void updateResults()
     {
-        /*
-        if (gameplayView.instance.GetSessions() < 10)
+        
+        if (gameplayView.instance.GetSessions() < limit)
         {
 
             sessionsLeft.SetActive(true);
@@ -151,26 +155,28 @@ public class gameEndView : MonoBehaviour
             //currentScore.text = "CHICKENS CAUGHT : " + SinglePlayerScoreBoardScript.instance.GetScore().ToString();
             currentScore.text = "DISTANCE TRAVELED : " + PlayerStats.Instance.GetScore().ToString();
             dailyScore.text = "DAILY SCORE : " + (gameplayView.instance.GetDailyScore());
+            weeklyScore.text = "WEEKLY SCORE : " + (gameplayView.instance.GetWeeklyScore());
             allTimeScore.text = "ALL TIME SCORE : " + (gameplayView.instance.GetAllTimeScore());
-            //sessionCounterText.text = "NFT DAILY RUNS : " + (gameplayView.instance.GetSessions()) + "/10";
-            sessionCounterText.text = "NFT DAILY RUNS : " + (gameplayView.instance.GetSessions());
+            longestDistance.text = "LONGEST RUN : " + (gameplayView.instance.GetLongestDistanceScore());
+            sessionCounterText.text = "NFT DAILY RUNS : " + (gameplayView.instance.GetSessions()) + "/" + limit.ToString();
+            //sessionCounterText.text = "NFT DAILY RUNS : " + (gameplayView.instance.GetSessions());
 
         }
-        else if (gameplayView.instance.GetSessions() >= 10)
+        else if (gameplayView.instance.GetSessions() >= limit)
         {
             sessionsLeft.SetActive(false);
             sessionsNotLeft.SetActive(true);
             dailyScore.text = "DAILY SCORE : " + (gameplayView.instance.GetDailyScore());
             allTimeScore.text = "ALL TIME SCORE : " + (gameplayView.instance.GetAllTimeScore());
-            //sessionCounterText.text = "NFT DAILY RUNS : " + (gameplayView.instance.GetSessions()) + "/10";
-            sessionCounterText.text = "NFT DAILY RUNS : " + (gameplayView.instance.GetSessions());
+            sessionCounterText.text = "NFT DAILY RUNS : " + (gameplayView.instance.GetSessions()) + "/" + limit.ToString();
+            //sessionCounterText.text = "NFT DAILY RUNS : " + (gameplayView.instance.GetSessions());
 
         }
         //SinglePlayerScoreBoardScript.instance.gameObject.transform.GetChild(0).gameObject.SetActive(false);
-        */
+        
 
         //Debug.Log("1");
-
+        /*
         sessionsLeft.SetActive(true);
         sessionsNotLeft.SetActive(false);
         //currentScore.text = "CHICKENS CAUGHT : " + SinglePlayerScoreBoardScript.instance.GetScore().ToString();
@@ -179,13 +185,14 @@ public class gameEndView : MonoBehaviour
         weeklyScore.text = "WEEKLY SCORE : " + (gameplayView.instance.GetWeeklyScore());
         allTimeScore.text = "ALL TIME SCORE : " + (gameplayView.instance.GetAllTimeScore());
         longestDistance.text = "LONGEST RUN : " + (gameplayView.instance.GetLongestDistanceScore());
-        //sessionCounterText.text = "NFT DAILY RUNS : " + (gameplayView.instance.GetSessions()) + "/10";
-        sessionCounterText.text = "NFT DAILY RUNS : " + (gameplayView.instance.GetSessions());
+        sessionCounterText.text = "NFT DAILY RUNS : " + (gameplayView.instance.GetSessions()) + "/20";
+        //sessionCounterText.text = "NFT DAILY RUNS : " + (gameplayView.instance.GetSessions());
+        */
     }
     public void setScoreResutls()
     {
-        /*
-        if (gameplayView.instance.GetSessions() < 10)
+        
+        if (gameplayView.instance.GetSessions() < limit)
         {
 
             sessionsLeft.SetActive(true);
@@ -193,25 +200,30 @@ public class gameEndView : MonoBehaviour
             //currentScore.text = "CHICKENS CAUGHT : " + SinglePlayerScoreBoardScript.instance.GetScore().ToString();
             currentScore.text = "DISTANCE TRAVELED : " + PlayerStats.Instance.GetScore().ToString();
             dailyScore.text = "DAILY SCORE : " + (gameplayView.instance.GetDailyScore());
+            weeklyScore.text = "WEEKLY SCORE : " + (gameplayView.instance.GetWeeklyScore());
             allTimeScore.text = "ALL TIME SCORE : " + (gameplayView.instance.GetAllTimeScore());
-            //sessionCounterText.text = "NFT DAILY RUNS : " + (gameplayView.instance.GetSessions()) + "/10";
-            sessionCounterText.text = "NFT DAILY RUNS : " + (gameplayView.instance.GetSessions());
+            longestDistance.text = "LONGEST RUN : " + (gameplayView.instance.GetLongestDistanceScore());
+            sessionCounterText.text = "NFT DAILY RUNS : " + (gameplayView.instance.GetSessions()) + "/" + limit.ToString();
+            //sessionCounterText.text = "NFT DAILY RUNS : " + (gameplayView.instance.GetSessions());
 
         }
-        else if (gameplayView.instance.GetSessions() >= 10)
+        else if (gameplayView.instance.GetSessions() >= limit)
         {
             sessionsLeft.SetActive(false);
             sessionsNotLeft.SetActive(true);
             dailyScore.text = "DAILY SCORE : " + (gameplayView.instance.GetDailyScore());
+            weeklyScore.text = "WEEKLY SCORE : " + (gameplayView.instance.GetWeeklyScore());
             allTimeScore.text = "ALL TIME SCORE : " + (gameplayView.instance.GetAllTimeScore());
-            //sessionCounterText.text = "NFT DAILY RUNS : " + (gameplayView.instance.GetSessions()) + "/10";
-            sessionCounterText.text = "NFT DAILY RUNS : " + (gameplayView.instance.GetSessions());
+            longestDistance.text = "LONGEST RUN : " + (gameplayView.instance.GetLongestDistanceScore());
+            sessionCounterText.text = "NFT DAILY RUNS : " + (gameplayView.instance.GetSessions()) + "/" + limit.ToString();
+            //sessionCounterText.text = "NFT DAILY RUNS : " + (gameplayView.instance.GetSessions());
 
         }
-        */
+        
 
         //Debug.Log("2");
 
+        /*
         sessionsLeft.SetActive(true);
         sessionsNotLeft.SetActive(false);
         //currentScore.text = "CHICKENS CAUGHT : " + SinglePlayerScoreBoardScript.instance.GetScore().ToString();
@@ -220,9 +232,9 @@ public class gameEndView : MonoBehaviour
         weeklyScore.text = "WEEKLY SCORE : " + (gameplayView.instance.GetWeeklyScore());
         allTimeScore.text = "ALL TIME SCORE : " + (gameplayView.instance.GetAllTimeScore());
         longestDistance.text = "LONGEST RUN : " + (gameplayView.instance.GetLongestDistanceScore());
-        //sessionCounterText.text = "NFT DAILY RUNS : " + (gameplayView.instance.GetSessions()) + "/10";
-        sessionCounterText.text = "NFT DAILY RUNS : " + (gameplayView.instance.GetSessions());
-
+        sessionCounterText.text = "NFT DAILY RUNS : " + (gameplayView.instance.GetSessions()) + "/20";
+        //sessionCounterText.text = "NFT DAILY RUNS : " + (gameplayView.instance.GetSessions());
+        */
 
         //characters = spawner.GetCharacterList();
         Debug.Log("Load character");
@@ -315,8 +327,8 @@ public class gameEndView : MonoBehaviour
     public void setScoreToUI()
     {
         gameEnded.Value = true;
-        /*
-        if (gameplayView.instance.GetSessions() < 10)
+        
+        if (gameplayView.instance.GetSessions() < limit)
         {
 
             sessionsLeft.SetActive(true);
@@ -324,25 +336,30 @@ public class gameEndView : MonoBehaviour
             //currentScore.text = "CHICKENS CAUGHT : " + SinglePlayerScoreBoardScript.instance.GetScore().ToString();
             currentScore.text = "DISTANCE TRAVELED : " + PlayerStats.Instance.GetScore().ToString();
             dailyScore.text = "DAILY SCORE : " + (gameplayView.instance.GetDailyScore());
+            weeklyScore.text = "WEEKLY SCORE : " + (gameplayView.instance.GetWeeklyScore());
             allTimeScore.text = "ALL TIME SCORE : " + (gameplayView.instance.GetAllTimeScore());
-            //sessionCounterText.text = "NFT DAILY RUNS : " + (gameplayView.instance.GetSessions()) + "/10";
-            sessionCounterText.text = "NFT DAILY RUNS : " + (gameplayView.instance.GetSessions());
+            longestDistance.text = "LONGEST RUN : " + (gameplayView.instance.GetLongestDistanceScore());
+            sessionCounterText.text = "NFT DAILY RUNS : " + (gameplayView.instance.GetSessions()) + "/" + limit.ToString();
+            //sessionCounterText.text = "NFT DAILY RUNS : " + (gameplayView.instance.GetSessions());
 
         }
-        else if (gameplayView.instance.GetSessions() >= 10)
+        else if (gameplayView.instance.GetSessions() >= limit)
         {
             sessionsLeft.SetActive(false);
             sessionsNotLeft.SetActive(true);
             dailyScore.text = "DAILY SCORE : " + (gameplayView.instance.GetDailyScore());
+            weeklyScore.text = "WEEKLY SCORE : " + (gameplayView.instance.GetWeeklyScore());
             allTimeScore.text = "ALL TIME SCORE : " + (gameplayView.instance.GetAllTimeScore());
-            //sessionCounterText.text = "NFT DAILY RUNS : " + (gameplayView.instance.GetSessions()) + "/10";
-            sessionCounterText.text = "NFT DAILY RUNS : " + (gameplayView.instance.GetSessions());
+            longestDistance.text = "LONGEST RUN : " + (gameplayView.instance.GetLongestDistanceScore());
+            sessionCounterText.text = "NFT DAILY RUNS : " + (gameplayView.instance.GetSessions()) + "/" + limit.ToString();
+            //sessionCounterText.text = "NFT DAILY RUNS : " + (gameplayView.instance.GetSessions());
 
         }
-        */
+        
 
         //Debug.Log("3");
 
+        /*
         sessionsLeft.SetActive(true);
         sessionsNotLeft.SetActive(false);
         //currentScore.text = "CHICKENS CAUGHT : " + SinglePlayerScoreBoardScript.instance.GetScore().ToString();
@@ -353,7 +370,7 @@ public class gameEndView : MonoBehaviour
         longestDistance.text = "LONGEST RUN : " + (gameplayView.instance.GetLongestDistanceScore());
         //sessionCounterText.text = "NFT DAILY RUNS : " + (gameplayView.instance.GetSessions()) + "/10";
         sessionCounterText.text = "NFT DAILY RUNS : " + (gameplayView.instance.GetSessions());
-
+        */
     }
     public void TryAgain()
     { 

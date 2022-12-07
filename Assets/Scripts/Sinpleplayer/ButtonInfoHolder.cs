@@ -96,12 +96,15 @@ public class ButtonInfoHolder : MonoBehaviour
 
     void UpdateSessionInfo()
     {
-        CSV.EnablePlay();
+        //CSV.EnablePlay();
 
-        /*
-        if (warriorGameModel.currentNFTSession<10)
+        
+        if (warriorGameModel.currentNFTSession < 20)
+        {
             CSV.EnablePlay();
-        info.text = "PLAYED " + warriorGameModel.currentNFTSession + " OUT OF 10 DAILY GAMES";
-        */
+        }
+            
+        info.text = "PLAYED " + warriorGameModel.currentNFTSession + " OUT OF 20 DAILY GAMES";
+        
     }
 }

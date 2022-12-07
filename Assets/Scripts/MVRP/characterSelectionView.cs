@@ -38,11 +38,14 @@ public class characterSelectionView : MonoBehaviour
     //for skip
     bool skipping;
     UnityEngine.Object[] info;
+
+    private int limit = 20;
+
     public void Start()
     {
         observeCharacterSelectionBtns();
         observesessionCounter();
-        //DisablePlay();
+        DisablePlay();
     }
     public void observesessionCounter()
     {
@@ -55,7 +58,7 @@ public class characterSelectionView : MonoBehaviour
     }
     void setPlayButtonDependtoSessions(int sessions)
     {
-        if (sessions >= 10)
+        if (sessions >= limit)
         {
             select.interactable = false;
             

@@ -17978,7 +17978,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa7ad64cfa25a8941b8995f3e49f886f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeLeft: 50
+  timeLeft: 5
   checkpointDistance: 0
   playerScore: 0
   longestRun: 0
@@ -61814,6 +61814,22 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 2474441163958323097}
+    - target: {fileID: 1746212748, guid: 3f310d4e21035d74b8722da693aa8585, type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1746212748, guid: 3f310d4e21035d74b8722da693aa8585, type: 3}
+      propertyPath: InitialModule.startSize.minScalar
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 1746212749, guid: 3f310d4e21035d74b8722da693aa8585, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 1746212749, guid: 3f310d4e21035d74b8722da693aa8585, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.26
+      objectReference: {fileID: 0}
     - target: {fileID: 1982401531218819207, guid: 3f310d4e21035d74b8722da693aa8585, type: 3}
       propertyPath: mapNo
       value: 

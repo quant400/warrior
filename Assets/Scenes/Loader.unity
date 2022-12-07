@@ -269,6 +269,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d51c9d7fef4195449ba232972b117c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!224 &73760243 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 8126445882156059210, guid: 0a974a8ad789e9c43a3d08fe44cd8f2f, type: 3}
+  m_PrefabInstance: {fileID: 1931956545}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &94411082
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9603,11 +9608,11 @@ RectTransform:
   m_GameObject: {fileID: 1606816190}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2001003697}
-  m_RootOrder: 14
+  m_Father: {fileID: 73760243}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -11067,6 +11072,18 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 179549523, guid: 0a974a8ad789e9c43a3d08fe44cd8f2f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 484129933, guid: 0a974a8ad789e9c43a3d08fe44cd8f2f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 799452198, guid: 0a974a8ad789e9c43a3d08fe44cd8f2f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 823841854, guid: 0a974a8ad789e9c43a3d08fe44cd8f2f, type: 3}
       propertyPath: cursorMode
       value: 0
@@ -11193,7 +11210,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4381750605995796525, guid: 0a974a8ad789e9c43a3d08fe44cd8f2f, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -253861.55
+      value: -287190.97
       objectReference: {fileID: 0}
     - target: {fileID: 5563223587690245332, guid: 0a974a8ad789e9c43a3d08fe44cd8f2f, type: 3}
       propertyPath: segmentSelect
@@ -11270,6 +11287,14 @@ PrefabInstance:
     - target: {fileID: 8126445881314723590, guid: 0a974a8ad789e9c43a3d08fe44cd8f2f, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8126445881342401004, guid: 0a974a8ad789e9c43a3d08fe44cd8f2f, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 113
+      objectReference: {fileID: 0}
+    - target: {fileID: 8126445881342401005, guid: 0a974a8ad789e9c43a3d08fe44cd8f2f, type: 3}
+      propertyPath: m_text
+      value: YOU HAVE PLAYED 20 ROUNDS TODAY COME BACK TOMORROW & TRY AGAIN
       objectReference: {fileID: 0}
     - target: {fileID: 8126445881414140771, guid: 0a974a8ad789e9c43a3d08fe44cd8f2f, type: 3}
       propertyPath: m_IsActive
@@ -11367,6 +11392,10 @@ PrefabInstance:
       propertyPath: methodSelect
       value: 
       objectReference: {fileID: 94411083}
+    - target: {fileID: 8126445882270659754, guid: 0a974a8ad789e9c43a3d08fe44cd8f2f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8126445882353529433, guid: 0a974a8ad789e9c43a3d08fe44cd8f2f, type: 3}
       propertyPath: m_IsActive
       value: 0

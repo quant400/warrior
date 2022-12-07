@@ -105,6 +105,7 @@ public class gameEndView : MonoBehaviour
         */
 
         if (gameplayView.instance.isRestApi && !gameplayView.instance.isTryout)
+        //if (gameplayView.instance.isRestApi)
         {
             Debug.Log("before Score");
 
@@ -168,7 +169,7 @@ public class gameEndView : MonoBehaviour
         //SinglePlayerScoreBoardScript.instance.gameObject.transform.GetChild(0).gameObject.SetActive(false);
         */
 
-        Debug.Log("1");
+        //Debug.Log("1");
 
         sessionsLeft.SetActive(true);
         sessionsNotLeft.SetActive(false);
@@ -209,7 +210,7 @@ public class gameEndView : MonoBehaviour
         }
         */
 
-        Debug.Log("2");
+        //Debug.Log("2");
 
         sessionsLeft.SetActive(true);
         sessionsNotLeft.SetActive(false);
@@ -231,6 +232,12 @@ public class gameEndView : MonoBehaviour
         Debug.Log(currentNFT.name);
         Debug.Log(displayChar.name);
         //var temp = Instantiate(displayChar, characterDisplay.position, Quaternion.identity, characterDisplay);
+
+        foreach (Transform child in characterDisplay.transform)
+        {
+            Destroy(child.gameObject);
+        }
+
         var temp = Instantiate(displayChar, characterDisplay.position, Quaternion.identity);
 
         temp.gameObject.transform.SetParent(characterDisplay.transform);
@@ -334,7 +341,7 @@ public class gameEndView : MonoBehaviour
         }
         */
 
-        Debug.Log("3");
+        //Debug.Log("3");
 
         sessionsLeft.SetActive(true);
         sessionsNotLeft.SetActive(false);

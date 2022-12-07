@@ -15,6 +15,7 @@ public class uiView : MonoBehaviour
     [SerializeField] GameObject resultsCanvas;
     [SerializeField] GameObject leaderBoeardCanvas;
     [SerializeField] GameObject startCanvas;
+    [SerializeField] GameObject methodSelect;
 
 
     public Button loginBtn, PlayMode, Play, LeaderBoard, BackToCharacterSelection, Skip, tryout, backFromLeaderboard , tryagain;
@@ -44,7 +45,8 @@ public class uiView : MonoBehaviour
     public void ObserveBtns()
     {
         loginBtn.OnClickAsObservable()
-            .Do(_=> webloginView.OnLogin(loginBtn, Skip, tryout))
+            //.Do(_=> webloginView.OnLogin(loginBtn, Skip, tryout))
+            .Do(_ => MethodSelect())
             .Where(_ => PlaySounds.instance != null)
             .Do(_ => PlaySounds.instance.Play())
             .Subscribe()
@@ -167,5 +169,10 @@ public class uiView : MonoBehaviour
         if(gameplayView.instance.GetSessions()<10)
             tryagain.gameObject.SetActive(state);
 
+    }
+
+    public void MethodSelect()
+    {
+        methodSelect.SetActive(true);
     }
 }

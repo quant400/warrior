@@ -286,7 +286,7 @@ public class KeyMaker : MonoBehaviour
             else
             {
                 //if server responded with an error and resend score 
-                if (gameplayView.instance.GetSessions() <= 10 && scoreUpdateTried < 5)
+                if (gameplayView.instance.GetSessions() <= 20 && scoreUpdateTried < 5)
                 {
                     scoreUpdateTried++;
                     gameplayView.instance.transform.GetComponentInChildren<gameEndView>().Invoke("setScoreAtStart", 6);

@@ -31,6 +31,12 @@ public class PlayerStats : MonoBehaviour
 
     private bool highscoreChanged;
 
+    public GameObject fireworks;
+
+    private ParticleSystem fireworksParticleSystem;
+
+    private bool fireworksTimerBool;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -48,6 +54,12 @@ public class PlayerStats : MonoBehaviour
         }
 
         highscoreChanged = false;
+
+        fireworksTimerBool = false;
+
+        fireworksParticleSystem = fireworks.GetComponent<ParticleSystem>();
+
+        fireworksParticleSystem.Stop();
     }
 
     // Update is called once per frame
@@ -64,6 +76,11 @@ public class PlayerStats : MonoBehaviour
             {
                 Debug.Log("New Highscore");
 
+                if(!fireworksTimerBool)
+                {
+                    StartCoroutine(fireworksTimer(5f));
+                }
+
                 highscoreChanged = true;
             }
         }
@@ -75,5 +92,16 @@ public class PlayerStats : MonoBehaviour
         return (int)playerScore;
     }
 
+    IEnumerator fireworksTimer(float secs)
+    {
+        fireworksTimerBool = true;
 
+        fireworksParticleSystem.Play();
+
+        yield return new WaitForSeconds(secs);
+
+        fireworksParticleSystem.Stop();
+
+        fireworksTimerBool = false;
+    }
 }

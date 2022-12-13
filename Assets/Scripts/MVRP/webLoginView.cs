@@ -27,6 +27,10 @@ public class webLoginView : MonoBehaviour
     NFTGetView nftGetter;
     [SerializeField]
     GameObject loginButton;
+    [SerializeField]
+    GameObject methodSelect;
+    [SerializeField]
+    GameObject signOutButton;
 
     // temp for skip
     [SerializeField]
@@ -54,6 +58,8 @@ public class webLoginView : MonoBehaviour
     {
         if (warriorGameModel.userIsLogged.Value)
         {
+            //Debug.Log("user logged in");
+
             loginBtn.GetComponent<Button>().interactable = false;
             skipBtn.GetComponent<Button>().interactable = false;
             tryoutBtn.GetComponent<Button>().interactable = false;
@@ -61,6 +67,9 @@ public class webLoginView : MonoBehaviour
         }
         else
         {
+            //Debug.Log("user NOT logged in");
+
+            methodSelect.SetActive(false);
             Web3Connect();
             OnConnected();
         }
@@ -84,9 +93,8 @@ public class webLoginView : MonoBehaviour
         loginButton.GetComponent<Button>().interactable = false;
         skipButton.GetComponent<Button>().interactable = false;
         tryoutButton.GetComponent<Button>().interactable = false;
+        signOutButton.SetActive(false);
         nftGetter.GetNFT();
-
-
     }
 
     public void OnSkip()

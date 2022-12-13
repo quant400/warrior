@@ -79,11 +79,19 @@ public class NFTGetView : MonoBehaviour
         warriorGameModel.currentNFTArray = NFTData;
         if (NFTData.Length == 0)
         {
+            /*
             noNFTCanvas.SetActive(true);
             warriorGameModel.userIsLogged.Value = false;
+            */
+
+            gameplayView.instance.usingFreemint = true;
+            characterSelectView.FreeMint();
+            warriorGameModel.userIsLogged.Value = true;
         }
         else
         {
+            gameplayView.instance.usingFreemint = false;
+
             noNFTCanvas.SetActive(false);
             characterSelectView.SetData(NFTData);
             warriorGameModel.userIsLogged.Value = true;

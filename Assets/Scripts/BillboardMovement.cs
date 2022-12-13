@@ -12,6 +12,16 @@ public class BillboardMovement : MonoBehaviour
 
     public int updateLocationTimes = 1;
 
+    private Collider objectCollider;
+
+    private bool objectInCollision;
+
+    public Sprite[] billboardAds;
+
+    private SpriteRenderer billboardSprite;
+
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -20,6 +30,14 @@ public class BillboardMovement : MonoBehaviour
         playerPos = playerBody.transform.position;
 
         gameObjectPos = gameObject.transform.position;
+
+        objectCollider = gameObject.GetComponent<Collider>();
+
+        objectInCollision = false;
+
+        billboardSprite = gameObject.transform.GetChild(1).transform.GetComponent<SpriteRenderer>();
+
+        billboardSprite.sprite = billboardAds[UnityEngine.Random.Range(0, billboardAds.Length)];
 
         /*
 
@@ -44,9 +62,57 @@ public class BillboardMovement : MonoBehaviour
 
                 gameObject.transform.position = gameObjectPos;
 
+                if(objectInCollision)
+                {
+                    gameObjectPos.x = UnityEngine.Random.Range(playerPos.x + 300, playerPos.x + 500);
+
+                    gameObject.transform.position = gameObjectPos;
+                }
+
+                billboardSprite.sprite = billboardAds[UnityEngine.Random.Range(0, billboardAds.Length)];
+
                 updateLocationTimes--;
             }
         }
 
+
+        if(objectInCollision && playerPos.x < gameObject.transform.position.x - 200)
+        {
+            gameObjectPos.x = UnityEngine.Random.Range(playerPos.x + 300, playerPos.x + 500);
+
+            gameObject.transform.position = gameObjectPos;
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.transform.CompareTag("Ground"))
+        {
+            objectInCollision = true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.transform.CompareTag("Ground"))
+        {
+            objectInCollision = false;
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.transform.CompareTag("Ground"))
+        {
+            objectInCollision = true;
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.transform.CompareTag("Ground"))
+        {
+            objectInCollision = false;
+        }
     }
 }

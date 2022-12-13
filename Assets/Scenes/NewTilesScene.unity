@@ -17903,6 +17903,17 @@ BoxCollider2D:
   m_CorrespondingSourceObject: {fileID: 2939620707129160649, guid: 69ec154776e5beb439f7ee40dbf47db7, type: 3}
   m_PrefabInstance: {fileID: 2014543048}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &669740522 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 669740522, guid: 300385bed0944204daa0d2b1592e14ad, type: 3}
+  m_PrefabInstance: {fileID: 1817958622}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &715512720 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 715512720, guid: 300385bed0944204daa0d2b1592e14ad, type: 3}
@@ -53043,6 +53054,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 756149752, guid: 300385bed0944204daa0d2b1592e14ad, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -386
+      objectReference: {fileID: 0}
+    - target: {fileID: 756149754, guid: 300385bed0944204daa0d2b1592e14ad, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 251470971922181960, guid: 300385bed0944204daa0d2b1592e14ad, type: 3}
       propertyPath: m_Name
       value: 'SinglePlayerUIController '
@@ -61662,17 +61681,6 @@ MonoBehaviour:
   m_TrackedDeviceOrientationAction: {fileID: 7970375526676320489, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
   m_DeselectOnBackgroundClick: 1
   m_PointerBehavior: 0
---- !u!114 &2144673500 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2144673500, guid: 300385bed0944204daa0d2b1592e14ad, type: 3}
-  m_PrefabInstance: {fileID: 1817958622}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1982401531218819206 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5833760049296812156, guid: 3f310d4e21035d74b8722da693aa8585, type: 3}
@@ -61897,26 +61905,10 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 2474441163958323097}
-    - target: {fileID: 1746212748, guid: 3f310d4e21035d74b8722da693aa8585, type: 3}
-      propertyPath: InitialModule.startSize.scalar
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1746212748, guid: 3f310d4e21035d74b8722da693aa8585, type: 3}
-      propertyPath: InitialModule.startSize.minScalar
-      value: 0.05
-      objectReference: {fileID: 0}
-    - target: {fileID: 1746212749, guid: 3f310d4e21035d74b8722da693aa8585, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.35
-      objectReference: {fileID: 0}
-    - target: {fileID: 1746212749, guid: 3f310d4e21035d74b8722da693aa8585, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.26
-      objectReference: {fileID: 0}
     - target: {fileID: 1982401531218819207, guid: 3f310d4e21035d74b8722da693aa8585, type: 3}
       propertyPath: mapNo
       value: 
-      objectReference: {fileID: 2144673500}
+      objectReference: {fileID: 669740522}
     - target: {fileID: 3114095610268794748, guid: 3f310d4e21035d74b8722da693aa8585, type: 3}
       propertyPath: m_Camera
       value: 
@@ -62009,6 +62001,50 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 421830967, guid: a769eb2e8cfb5154a97f7bc5a8d17c3c, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 02cd52b8df1bd954582a009b588f4d8b, type: 3}
+    - target: {fileID: 421830968, guid: a769eb2e8cfb5154a97f7bc5a8d17c3c, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.0032991366
+      objectReference: {fileID: 0}
+    - target: {fileID: 421830968, guid: a769eb2e8cfb5154a97f7bc5a8d17c3c, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.002893968
+      objectReference: {fileID: 0}
+    - target: {fileID: 421830968, guid: a769eb2e8cfb5154a97f7bc5a8d17c3c, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.03328263
+      objectReference: {fileID: 0}
+    - target: {fileID: 421830968, guid: a769eb2e8cfb5154a97f7bc5a8d17c3c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.000034999848
+      objectReference: {fileID: 0}
+    - target: {fileID: 421830968, guid: a769eb2e8cfb5154a97f7bc5a8d17c3c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.01778
+      objectReference: {fileID: 0}
+    - target: {fileID: 3469287837456140088, guid: a769eb2e8cfb5154a97f7bc5a8d17c3c, type: 3}
+      propertyPath: billboardAds.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3469287837456140088, guid: a769eb2e8cfb5154a97f7bc5a8d17c3c, type: 3}
+      propertyPath: billboardAds.Array.data[0]
+      value: 
+      objectReference: {fileID: 21300000, guid: 097a280e6343508468c8c95af3c147db, type: 3}
+    - target: {fileID: 3469287837456140088, guid: a769eb2e8cfb5154a97f7bc5a8d17c3c, type: 3}
+      propertyPath: billboardAds.Array.data[1]
+      value: 
+      objectReference: {fileID: 21300000, guid: 02cd52b8df1bd954582a009b588f4d8b, type: 3}
+    - target: {fileID: 3469287837456140088, guid: a769eb2e8cfb5154a97f7bc5a8d17c3c, type: 3}
+      propertyPath: billboardAds.Array.data[2]
+      value: 
+      objectReference: {fileID: 21300000, guid: f8e6f541b89feb142afc0866e03bfc4b, type: 3}
+    - target: {fileID: 3469287837456140088, guid: a769eb2e8cfb5154a97f7bc5a8d17c3c, type: 3}
+      propertyPath: billboardAds.Array.data[3]
+      value: 
+      objectReference: {fileID: 21300000, guid: 22fe3fae5f6f8c1418b7a4aa20b636fd, type: 3}
     - target: {fileID: 5991464186618076014, guid: a769eb2e8cfb5154a97f7bc5a8d17c3c, type: 3}
       propertyPath: m_RootOrder
       value: 10
@@ -62056,10 +62092,6 @@ PrefabInstance:
     - target: {fileID: 6372070390363587028, guid: a769eb2e8cfb5154a97f7bc5a8d17c3c, type: 3}
       propertyPath: m_Name
       value: Billboard
-      objectReference: {fileID: 0}
-    - target: {fileID: 6372070390363587028, guid: a769eb2e8cfb5154a97f7bc5a8d17c3c, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a769eb2e8cfb5154a97f7bc5a8d17c3c, type: 3}

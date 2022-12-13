@@ -18,8 +18,9 @@ public class uiView : MonoBehaviour
     [SerializeField] GameObject methodSelect;
 
 
-    public Button loginBtn, PlayMode, Play, LeaderBoard, BackToCharacterSelection, Skip, tryout, backFromLeaderboard , tryagain;
+    public Button loginBtn, metamaskBtn, PlayMode, Play, LeaderBoard, BackToCharacterSelection, Skip, tryout, backFromLeaderboard , tryagain;
     [SerializeField] webLoginView webloginView;
+    
     // Start is called before the first frame update
     private void Awake()
     {
@@ -44,6 +45,14 @@ public class uiView : MonoBehaviour
     }
     public void ObserveBtns()
     {
+
+
+        metamaskBtn.OnClickAsObservable()
+            .Do(_=> webloginView.OnLogin(metamaskBtn, Skip, tryout))
+            .Where(_ => PlaySounds.instance != null)
+            .Do(_ => PlaySounds.instance.Play())
+            .Subscribe()
+            .AddTo(this);
         loginBtn.OnClickAsObservable()
             //.Do(_=> webloginView.OnLogin(loginBtn, Skip, tryout))
             .Do(_ => MethodSelect())
@@ -174,5 +183,10 @@ public class uiView : MonoBehaviour
     public void MethodSelect()
     {
         methodSelect.SetActive(true);
+    }
+
+    public void MethodSelectDisable()
+    {
+        methodSelect.SetActive(false);
     }
 }

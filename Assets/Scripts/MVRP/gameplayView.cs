@@ -26,6 +26,8 @@ public class gameplayView : MonoBehaviour
     [SerializeField]
     float mushroomPowerUpChance;
 
+    public bool usingFreemint = false;
+
     public NFTInfo chosenNFT;
 
     public int dailyScore, AlltimeScore, weeklyScore, longestDistance, sessions;

@@ -31,6 +31,12 @@ public class FireBaseWebGLAuth : MonoBehaviour
     public TMP_InputField passwordRegisterField;
     public TMP_InputField passwordRegisterVerifyField;
     public TMP_Text warningRegisterText;
+    public bool accpetedTos;
+
+    [Header("PasswordReset")]
+    public Transform passwordResetPanel;
+    public TMP_InputField emailPasswordReset;
+    public TMP_Text warningEmailReset;
 
     [Header ("Others")]
     [SerializeField]
@@ -53,17 +59,18 @@ public class FireBaseWebGLAuth : MonoBehaviour
 
     public void OnSignInClick()
     {
-        warningLoginText.text = "";
-        if (emailLoginField.text == "" || !IsValidEmail(emailLoginField.text))
-        {
-            SignInPanel.DOShakePosition(1, 1);
-            warningLoginText.text = "Please enter a valid email".ToUpper();
-            warningLoginText.color = Color.red;
-        }
-        else
-        {
-            SignInWithEmailAndPassword();
-        }
+         warningLoginText.text = "";
+         if (emailLoginField.text == "" || !IsValidEmail(emailLoginField.text))
+         {
+             SignInPanel.DOShakePosition(1, 1);
+             warningLoginText.text = "Please enter a valid email".ToUpper();
+             warningLoginText.color = Color.red;
+         }
+         else
+         {
+             SignInWithEmailAndPassword();
+         }
+       
     }
 
     public void OnRegisterClick()
@@ -81,6 +88,12 @@ public class FireBaseWebGLAuth : MonoBehaviour
             warningRegisterText.text = "Password does not match".ToUpper();
             warningRegisterText.color = Color.red;
         }
+        else if(!accpetedTos)
+        {
+            registerPanel.DOShakePosition(1, 1);
+            warningRegisterText.text = "please read and accept the terms of servive and privacy policy".ToUpper();
+            warningRegisterText.color = Color.red;
+        }
         else
         {
             CreateUserWithEmailAndPassword();
@@ -93,12 +106,12 @@ public class FireBaseWebGLAuth : MonoBehaviour
     public void CreateUserWithEmailAndPassword() =>
         FirebaseAuth.CreateUserWithEmailAndPassword(emailRegisterField.text, passwordRegisterField.text, gameObject.name, "SignedIn", "DisplayError");
 
-    public void SignInWithGoogle()
-    {
-        PlayerPrefs.SetString("LastLogin", System.DateTime.Now.ToBinary().ToString());
-        PlayerPrefs.SetInt("SignOut",0);
+    public void SignInWithGoogle()=>
         FirebaseAuth.SignInWithGoogle(gameObject.name, "SignedIn", "DisplayError");
-    }
+
+    
+    public void ResetPasswordEmail()=>
+        FirebaseAuth.ResetPassword(emailPasswordReset.text, gameObject.name, "DisplayResetReply", "DisplayResetReply");
 
 
 
@@ -106,9 +119,14 @@ public class FireBaseWebGLAuth : MonoBehaviour
     {
         Debug.Log(info);
     }
+
+    void DisplayResetReply(string info)
+    {
+        warningEmailReset.text = info.ToUpper();
+    }
     void DisplayUserInfo(string info)
     {
-        if (info != "" && CheckIfloginValid() && (!PlayerPrefs.HasKey("SignOut") || PlayerPrefs.GetInt("SignOut") == 0))
+        if (info != "")
         {
             Debug.Log(info);
             FirebaseUser pl = JsonUtility.FromJson<FirebaseUser>(info);
@@ -122,22 +140,21 @@ public class FireBaseWebGLAuth : MonoBehaviour
     }
     void SignedIn(string info)
     {
-        PlayerPrefs.SetInt("SignOut", 0);
         InfoDisplay.text = info.ToUpper();
         currentOpenWindiow.SetActive(false);
         currentOpenWindiow = methodSelect;
         PlayerPrefs.SetString("Account", "0xD408B954A1Ec6c53BE4E181368F1A54ca434d2f3");
         gameplayView.instance.isTryout = false;
         //change what loads when mint nft added and stuff linked
-        GetComponentInParent<NFTGetView>().Skip();
-        PlayerPrefs.SetString("LastLogin", System.DateTime.Now.ToBinary().ToString());
-        //Debug.Log(PlayerPrefs.GetString("LastLogin"));
+        GetComponentInParent<NFTGetView>().Display(new NFTInfo[0]);
 
     }
     
-    public void SignOut()
+    public void LogOut()
     {
-        PlayerPrefs.SetInt("SignOut", 1);
+        gameplayView.instance.usingFreemint = false;
+        FirebaseAuth.SignOut();
+        warriorGameModel.userIsLogged.Value = false;
         GetComponentInParent<uiView>().goToMenu("login");
         InfoDisplay.text = "";
         emailRegisterField.text = "";
@@ -147,6 +164,7 @@ public class FireBaseWebGLAuth : MonoBehaviour
         emailLoginField.text = "";
         passwordLoginField.text = "";
         warningLoginText.text = "";
+        warningEmailReset.text = "";
     }
 
     void DisplayError(string error)
@@ -197,6 +215,21 @@ public class FireBaseWebGLAuth : MonoBehaviour
         currentOpenWindiow = registerPanel.gameObject;
         registerPanel.gameObject.SetActive(true);
     }
+
+    public void OpenPasswordReset()
+    {
+        if (currentOpenWindiow == null)
+        {
+            currentOpenWindiow = methodSelect;
+        }
+        emailRegisterField.text = "";
+        passwordRegisterField.text = "";
+        passwordRegisterVerifyField.text = "";
+        warningRegisterText.text = "";
+        currentOpenWindiow.SetActive(false);
+        currentOpenWindiow = passwordResetPanel.gameObject;
+        passwordResetPanel.gameObject.SetActive(true);
+    }
     public void Close()
     {
         if (currentOpenWindiow != null)
@@ -210,6 +243,8 @@ public class FireBaseWebGLAuth : MonoBehaviour
             emailLoginField.text = "";
             passwordLoginField.text = "";
             warningLoginText.text = "";
+            emailPasswordReset.text = "";
+            warningEmailReset.text = "";
         }
     }
     bool IsValidEmail(string email)
@@ -218,25 +253,28 @@ public class FireBaseWebGLAuth : MonoBehaviour
 
         return emailRegex.IsMatch(email);
     }
-   
 
-    bool CheckIfloginValid()
+    public void OpenMethodSelect()
     {
-        if (PlayerPrefs.HasKey("LastLogin"))
-        {
-            DateTime currentDate = System.DateTime.Now;
+        methodSelect.SetActive(true);
+        currentOpenWindiow = methodSelect;
+    }
 
-            long temp = Convert.ToInt64(PlayerPrefs.GetString("LastLogin"));
-            DateTime oldDate = DateTime.FromBinary(temp);
-            TimeSpan difference = currentDate.Subtract(oldDate);
-            if (difference.TotalMinutes >= 5)
-                return false;
-            else
-                return true;
-        }
-        else
-            return false;
+    public void ToggleTos(bool val)
+    {
+        accpetedTos = val;
+    }
+    public void LoadTos()
+    {
+        //Debug.Log(1);
 
+        Application.OpenURL("https://www.cryptofightclub.io/terms-of-service");
+    }
+    public void LoadPrivacy()
+    {
+        //Debug.Log(2);
+
+        Application.OpenURL("https://www.cryptofightclub.io/privacy-policy");
     }
  #endregion utility
        

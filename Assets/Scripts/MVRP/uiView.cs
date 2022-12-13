@@ -182,7 +182,13 @@ public class uiView : MonoBehaviour
 
     public void MethodSelect()
     {
-        methodSelect.SetActive(true);
+        if(methodSelect.activeSelf == false)
+        {
+            //Debug.Log("Method select active");
+
+            methodSelect.SetActive(true);
+        }
+        
     }
 
     public void MethodSelectDisable()

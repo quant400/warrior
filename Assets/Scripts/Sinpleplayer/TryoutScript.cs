@@ -8,6 +8,8 @@ public class TryoutScript : MonoBehaviour
     [SerializeField]
     GameObject startscreen;
     [SerializeField]
+    GameObject loginPanel;
+    [SerializeField]
     NFTGetView nftGetter;
 
     /*
@@ -113,6 +115,7 @@ public class TryoutScript : MonoBehaviour
     {
         gameObject.SetActive(false);
         startscreen.SetActive(true);
+        loginPanel.SetActive(true);
         gameplayView.instance.isTryout = false;
     }
 
@@ -123,6 +126,7 @@ public class TryoutScript : MonoBehaviour
             Debug.Log("Called");
             transform.parent.GetChild(2).gameObject.SetActive(true);
             transform.parent.GetChild(2).GetChild(0).GetChild(4).gameObject.SetActive(true);
+            loginPanel.SetActive(true);
             transform.parent.GetChild(6).gameObject.SetActive(false);
             warriorGameModel.gameCurrentStep.Value = warriorGameModel.GameSteps.OnLogin;
             SceneManager.LoadScene(warriorGameModel.mainSceneLoadname.sceneName);

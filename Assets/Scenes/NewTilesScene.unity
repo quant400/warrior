@@ -53023,14 +53023,6 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2612304960970213025, guid: da77b1413aa8bb547955541bfdb402d7, type: 3}
-      propertyPath: m_AnimatedTiles.Array.data[21].second.m_AnimationSpeed
-      value: 10.000001
-      objectReference: {fileID: 0}
-    - target: {fileID: 2612304960970213025, guid: da77b1413aa8bb547955541bfdb402d7, type: 3}
-      propertyPath: m_AnimatedTiles.Array.data[30].second.m_AnimationSpeed
-      value: 10
-      objectReference: {fileID: 0}
     - target: {fileID: 2612304960970213026, guid: da77b1413aa8bb547955541bfdb402d7, type: 3}
       propertyPath: m_ColliderPaths.Array.size
       value: 0
@@ -62001,50 +61993,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 421830967, guid: a769eb2e8cfb5154a97f7bc5a8d17c3c, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 02cd52b8df1bd954582a009b588f4d8b, type: 3}
-    - target: {fileID: 421830968, guid: a769eb2e8cfb5154a97f7bc5a8d17c3c, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.0032991366
-      objectReference: {fileID: 0}
-    - target: {fileID: 421830968, guid: a769eb2e8cfb5154a97f7bc5a8d17c3c, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.002893968
-      objectReference: {fileID: 0}
-    - target: {fileID: 421830968, guid: a769eb2e8cfb5154a97f7bc5a8d17c3c, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.03328263
-      objectReference: {fileID: 0}
-    - target: {fileID: 421830968, guid: a769eb2e8cfb5154a97f7bc5a8d17c3c, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.000034999848
-      objectReference: {fileID: 0}
-    - target: {fileID: 421830968, guid: a769eb2e8cfb5154a97f7bc5a8d17c3c, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.01778
-      objectReference: {fileID: 0}
-    - target: {fileID: 3469287837456140088, guid: a769eb2e8cfb5154a97f7bc5a8d17c3c, type: 3}
-      propertyPath: billboardAds.Array.size
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 3469287837456140088, guid: a769eb2e8cfb5154a97f7bc5a8d17c3c, type: 3}
-      propertyPath: billboardAds.Array.data[0]
-      value: 
-      objectReference: {fileID: 21300000, guid: 097a280e6343508468c8c95af3c147db, type: 3}
-    - target: {fileID: 3469287837456140088, guid: a769eb2e8cfb5154a97f7bc5a8d17c3c, type: 3}
-      propertyPath: billboardAds.Array.data[1]
-      value: 
-      objectReference: {fileID: 21300000, guid: 02cd52b8df1bd954582a009b588f4d8b, type: 3}
-    - target: {fileID: 3469287837456140088, guid: a769eb2e8cfb5154a97f7bc5a8d17c3c, type: 3}
-      propertyPath: billboardAds.Array.data[2]
-      value: 
-      objectReference: {fileID: 21300000, guid: f8e6f541b89feb142afc0866e03bfc4b, type: 3}
-    - target: {fileID: 3469287837456140088, guid: a769eb2e8cfb5154a97f7bc5a8d17c3c, type: 3}
-      propertyPath: billboardAds.Array.data[3]
-      value: 
-      objectReference: {fileID: 21300000, guid: 22fe3fae5f6f8c1418b7a4aa20b636fd, type: 3}
     - target: {fileID: 5991464186618076014, guid: a769eb2e8cfb5154a97f7bc5a8d17c3c, type: 3}
       propertyPath: m_RootOrder
       value: 10

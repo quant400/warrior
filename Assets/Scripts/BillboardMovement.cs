@@ -25,6 +25,8 @@ public class BillboardMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        int rand = 0;
+
         playerBody = GameObject.FindGameObjectWithTag("PlayerBody");
 
         playerPos = playerBody.transform.position;
@@ -36,8 +38,10 @@ public class BillboardMovement : MonoBehaviour
         objectInCollision = false;
 
         billboardSprite = gameObject.transform.GetChild(1).transform.GetComponent<SpriteRenderer>();
+        
+        rand = UnityEngine.Random.Range(0, billboardAds.Length);
 
-        billboardSprite.sprite = billboardAds[UnityEngine.Random.Range(0, billboardAds.Length)];
+        billboardSprite.sprite = billboardAds[rand];
 
         /*
 

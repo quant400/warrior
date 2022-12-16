@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class TryoutScript : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class TryoutScript : MonoBehaviour
     GameObject loginPanel;
     [SerializeField]
     NFTGetView nftGetter;
+    [SerializeField]
+    private Button select;
 
     /*
     private void OnEnable()
@@ -21,7 +24,7 @@ public class TryoutScript : MonoBehaviour
         transform.gameObject.SetActive(false);
     }
     */
-    
+
     public void ButtonPressed(int i)
     {
         gameplayView.instance.isTryout = true;
@@ -117,9 +120,15 @@ public class TryoutScript : MonoBehaviour
         startscreen.SetActive(true);
         loginPanel.SetActive(true);
         gameplayView.instance.isTryout = false;
+        DisablePlay();
     }
 
-   public void TryOutHomeBtn()
+    public void DisablePlay()
+    {
+        select.interactable = false;
+    }
+
+    public void TryOutHomeBtn()
     {
         if(gameplayView.instance.isTryout)
         {

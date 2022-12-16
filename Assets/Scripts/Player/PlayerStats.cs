@@ -27,7 +27,7 @@ public class PlayerStats : MonoBehaviour
 
     public float playerScore = 0.0f;
 
-    public int longestRun = 0;
+    public int longestRun = 100000;
 
     private bool highscoreChanged;
 
@@ -50,7 +50,7 @@ public class PlayerStats : MonoBehaviour
         }
         catch
         {
-            longestRun = 0;
+            longestRun = 100000;
         }
 
         highscoreChanged = false;

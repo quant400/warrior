@@ -61905,6 +61905,10 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 2474441163958323097}
+    - target: {fileID: 3414130396246650437, guid: 3f310d4e21035d74b8722da693aa8585, type: 3}
+      propertyPath: chosenNFTName
+      value: a-rod
+      objectReference: {fileID: 0}
     - target: {fileID: 5833760049296812120, guid: 3f310d4e21035d74b8722da693aa8585, type: 3}
       propertyPath: pressEPrompt2
       value: 

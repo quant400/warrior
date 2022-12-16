@@ -91,7 +91,7 @@ public class uiView : MonoBehaviour
           .Subscribe()
           .AddTo(this);
         Skip.OnClickAsObservable()
-        .Do(_ => webloginView.OnSkip())
+        //.Do(_ => webloginView.OnSkip())
         .Where(_ => PlaySounds.instance != null)
         .Do(_ => PlaySounds.instance.Play())
         .Subscribe()
@@ -111,10 +111,7 @@ public class uiView : MonoBehaviour
     }
     public void PlayMainButton()
     {
-
-       
         warriorGameModel.gameCurrentStep.Value = warriorGameModel.GameSteps.OnCharacterSelection;
-
     }
     public void goToMenu(string menuName)
     {

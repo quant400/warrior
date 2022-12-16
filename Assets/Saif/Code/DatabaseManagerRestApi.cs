@@ -13,7 +13,7 @@ public class DatabaseManagerRestApi : MonoBehaviour
 {
     public static DatabaseManagerRestApi _instance;
     ReactiveProperty<int> sessionCounterReactive = new ReactiveProperty<int>();
-    int localID;
+    string localID;
     public int scoreUpdateTried=0;
     private int limit = 20;
 
@@ -56,17 +56,21 @@ public class DatabaseManagerRestApi : MonoBehaviour
     }
     public void setScoreRestApiMain(string _assetID, int _score)
     {
-        int id = int.Parse(_assetID);
-        setScoreWithRestApi(id, _score);
+        setScoreWithRestApi(_assetID, _score);
     }
-    public void setScoreWithRestApi(int assetID,int score)
+    public void setScoreWithRestApi(string assetID,int score)
     {
         
         if (sessionCounterReactive.Value <= limit)
         {
             //StartCoroutine(setScoreInLeaderBoeardRestApi(assetID, score));
 
-            StartCoroutine(KeyMaker.instance.endSessionApi(assetID, score));
+
+            if(!gameplayView.instance.isTryout)
+            {
+                StartCoroutine(KeyMaker.instance.endSessionApi(assetID, score));
+            }
+            
         }
         else
         {
@@ -77,7 +81,7 @@ public class DatabaseManagerRestApi : MonoBehaviour
         //StartCoroutine(KeyMaker.instance.endSessionApi(assetID, score));
     }
   
-    public void startSessionFromRestApi(int _assetID)
+    public void startSessionFromRestApi(string _assetID)
     {
         scoreUpdateTried = 0;
         //StartCoroutine(startSessionApi("https://api.cryptofightclub.io/game/sdk/warrior/start-session", _assetID));
@@ -85,13 +89,13 @@ public class DatabaseManagerRestApi : MonoBehaviour
         StartCoroutine(KeyMaker.instance.startSessionApi(_assetID));
     }
 
-    public void getDataFromRestApi(int assetId)
+    public void getDataFromRestApi(string assetId)
     {
         StartCoroutine(getDataRestApi(assetId));
 
         //StartCoroutine(getDataRestApi2(assetId));
     }
-    public IEnumerator getSessionCounterAndSetScoreFromApi(string url,int assetId, int score)
+    public IEnumerator getSessionCounterAndSetScoreFromApi(string url, string assetId, int score)
     {
         leaderboardModel.userGetDataModel idData = new leaderboardModel.userGetDataModel();
         idData.id = assetId;
@@ -127,6 +131,7 @@ public class DatabaseManagerRestApi : MonoBehaviour
 
     }
    
+    /*
     public IEnumerator setScoreInLeaderBoeardRestApi(int id,  int scoreAdded)
     {
          leaderboardModel.userPostedData postedData = new leaderboardModel.userPostedData();
@@ -166,35 +171,53 @@ public class DatabaseManagerRestApi : MonoBehaviour
 
 
         }
+    }*/
 
-
-
-    }
-
-    public IEnumerator getDataRestApi(int assetId)
+    public IEnumerator getDataRestApi(string assetId)
     {
         leaderboardModel.userGetDataModel idData = new leaderboardModel.userGetDataModel();
         idData.id = assetId;
         localID = assetId;
         string idJsonData = JsonUtility.ToJson(idData);
         Debug.Log(idData);
-        
-        using (UnityWebRequest request = UnityWebRequest.Put("https://api.cryptofightclub.io/game/sdk/warrior/score", idJsonData))
+
+        string url = "";
+
+        //Debug.Log("assetId" + assetId);
+
+        /*
+        if (KeyMaker.instance.buildType == BuildType.staging)
+        {
+            url = "https://staging-api.cryptofightclub.io/game/sdk/warrior/score";
+        }
+        else if (KeyMaker.instance.buildType == BuildType.production)
+        {
+            url = "https://api.cryptofightclub.io/game/sdk/warrior/score";
+        }
+        */
+
+        url = "https://api.cryptofightclub.io/game/sdk/warrior/score";
+
+        using (UnityWebRequest request = UnityWebRequest.Put(url, idJsonData))
         {
             byte[] bodyRaw = Encoding.UTF8.GetBytes(idJsonData);
             request.method = "POST";
             request.SetRequestHeader("Accept", "application/json");
             request.SetRequestHeader("Content-Type", "application/json");
             yield return request.SendWebRequest();
+
             if (request.error == null)
             {
+                //Debug.Log(request.downloadHandler.text);
+
                 string result = Encoding.UTF8.GetString(request.downloadHandler.data);
 
                 checkSessionCounter(result);
 
-
-                Debug.Log(request.downloadHandler.text);
-
+                if (KeyMaker.instance.buildType == BuildType.staging)
+                {
+                    Debug.Log(request.downloadHandler.text);
+                }
             }
             else
             {
@@ -205,6 +228,7 @@ public class DatabaseManagerRestApi : MonoBehaviour
         }
     }
 
+    /*
     public IEnumerator getDataRestApi2(int assetId)
     {
         leaderboardModel.userGetDataModel idData = new leaderboardModel.userGetDataModel();
@@ -243,7 +267,9 @@ public class DatabaseManagerRestApi : MonoBehaviour
 
         }
     }
+    */
 
+    /*
     public IEnumerator startSessionApi(string url, int assetId)
     {
         leaderboardModel.userGetDataModel idData = new leaderboardModel.userGetDataModel();
@@ -275,11 +301,19 @@ public class DatabaseManagerRestApi : MonoBehaviour
 
 
     }
+    */
+
     public void checkSessionCounter(string url)
     {
 
         string MatchData = url;
-        Debug.Log(MatchData);
+
+        if(KeyMaker.instance.buildType == BuildType.staging)
+        {
+            Debug.Log(MatchData);
+        }
+
+
         leaderboardModel.assetClass playerData = restApiDataView.JsonUtil.fromJson<leaderboardModel.assetClass>(url);
         if (playerData != null)
         {
@@ -309,6 +343,51 @@ public class DatabaseManagerRestApi : MonoBehaviour
         gameplayView.instance.longestDistance = -1;
         gameplayView.instance.dailysessionReactive.Value = -1;
 
+    }
+
+    public void getJuiceFromRestApi(string assetId)
+    {
+        StartCoroutine(getJuiceRestApi(assetId));
+    }
+    struct reply
+    {
+        public string id;
+        public string balance;
+    };
+    IEnumerator getJuiceRestApi(string assetId)
+    {
+        string url = "";
+
+        if(KeyMaker.instance.buildType == BuildType.staging)
+        {
+            url = "https://staging-api.cryptofightclub.io/game/sdk/juice/balance/";
+        }
+        else if (KeyMaker.instance.buildType == BuildType.production)
+        {
+            url = "https://api.cryptofightclub.io/game/sdk/juice/balance/";
+        }
+
+        using (UnityWebRequest request = UnityWebRequest.Get(url + assetId))
+        {
+            request.SetRequestHeader("Accept", "application/json");
+            request.SetRequestHeader("Content-Type", "application/json");
+            yield return request.SendWebRequest();
+            if (request.error == null)
+            {
+                string result = Encoding.UTF8.GetString(request.downloadHandler.data);
+                reply r = JsonUtility.FromJson<reply>(request.downloadHandler.text);
+                if (KeyMaker.instance.buildType == BuildType.staging)
+                    Debug.Log(request.downloadHandler.text);
+                gameplayView.instance.SetJuiceBal(r.balance);
+
+            }
+            else
+            {
+                Debug.Log("error in server");
+            }
+
+
+        }
     }
 
     public void SetDemoScore(string _assetID, string _FighterName, int _score)

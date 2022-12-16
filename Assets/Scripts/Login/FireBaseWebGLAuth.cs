@@ -41,6 +41,8 @@ public class FireBaseWebGLAuth : MonoBehaviour
     [Header ("Others")]
     [SerializeField]
     GameObject methodSelect;
+    [SerializeField]
+    GameObject BackgroundBlur;
     GameObject currentOpenWindiow;
     [SerializeField]
     TMP_Text InfoDisplay;
@@ -128,34 +130,36 @@ public class FireBaseWebGLAuth : MonoBehaviour
     {
         if (info != "")
         {
-            Debug.Log(info);
             FirebaseUser pl = JsonUtility.FromJson<FirebaseUser>(info);
-            /*ebug.Log(pl.email);
-             Debug.Log(pl.uid);
-             Debug.Log(pl.isEmailVerified);
-             Debug.Log(pl.displayName);*/
+            gameplayView.instance.logedPlayer = (pl.email.ToLower(), pl.uid.ToLower());
+            gameplayView.instance.usingMeta = false;
+            DatabaseManagerRestApi._instance.getJuiceFromRestApi(pl.email);
             SignedIn("Signed in as ".ToUpper()+pl.email.ToUpper()+"\n\n"+pl.providerData);
         }
 
     }
     void SignedIn(string info)
     {
+        Close();
         InfoDisplay.text = info.ToUpper();
         currentOpenWindiow.SetActive(false);
         currentOpenWindiow = methodSelect;
-        PlayerPrefs.SetString("Account", "0xD408B954A1Ec6c53BE4E181368F1A54ca434d2f3");
+        //PlayerPrefs.SetString("Account", "0xD408B954A1Ec6c53BE4E181368F1A54ca434d2f3");
         gameplayView.instance.isTryout = false;
         //change what loads when mint nft added and stuff linked
-        GetComponentInParent<NFTGetView>().Display(new NFTInfo[0]);
+        StartCoroutine(KeyMaker.instance.GetRequest());
 
     }
     
     public void LogOut()
     {
-        gameplayView.instance.usingFreemint = false;
         FirebaseAuth.SignOut();
-        warriorGameModel.userIsLogged.Value = false;
         GetComponentInParent<uiView>().goToMenu("login");
+        warriorGameModel.userIsLogged.Value = false;
+        gameplayView.instance.usingFreemint = false;
+        gameplayView.instance.usingMeta = false;
+        gameplayView.instance.isTryout = false;
+        warriorGameModel.currentNFTArray = null;
         InfoDisplay.text = "";
         emailRegisterField.text = "";
         passwordRegisterField.text = "";
@@ -200,6 +204,7 @@ public class FireBaseWebGLAuth : MonoBehaviour
         currentOpenWindiow.SetActive(false);
         currentOpenWindiow = SignInPanel.gameObject;
         SignInPanel.gameObject.SetActive(true);
+        BackgroundBlur.SetActive(true);
     }
 
     public void OpenRegister()
@@ -214,6 +219,7 @@ public class FireBaseWebGLAuth : MonoBehaviour
         currentOpenWindiow.SetActive(false);
         currentOpenWindiow = registerPanel.gameObject;
         registerPanel.gameObject.SetActive(true);
+        BackgroundBlur.SetActive(true);
     }
 
     public void OpenPasswordReset()
@@ -229,6 +235,12 @@ public class FireBaseWebGLAuth : MonoBehaviour
         currentOpenWindiow.SetActive(false);
         currentOpenWindiow = passwordResetPanel.gameObject;
         passwordResetPanel.gameObject.SetActive(true);
+        BackgroundBlur.SetActive(true);
+    }
+    public void OpenMethodSelect()
+    {
+        methodSelect.SetActive(true);
+        BackgroundBlur.SetActive(true);
     }
     public void Close()
     {
@@ -246,6 +258,7 @@ public class FireBaseWebGLAuth : MonoBehaviour
             emailPasswordReset.text = "";
             warningEmailReset.text = "";
         }
+        BackgroundBlur.SetActive(false);
     }
     bool IsValidEmail(string email)
     {
@@ -254,11 +267,6 @@ public class FireBaseWebGLAuth : MonoBehaviour
         return emailRegex.IsMatch(email);
     }
 
-    public void OpenMethodSelect()
-    {
-        methodSelect.SetActive(true);
-        currentOpenWindiow = methodSelect;
-    }
 
     public void ToggleTos(bool val)
     {
@@ -266,15 +274,25 @@ public class FireBaseWebGLAuth : MonoBehaviour
     }
     public void LoadTos()
     {
-        //Debug.Log(1);
-
         Application.OpenURL("https://www.cryptofightclub.io/terms-of-service");
     }
     public void LoadPrivacy()
     {
-        //Debug.Log(2);
-
         Application.OpenURL("https://www.cryptofightclub.io/privacy-policy");
+    }
+
+    public void Skip()
+    {
+        //for email login
+        //gameplayView.instance.logedPlayer = ("test@test.com".ToLower(), "5uU1JCypYMT3EGWTzK3I2EhHqpC3".ToLower());
+        //DatabaseManagerRestApi._instance.getJuiceFromRestApi(gameplayView.instance.logedPlayer.Item1);
+
+        //for meta login
+        gameplayView.instance.usingMeta = true;
+        PlayerPrefs.SetString("Account", "0xD408B954A1Ec6c53BE4E181368F1A54ca434d2f3");
+        
+       
+        StartCoroutine(KeyMaker.instance.GetRequest());
     }
  #endregion utility
        

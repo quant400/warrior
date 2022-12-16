@@ -77,7 +77,7 @@ public class restApiDataView : MonoBehaviour
     }
     public IEnumerator getLeaderboardFromApi(string url,string type)
     {
-        using (UnityWebRequest request = UnityWebRequest.Get(url.ToString()))
+        using (UnityWebRequest request = UnityWebRequest.Get(url))
         {
             request.method = UnityWebRequest.kHttpVerbGET;
             request.SetRequestHeader("Accept", "application/json");
@@ -111,7 +111,7 @@ public class restApiDataView : MonoBehaviour
 
     }
  
-        public void checkLeadboardAllTime(string url)
+    public void checkLeadboardAllTime(string url)
     {
 
         string MatchData = fixJsonName(url);

@@ -42,6 +42,21 @@ public class gameplayView : MonoBehaviour
     public bool isTryout=false;
 
     public bool isPaused = false;
+
+    public (string, string) logedPlayer;
+
+    public bool usingMeta;
+
+    private string juiceBal;
+
+    private string coinBal;
+
+    public GameObject juiceText;
+
+    public GameObject CoinText;
+
+
+
     private void Awake()
     {
         if (instance != null && instance != this)
@@ -67,17 +82,27 @@ public class gameplayView : MonoBehaviour
     }
 
 
- 
-
     public void StartGame()
     {
         //SinglePlayerScoreBoardScript.instance.StartGame(GetTimeForGame());
         player = GameObject.FindGameObjectWithTag("Player");
         player.GetComponent<ThirdPersonController>().SetStarted(true);
         GetScores();
-        Debug.Log(chosenNFT.id);
-        if(!instance.isTryout)
-            DatabaseManagerRestApi._instance.startSessionFromRestApi(chosenNFT.id);
+
+        if(KeyMaker.instance.buildType == BuildType.staging)
+        {
+            Debug.Log(chosenNFT.id);
+        }
+
+        if (!instance.isTryout && !usingFreemint)
+        {
+            DatabaseManagerRestApi._instance.startSessionFromRestApi(chosenNFT.id.ToString());
+        }
+        else if (usingFreemint)
+        {
+            DatabaseManagerRestApi._instance.startSessionFromRestApi(GetLoggedPlayerString());
+        }
+
         warriorGameModel.gameCurrentStep.Value = warriorGameModel.GameSteps.OnGameRunning;
 
     }
@@ -167,7 +192,14 @@ public class gameplayView : MonoBehaviour
     }
     void GetSoresRestApi()
     {
-        DatabaseManagerRestApi._instance.getDataFromRestApi(chosenNFT.id);
+        if (!usingFreemint)
+        {
+            DatabaseManagerRestApi._instance.getDataFromRestApi(chosenNFT.id.ToString());
+        }
+        else
+        {
+            DatabaseManagerRestApi._instance.getDataFromRestApi(GetLoggedPlayerString());
+        }    
 
     }
     void observeReactiveSession()
@@ -183,6 +215,38 @@ public class gameplayView : MonoBehaviour
     {
         EndGame();
         SinglePlayerScoreBoardScript.instance.DisplayScore();
+    }
+
+    public string GetLoggedPlayerString()
+    {
+        if (usingMeta)
+            return PlayerPrefs.GetString("Account");
+        else
+            return logedPlayer.Item1 + "$$$" + logedPlayer.Item2;
+    }
+
+    public void SetJuiceBal(string val)
+    {
+        juiceBal = val;
+    }
+    public void SetCoinBal(string val)
+    {
+        coinBal = val;
+    }
+    public void UpdateJuiceBalance()
+    {
+        if (juiceBal == "")
+            juiceText.GetComponent<TMPro.TMP_Text>().text = "0";
+        else
+            juiceText.GetComponent<TMPro.TMP_Text>().text = juiceBal;
+    }
+
+    public void UpdateCoinBalance()
+    {
+        if (coinBal == "")
+            CoinText.GetComponent<TMPro.TMP_Text>().text = "0";
+        else
+            CoinText.GetComponent<TMPro.TMP_Text>().text = coinBal;
     }
 }
 

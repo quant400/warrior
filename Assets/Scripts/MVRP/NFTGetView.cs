@@ -117,7 +117,10 @@ public class NFTGetView : MonoBehaviour
     //temp Fuction for skip
     public void Skip()
     {
-        StartCoroutine(KeyMaker.instance.GetRequestSkip());
+        if(!gameplayView.instance.isTryout)
+        {
+            StartCoroutine(KeyMaker.instance.GetRequestSkip());
+        }
 
         characterSelectView.Skip();
     }

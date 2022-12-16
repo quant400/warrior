@@ -47,6 +47,8 @@ public class characterSelectionView : MonoBehaviour
         observesessionCounter();
         DisablePlay();
     }
+
+
     public void observesessionCounter()
     {
       
@@ -60,11 +62,15 @@ public class characterSelectionView : MonoBehaviour
     {
         if (sessions >= limit)
         {
+            //Debug.Log("sessions = " + sessions);
+
             select.interactable = false;
             
         }
         else
         {
+            //Debug.Log("sessions = " + sessions);
+
             select.interactable = true;
         }
     }
@@ -277,6 +283,8 @@ public class characterSelectionView : MonoBehaviour
         }
         else
         {
+            //Debug.Log("Tryout");
+
             gameplayView.instance.chosenNFT = new NFTInfo { name = "a-rod", id = 175 };
             selected = true;
         }

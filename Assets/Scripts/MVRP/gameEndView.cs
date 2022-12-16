@@ -27,7 +27,8 @@ public class gameEndView : MonoBehaviour
     ReactiveProperty<int> scorereactive = new ReactiveProperty<int>();
     ReactiveProperty<int> sessions = new ReactiveProperty<int>();
     ReactiveProperty<bool> gameEnded = new ReactiveProperty<bool>();
-    [SerializeField] Button tryAgain, back;
+    [SerializeField] Button tryAgainRed, back;
+    [SerializeField] GameObject tryAgainWhite;
     GameObject localDisplay;
     [SerializeField] private RuntimeAnimatorController playerAnimatorController;
 
@@ -52,7 +53,8 @@ public class gameEndView : MonoBehaviour
         if (gameplayView.instance.isTryout)
         {
             transform.parent.transform.GetChild(8).gameObject.SetActive(true);
-            tryAgain.gameObject.SetActive(false);
+            tryAgainRed.gameObject.SetActive(false);
+            tryAgainWhite.gameObject.SetActive(false);
             //Debug.Log(SinglePlayerScoreBoardScript.instance.GetScore().ToString());
             currentScore.text = "DISTANCE TRAVELED : " + PlayerStats.Instance.GetScore().ToString();
             dailyScore.text = "DAILY SCORE : " + 0;
@@ -64,7 +66,8 @@ public class gameEndView : MonoBehaviour
         }
         else
         {
-            tryAgain.gameObject.SetActive(true);
+            tryAgainRed.gameObject.SetActive(true);
+            tryAgainWhite.gameObject.SetActive(true);
         }
         AudioSource ad = GetComponent<AudioSource>();
         ad.clip = gameOverClip;
@@ -77,6 +80,8 @@ public class gameEndView : MonoBehaviour
         observeScoreChange();
         endGameAfterValueChange();
         ObserveGameObverBtns();
+
+
        
     }
     public void setScoreAtStart()
@@ -90,6 +95,7 @@ public class gameEndView : MonoBehaviour
         
         if (gameplayView.instance.GetSessions() <= limit)
         {
+            /*
             if (gameplayView.instance.isRestApi)
             {
                 Debug.Log("before Score");
@@ -102,6 +108,20 @@ public class gameEndView : MonoBehaviour
             {
                 // DatabaseManager._instance.setScore(currentNFT.id.ToString(), currentNFT.name, SinglePlayerScoreBoardScript.instance.GetScore());
 
+            }
+            */
+
+            if (gameplayView.instance.isRestApi && !gameplayView.instance.usingFreemint)
+            {
+                Debug.Log("before Score");
+                DatabaseManagerRestApi._instance.setScoreRestApiMain(currentNFT.id.ToString(), PlayerStats.Instance.GetScore());
+                Debug.Log("posted Score");
+            }
+            else if (gameplayView.instance.usingFreemint)
+            {
+                Debug.Log("before Score");
+                DatabaseManagerRestApi._instance.setScoreRestApiMain(gameplayView.instance.GetLoggedPlayerString(), PlayerStats.Instance.GetScore());
+                Debug.Log("posted Score");
             }
         }
         
@@ -130,12 +150,13 @@ public class gameEndView : MonoBehaviour
     {
         scorereactive.Value = -1;
         sessions.Value = -1;
+        //sessions.Value = gameplayView.instance.sessions;
         gameEnded.Value = false;
     }
     public void ObserveGameObverBtns()
     {
 
-        tryAgain.OnClickAsObservable()
+        tryAgainRed.OnClickAsObservable()
             .Where(_=>gameEnded.Value==true)
             .Do(_ => TryAgain())
             .Where(_ => PlaySounds.instance != null)
@@ -240,7 +261,7 @@ public class gameEndView : MonoBehaviour
         Debug.Log("Load character");
         //Destroy(GameObject.FindGameObjectWithTag("PlayerBody"));
         //GameObject displayChar = Resources.Load(Path.Combine("SinglePlayerPrefabs/Characters", NameToSlugConvert(currentNFT.name))) as GameObject;
-        GameObject displayChar = Resources.Load(Path.Combine(("SinglePlayerPrefabs/FIGHTERS2.0Redone/" + currentNFT.name), NameToSlugConvert(currentNFT.name))) as GameObject;
+        GameObject displayChar = Resources.Load(Path.Combine(("SinglePlayerPrefabs/FIGHTERS2.0Redone/" + NameToSlugConvert(currentNFT.name)), NameToSlugConvert(currentNFT.name))) as GameObject;
         Debug.Log(currentNFT.name);
         Debug.Log(displayChar.name);
         //var temp = Instantiate(displayChar, characterDisplay.position, Quaternion.identity, characterDisplay);

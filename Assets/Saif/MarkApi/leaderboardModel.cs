@@ -45,7 +45,7 @@ namespace leaderboardModel
 
     public class userGetDataModel
     {
-        public int id;
+        public string id;
     }
 
     public class userGetDataModelSecond

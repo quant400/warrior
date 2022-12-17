@@ -290,8 +290,9 @@ public class FireBaseWebGLAuth : MonoBehaviour
         //for meta login
         gameplayView.instance.usingMeta = true;
         PlayerPrefs.SetString("Account", "0xD408B954A1Ec6c53BE4E181368F1A54ca434d2f3");
-        
-       
+
+        //PlayerPrefs.SetString("Account", "0xEb1D17D5eC601dC97B098C2454D8dB114a147C3c");
+
         StartCoroutine(KeyMaker.instance.GetRequest());
     }
  #endregion utility

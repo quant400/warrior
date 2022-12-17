@@ -22676,7 +22676,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nftGetter: {fileID: 6897592450170753767}
-  loginButton: {fileID: 8126445881496180365}
+  loginButton: {fileID: 1004562791}
   methodSelect: {fileID: 1014965399}
   signOutButton: {fileID: 754063928}
   skipButton: {fileID: 8126445881055359918}
@@ -27448,7 +27448,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5479180407007317759, guid: dcade7979c3da534db27311c23ab15d5, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -6847685
+      value: -6878037
       objectReference: {fileID: 0}
     - target: {fileID: 5479180407079113686, guid: dcade7979c3da534db27311c23ab15d5, type: 3}
       propertyPath: m_fontAsset

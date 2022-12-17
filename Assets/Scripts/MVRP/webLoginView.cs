@@ -93,7 +93,9 @@ public class webLoginView : MonoBehaviour
         loginButton.GetComponent<Button>().interactable = false;
         skipButton.GetComponent<Button>().interactable = false;
         tryoutButton.GetComponent<Button>().interactable = false;
-        signOutButton.SetActive(false);
+        gameplayView.instance.usingMeta = true;
+        loginButton.GetComponentInParent<FireBaseWebGLAuth>().Close();
+        //signOutButton.SetActive(false);
         nftGetter.GetNFT();
     }
 

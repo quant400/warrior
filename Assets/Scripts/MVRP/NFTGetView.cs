@@ -79,6 +79,7 @@ public class NFTGetView : MonoBehaviour
         warriorGameModel.currentNFTArray = NFTData;
         if (NFTData.Length == 0 && gameplayView.instance.usingMeta)
         {
+            //Debug.Log("1");
             
             noNFTCanvas.SetActive(true);
             warriorGameModel.userIsLogged.Value = false;
@@ -91,6 +92,11 @@ public class NFTGetView : MonoBehaviour
         }
         else if (NFTData.Length == 0 && !gameplayView.instance.usingMeta)
         {
+            //Debug.Log("2");
+
+            Debug.Log("NFTData.Length = " + NFTData.Length);
+            Debug.Log("gameplayView.instance.usingMeta = " + gameplayView.instance.usingMeta);
+
             /*
             noNFTCanvas.SetActive(true);
             warriorGameModel.userIsLogged.Value = false;
@@ -102,6 +108,8 @@ public class NFTGetView : MonoBehaviour
         }
         else
         {
+            //Debug.Log("3");
+
             gameplayView.instance.usingFreemint = false;
 
             noNFTCanvas.SetActive(false);

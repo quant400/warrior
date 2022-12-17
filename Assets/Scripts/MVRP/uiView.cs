@@ -55,7 +55,7 @@ public class uiView : MonoBehaviour
             .AddTo(this);
         loginBtn.OnClickAsObservable()
             //.Do(_=> webloginView.OnLogin(loginBtn, Skip, tryout))
-            .Do(_ => MethodSelect())
+            //.Do(_ => MethodSelect())
             .Where(_ => PlaySounds.instance != null)
             .Do(_ => PlaySounds.instance.Play())
             .Subscribe()
@@ -176,7 +176,7 @@ public class uiView : MonoBehaviour
             tryagain.gameObject.SetActive(state);
 
     }
-
+    
     public void MethodSelect()
     {
         if(methodSelect.activeSelf == false)

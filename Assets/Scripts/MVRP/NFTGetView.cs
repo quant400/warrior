@@ -9,7 +9,7 @@ using UnityEngine.Networking;
 [Serializable]
 public class NFTInfo
 {
-    public int id;
+    public string id;
     public string name;
 }
 public class NFTGetView : MonoBehaviour
@@ -77,7 +77,19 @@ public class NFTGetView : MonoBehaviour
 
         //NFTInfo[] NFTData = JsonHelper.FromJson<NFTInfo>(data);
         warriorGameModel.currentNFTArray = NFTData;
-        if (NFTData.Length == 0)
+        if (NFTData.Length == 0 && gameplayView.instance.usingMeta)
+        {
+            
+            noNFTCanvas.SetActive(true);
+            warriorGameModel.userIsLogged.Value = false;
+
+            /*
+            gameplayView.instance.usingFreemint = true;
+            characterSelectView.FreeMint();
+            warriorGameModel.userIsLogged.Value = true;
+            */
+        }
+        else if (NFTData.Length == 0 && !gameplayView.instance.usingMeta)
         {
             /*
             noNFTCanvas.SetActive(true);

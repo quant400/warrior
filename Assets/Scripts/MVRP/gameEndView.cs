@@ -16,7 +16,7 @@ public class gameEndView : MonoBehaviour
     Transform characterDisplay;
     GameObject[] characters;
     [SerializeField]
-    TMP_Text currentScore, dailyScore, allTimeScore, weeklyScore, longestDistance, sessionCounterText;
+    TMP_Text currentScore, dailyScore, allTimeScore, weeklyScore, longestDistance, sessionCounterText, ntfID;
     [SerializeField]
     GameObject canvasToDisable;
     [SerializeField]
@@ -62,6 +62,7 @@ public class gameEndView : MonoBehaviour
             allTimeScore.text = "ALL TIME SCORE : " + 0;
             longestDistance.text = "LONGEST RUN : " + 0;
             sessionCounterText.text = "NFT DAILY RUNS : " + 0 + "/" + limit.ToString();
+            ntfID.text = "";
             //sessionCounterText.text = "NFT DAILY RUNS : " + 0;
         }
         else
@@ -180,6 +181,17 @@ public class gameEndView : MonoBehaviour
             allTimeScore.text = "ALL TIME SCORE : " + (gameplayView.instance.GetAllTimeScore());
             longestDistance.text = "LONGEST RUN : " + (gameplayView.instance.GetLongestDistanceScore());
             sessionCounterText.text = "NFT DAILY RUNS : " + (gameplayView.instance.GetSessions()) + "/" + limit.ToString();
+
+            string n = NameToSlugConvert(gameplayView.instance.chosenNFT.name);
+            if (n == "average-joe" || n == "billy-basic" || n == "mary-jane")
+            {
+                ntfID.text = "NFT ID: FREE FIGHTER";
+            }
+            else
+            {
+                ntfID.text = "NFT ID: " + gameplayView.instance.chosenNFT.id;
+            }
+            
             //sessionCounterText.text = "NFT DAILY RUNS : " + (gameplayView.instance.GetSessions());
 
         }
@@ -190,6 +202,16 @@ public class gameEndView : MonoBehaviour
             dailyScore.text = "DAILY SCORE : " + (gameplayView.instance.GetDailyScore());
             allTimeScore.text = "ALL TIME SCORE : " + (gameplayView.instance.GetAllTimeScore());
             sessionCounterText.text = "NFT DAILY RUNS : " + (gameplayView.instance.GetSessions()) + "/" + limit.ToString();
+
+            string n = NameToSlugConvert(gameplayView.instance.chosenNFT.name);
+            if (n == "average-joe" || n == "billy-basic" || n == "mary-jane")
+            {
+                ntfID.text = "NFT ID: FREE FIGHTER";
+            }
+            else
+            {
+                ntfID.text = "NFT ID: " + gameplayView.instance.chosenNFT.id;
+            }
             //sessionCounterText.text = "NFT DAILY RUNS : " + (gameplayView.instance.GetSessions());
 
         }
@@ -225,6 +247,16 @@ public class gameEndView : MonoBehaviour
             allTimeScore.text = "ALL TIME SCORE : " + (gameplayView.instance.GetAllTimeScore());
             longestDistance.text = "LONGEST RUN : " + (gameplayView.instance.GetLongestDistanceScore());
             sessionCounterText.text = "NFT DAILY RUNS : " + (gameplayView.instance.GetSessions()) + "/" + limit.ToString();
+
+            string n = NameToSlugConvert(gameplayView.instance.chosenNFT.name);
+            if (n == "average-joe" || n == "billy-basic" || n == "mary-jane")
+            {
+                ntfID.text = "NFT ID: FREE FIGHTER";
+            }
+            else
+            {
+                ntfID.text = "NFT ID: " + gameplayView.instance.chosenNFT.id;
+            }
             //sessionCounterText.text = "NFT DAILY RUNS : " + (gameplayView.instance.GetSessions());
 
         }
@@ -237,6 +269,16 @@ public class gameEndView : MonoBehaviour
             allTimeScore.text = "ALL TIME SCORE : " + (gameplayView.instance.GetAllTimeScore());
             longestDistance.text = "LONGEST RUN : " + (gameplayView.instance.GetLongestDistanceScore());
             sessionCounterText.text = "NFT DAILY RUNS : " + (gameplayView.instance.GetSessions()) + "/" + limit.ToString();
+
+            string n = NameToSlugConvert(gameplayView.instance.chosenNFT.name);
+            if (n == "average-joe" || n == "billy-basic" || n == "mary-jane")
+            {
+                ntfID.text = "NFT ID: FREE FIGHTER";
+            }
+            else
+            {
+                ntfID.text = "NFT ID: " + gameplayView.instance.chosenNFT.id;
+            }
             //sessionCounterText.text = "NFT DAILY RUNS : " + (gameplayView.instance.GetSessions());
 
         }
@@ -361,6 +403,16 @@ public class gameEndView : MonoBehaviour
             allTimeScore.text = "ALL TIME SCORE : " + (gameplayView.instance.GetAllTimeScore());
             longestDistance.text = "LONGEST RUN : " + (gameplayView.instance.GetLongestDistanceScore());
             sessionCounterText.text = "NFT DAILY RUNS : " + (gameplayView.instance.GetSessions()) + "/" + limit.ToString();
+
+            string n = NameToSlugConvert(gameplayView.instance.chosenNFT.name);
+            if (n == "average-joe" || n == "billy-basic" || n == "mary-jane")
+            {
+                ntfID.text = "NFT ID: FREE FIGHTER";
+            }
+            else
+            {
+                ntfID.text = "NFT ID: " + gameplayView.instance.chosenNFT.id;
+            }
             //sessionCounterText.text = "NFT DAILY RUNS : " + (gameplayView.instance.GetSessions());
 
         }
@@ -373,6 +425,16 @@ public class gameEndView : MonoBehaviour
             allTimeScore.text = "ALL TIME SCORE : " + (gameplayView.instance.GetAllTimeScore());
             longestDistance.text = "LONGEST RUN : " + (gameplayView.instance.GetLongestDistanceScore());
             sessionCounterText.text = "NFT DAILY RUNS : " + (gameplayView.instance.GetSessions()) + "/" + limit.ToString();
+
+            string n = NameToSlugConvert(gameplayView.instance.chosenNFT.name);
+            if (n == "average-joe" || n == "billy-basic" || n == "mary-jane")
+            {
+                ntfID.text = "NFT ID: FREE FIGHTER";
+            }
+            else
+            {
+                ntfID.text = "NFT ID: " + gameplayView.instance.chosenNFT.id;
+            }
             //sessionCounterText.text = "NFT DAILY RUNS : " + (gameplayView.instance.GetSessions());
 
         }

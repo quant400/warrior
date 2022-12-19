@@ -30,6 +30,9 @@ public class GameOverScript : MonoBehaviour
     [SerializeField] Button tryAgain, back;
     // [SerializeField]
     //SinglePlayerSpawner spawner;
+
+    private int limit = 20;
+
     public void Start()
     {
         observeScoreChange();
@@ -42,7 +45,7 @@ public class GameOverScript : MonoBehaviour
             canvasToDisable = SinglePlayerScoreBoardScript.instance.gameObject.transform.GetChild(0).gameObject;
         }
         currentNFT = SingleplayerGameControler.instance.chosenNFT;
-        if (SingleplayerGameControler.instance.GetSessions() <=10 && !gameplayView.instance.isTryout)
+        if (SingleplayerGameControler.instance.GetSessions() <= limit && !gameplayView.instance.isTryout)
         {
             if (SingleplayerGameControler.instance.isRestApi)
             {
@@ -78,24 +81,24 @@ public class GameOverScript : MonoBehaviour
     public void setScoreResutls()
     {
        
-        if (SingleplayerGameControler.instance.GetSessions() < 10)
+        if (SingleplayerGameControler.instance.GetSessions() < limit)
         {
             
             sessionsLeft.SetActive(true);
             sessionsNotLeft.SetActive(false);
-            currentScore.text = "DISTANCE TRAVELED : " + PlayerStats.Instance.GetScore().ToString();
+            currentScore.text = "SCORE : " + PlayerStats.Instance.GetScore().ToString();
             dailyScore.text = "DAILY SCORE : " + (SingleplayerGameControler.instance.GetDailyScore());
             allTimeScore.text = "ALL TIME SCORE : " + (SingleplayerGameControler.instance.GetAllTimeScore() );
-            sessionCounterText.text = "NFT DAILY RUNS : " + (SingleplayerGameControler.instance.GetSessions()) + "/10";
+            sessionCounterText.text = "DAILY RUNS : " + (SingleplayerGameControler.instance.GetSessions()) + "/20";
 
         }
-        else if (SingleplayerGameControler.instance.GetSessions() >= 10)
+        else if (SingleplayerGameControler.instance.GetSessions() >= limit)
         {
             sessionsLeft.SetActive(false);
             sessionsNotLeft.SetActive(true);
             dailyScore.text = "DAILY SCORE : " + (SingleplayerGameControler.instance.GetDailyScore());
             allTimeScore.text = "ALL TIME SCORE : " + (SingleplayerGameControler.instance.GetAllTimeScore());
-            sessionCounterText.text = "NFT DAILY RUNS : " + (SingleplayerGameControler.instance.GetSessions()) + "/10";
+            sessionCounterText.text = "DAILY RUNS : " + (SingleplayerGameControler.instance.GetSessions()) + "/20";
 
         }
 
@@ -160,10 +163,10 @@ public class GameOverScript : MonoBehaviour
     public void setScoreToUI()
     {
         gameEnded.Value = true;
-        currentScore.text = "DISTANCE TRAVELED : " + PlayerStats.Instance.GetScore().ToString();
+        currentScore.text = "SCORE : " + PlayerStats.Instance.GetScore().ToString();
         dailyScore.text = "DAILY SCORE : " + (SingleplayerGameControler.instance.GetDailyScore() );
         allTimeScore.text = "ALL TIME SCORE : " + (SingleplayerGameControler.instance.GetAllTimeScore() );
-        sessionCounterText.text= "NFT DAILY RUNS : " + (SingleplayerGameControler.instance.GetSessions())+"/10";
+        sessionCounterText.text= "DAILY RUNS : " + (SingleplayerGameControler.instance.GetSessions())+"/20";
     }
     public void TryAgain()
     {

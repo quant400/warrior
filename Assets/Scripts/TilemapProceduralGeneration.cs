@@ -1166,7 +1166,10 @@ public class TilemapProceduralGeneration : MonoBehaviour
 
                     checkpointCrossed = true;
 
-                    PlayerStats.Instance.playerScore++;
+                    if(warriorGameModel.gameCurrentStep.Value != warriorGameModel.GameSteps.OnGameEnded)
+                    {
+                        PlayerStats.Instance.playerScore++;
+                    }
 
                     checkpointLastDistance = startingWidth;
 
@@ -1193,7 +1196,10 @@ public class TilemapProceduralGeneration : MonoBehaviour
 
                     checkpointCrossed = true;
 
-                    PlayerStats.Instance.playerScore++;
+                    if (warriorGameModel.gameCurrentStep.Value != warriorGameModel.GameSteps.OnGameEnded)
+                    {
+                        PlayerStats.Instance.playerScore++;
+                    }
 
                     checkpointLastDistance = startingWidth;
 
@@ -1220,7 +1226,10 @@ public class TilemapProceduralGeneration : MonoBehaviour
 
                     checkpointCrossed = true;
 
-                    PlayerStats.Instance.playerScore++;
+                    if (warriorGameModel.gameCurrentStep.Value != warriorGameModel.GameSteps.OnGameEnded)
+                    {
+                        PlayerStats.Instance.playerScore++;
+                    }
 
                     checkpointLastDistance = startingWidth;
 
@@ -1334,18 +1343,20 @@ public class TilemapProceduralGeneration : MonoBehaviour
 
             if (!(((checkpointLastDistance - PlayerStats.Instance.checkpointDistance) < 0) && PlayerStats.Instance.playerScore == 0))
             {
-                PlayerStats.Instance.playerScore += checkpointLastDistance - PlayerStats.Instance.checkpointDistance;
-
-                checkpointLastDistance = PlayerStats.Instance.checkpointDistance;
-
-
-                if (PlayerStats.Instance.playerScore < 10)
+                if (warriorGameModel.gameCurrentStep.Value != warriorGameModel.GameSteps.OnGameEnded)
                 {
-                    playerScoreText.text = "SCORE: 0" + Mathf.RoundToInt(PlayerStats.Instance.playerScore).ToString();
-                }
-                else
-                {
-                    playerScoreText.text = "SCORE: " + Mathf.RoundToInt(PlayerStats.Instance.playerScore).ToString();
+                    PlayerStats.Instance.playerScore += checkpointLastDistance - PlayerStats.Instance.checkpointDistance;
+
+                    checkpointLastDistance = PlayerStats.Instance.checkpointDistance;
+
+                    if (PlayerStats.Instance.playerScore < 10)
+                    {
+                        playerScoreText.text = "SCORE: 0" + Mathf.RoundToInt(PlayerStats.Instance.playerScore).ToString();
+                    }
+                    else
+                    {
+                        playerScoreText.text = "SCORE: " + Mathf.RoundToInt(PlayerStats.Instance.playerScore).ToString();
+                    }
                 }
             }
 

@@ -334,7 +334,8 @@ public class gameEndView : MonoBehaviour
         Debug.Log("Load character");
         //Destroy(GameObject.FindGameObjectWithTag("PlayerBody"));
         //GameObject displayChar = Resources.Load(Path.Combine("SinglePlayerPrefabs/Characters", NameToSlugConvert(currentNFT.name))) as GameObject;
-        GameObject displayChar = Resources.Load(Path.Combine(("SinglePlayerPrefabs/FIGHTERS2.0Redone/" + NameToSlugConvert(currentNFT.name)), NameToSlugConvert(currentNFT.name))) as GameObject;
+        //GameObject displayChar = Resources.Load(Path.Combine(("SinglePlayerPrefabs/FIGHTERS2.0Redone/" + NameToSlugConvert(currentNFT.name)), NameToSlugConvert(currentNFT.name))) as GameObject;
+        GameObject displayChar = Resources.Load(Path.Combine(("SinglePlayerPrefabs/FIGHTERS2.0Redone/" + NameToSlugConvert("santa")), NameToSlugConvert("santa"))) as GameObject;
         Debug.Log(currentNFT.name);
         Debug.Log(displayChar.name);
         //var temp = Instantiate(displayChar, characterDisplay.position, Quaternion.identity, characterDisplay);

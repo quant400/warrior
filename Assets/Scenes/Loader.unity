@@ -264,7 +264,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &84495452
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8081,9 +8081,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startscreen: {fileID: 8126445881630838351}
-  loginPanel: {fileID: 0}
+  loginPanel: {fileID: 94411084}
   nftGetter: {fileID: 6897592450170753767}
-  select: {fileID: 0}
+  select: {fileID: 417038143}
 --- !u!223 &752361408
 Canvas:
   m_ObjectHideFlags: 0
@@ -13967,7 +13967,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1442660221
 RectTransform:
   m_ObjectHideFlags: 0
@@ -18014,7 +18014,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1823577819
 RectTransform:
   m_ObjectHideFlags: 0
@@ -27589,7 +27589,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5479180407007317759, guid: dcade7979c3da534db27311c23ab15d5, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -7014901
+      value: -7018373
       objectReference: {fileID: 0}
     - target: {fileID: 5479180407079113686, guid: dcade7979c3da534db27311c23ab15d5, type: 3}
       propertyPath: m_fontAsset

@@ -59,7 +59,15 @@ public class PlayerModelSelect : MonoBehaviour
         {
             //chosenNFTName = NameToSlugConvert(gameplayView.instance.chosenNFT.name);
 
-            chosenNFTName = NameToSlugConvert("santa");
+            if (gameplayView.instance.isTryout)
+            {
+                chosenNFTName = NameToSlugConvert("grane");
+            }
+            else
+            {
+                chosenNFTName = NameToSlugConvert("santa");
+            }
+            
         }
         catch (Exception e)
         {

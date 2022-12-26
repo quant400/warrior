@@ -178,7 +178,7 @@ public class uiView : MonoBehaviour
 
     public void SetTryAgain(bool state)
     {
-        if(gameplayView.instance.GetSessions()<20)
+        if(gameplayView.instance.GetSessions()<10)
             tryagain.gameObject.SetActive(state);
 
     }

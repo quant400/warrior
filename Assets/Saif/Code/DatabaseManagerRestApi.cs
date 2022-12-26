@@ -15,7 +15,7 @@ public class DatabaseManagerRestApi : MonoBehaviour
     ReactiveProperty<int> sessionCounterReactive = new ReactiveProperty<int>();
     string localID;
     public int scoreUpdateTried=0;
-    private int limit = 20;
+    private int limit = 10;
 
 
     private void Awake()

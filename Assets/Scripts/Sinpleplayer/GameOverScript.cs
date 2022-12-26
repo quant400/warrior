@@ -31,7 +31,7 @@ public class GameOverScript : MonoBehaviour
     // [SerializeField]
     //SinglePlayerSpawner spawner;
 
-    private int limit = 20;
+    private int limit = 10;
 
     public void Start()
     {
@@ -89,7 +89,7 @@ public class GameOverScript : MonoBehaviour
             currentScore.text = "SCORE : " + PlayerStats.Instance.GetScore().ToString();
             dailyScore.text = "DAILY SCORE : " + (SingleplayerGameControler.instance.GetDailyScore());
             allTimeScore.text = "ALL TIME SCORE : " + (SingleplayerGameControler.instance.GetAllTimeScore() );
-            sessionCounterText.text = "DAILY RUNS : " + (SingleplayerGameControler.instance.GetSessions()) + "/20";
+            sessionCounterText.text = "DAILY RUNS : " + (SingleplayerGameControler.instance.GetSessions()) + "/10";
 
         }
         else if (SingleplayerGameControler.instance.GetSessions() >= limit)
@@ -98,7 +98,7 @@ public class GameOverScript : MonoBehaviour
             sessionsNotLeft.SetActive(true);
             dailyScore.text = "DAILY SCORE : " + (SingleplayerGameControler.instance.GetDailyScore());
             allTimeScore.text = "ALL TIME SCORE : " + (SingleplayerGameControler.instance.GetAllTimeScore());
-            sessionCounterText.text = "DAILY RUNS : " + (SingleplayerGameControler.instance.GetSessions()) + "/20";
+            sessionCounterText.text = "DAILY RUNS : " + (SingleplayerGameControler.instance.GetSessions()) + "/10";
 
         }
 
@@ -166,7 +166,7 @@ public class GameOverScript : MonoBehaviour
         currentScore.text = "SCORE : " + PlayerStats.Instance.GetScore().ToString();
         dailyScore.text = "DAILY SCORE : " + (SingleplayerGameControler.instance.GetDailyScore() );
         allTimeScore.text = "ALL TIME SCORE : " + (SingleplayerGameControler.instance.GetAllTimeScore() );
-        sessionCounterText.text= "DAILY RUNS : " + (SingleplayerGameControler.instance.GetSessions())+"/20";
+        sessionCounterText.text= "DAILY RUNS : " + (SingleplayerGameControler.instance.GetSessions())+"/10";
     }
     public void TryAgain()
     {

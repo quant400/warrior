@@ -39,7 +39,7 @@ public class characterSelectionView : MonoBehaviour
     bool skipping;
     UnityEngine.Object[] info;
 
-    private int limit = 20;
+    private int limit = 10;
 
     public void Start()
     {

@@ -291,11 +291,11 @@ public class FireBaseWebGLAuth : MonoBehaviour
     public void Skip()
     {
         //for email login
-        gameplayView.instance.logedPlayer = ("test@test.com".ToLower(), "5uU1JCypYMT3EGWTzK3I2EhHqpC3".ToLower());
+        //gameplayView.instance.logedPlayer = ("test@test.com".ToLower(), "5uU1JCypYMT3EGWTzK3I2EhHqpC3".ToLower());
 
         //for meta login
-        //gameplayView.instance.usingMeta = true;
-        //PlayerPrefs.SetString("Account", "0xD408B954A1Ec6c53BE4E181368F1A54ca434d2f3");
+        gameplayView.instance.usingMeta = true;
+        PlayerPrefs.SetString("Account", "0xD408B954A1Ec6c53BE4E181368F1A54ca434d2f3");
 
         //PlayerPrefs.SetString("Account", "0xEb1D17D5eC601dC97B098C2454D8dB114a147C3c");
 

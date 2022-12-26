@@ -47,15 +47,15 @@ public class gameplayView : MonoBehaviour
 
     public bool usingMeta;
 
-    private string juiceBal;
+    //private string juiceBal;
 
-    private string coinBal;
+    //private string coinBal;
 
-    public GameObject juiceText;
+    //public GameObject juiceText;
 
-    public GameObject CoinText;
+    //public GameObject CoinText;
 
-
+    public JuiceDisplayScript juiceDisplay;
 
     private void Awake()
     {
@@ -225,6 +225,7 @@ public class gameplayView : MonoBehaviour
             return logedPlayer.Item1 + "$$$" + logedPlayer.Item2;
     }
 
+    /*
     public void SetJuiceBal(string val)
     {
         juiceBal = val;
@@ -248,5 +249,6 @@ public class gameplayView : MonoBehaviour
         else
             CoinText.GetComponent<TMPro.TMP_Text>().text = coinBal;
     }
+    */
 }
 

@@ -126,6 +126,8 @@ public class uiView : MonoBehaviour
                 characterSelectionPanel.SetActive(false);
                 loginCanvas.gameObject.SetActive(true);
                 startCanvas.gameObject.SetActive(true);
+                loginBtn.interactable = true;
+                gameplayView.instance.juiceDisplay.DeactivateJuiceDisplay();
 
                 leaderBoeardCanvas.GetComponent<LeaderBoardControllerRestApi>().ToggleLeaderBoard(false);
                 resultsCanvas.SetActive(false);
@@ -137,6 +139,7 @@ public class uiView : MonoBehaviour
                 characterSelectionPanel.SetActive(false);
                 loginCanvas.gameObject.SetActive(false);
                 resultsCanvas.SetActive(false);
+                gameplayView.instance.juiceDisplay.DeactivateJuiceDisplay();
                 leaderBoeardCanvas.GetComponent<LeaderBoardControllerRestApi>().ToggleLeaderBoard(false);
                 break;
             case "characterSelection":
@@ -145,6 +148,7 @@ public class uiView : MonoBehaviour
                 characterSelectionPanel.SetActive(true);
                 loginCanvas.gameObject.SetActive(false);
                 resultsCanvas.SetActive(false);
+                gameplayView.instance.juiceDisplay.ActivateJuiceDisplay();
                 leaderBoeardCanvas.GetComponent<LeaderBoardControllerRestApi>().ToggleLeaderBoard(false);
                 break;
             case "results":
@@ -154,6 +158,7 @@ public class uiView : MonoBehaviour
                 loginCanvas.gameObject.SetActive(false);
                 resultsCanvas.SetActive(true);
                 startCanvas.gameObject.SetActive(false);
+                gameplayView.instance.juiceDisplay.ActivateJuiceDisplay();
 
                 break;
             case "leaderboeard":
@@ -164,6 +169,7 @@ public class uiView : MonoBehaviour
                 loginCanvas.gameObject.SetActive(false);
                 startCanvas.gameObject.SetActive(false);
                 resultsCanvas.SetActive(false);
+                gameplayView.instance.juiceDisplay.DeactivateJuiceDisplay();
                 leaderBoeardCanvas.GetComponent<LeaderBoardControllerRestApi>().ToggleLeaderBoard(false);
                 break;
 

@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine;
 using System.Text.RegularExpressions;
 using DG.Tweening;
+using UnityEngine.UI;
 using System;
 
 public struct LoginObject
@@ -46,6 +47,9 @@ public class FireBaseWebGLAuth : MonoBehaviour
     GameObject currentOpenWindiow;
     [SerializeField]
     TMP_Text InfoDisplay;
+    [SerializeField]
+    Button loginButton;
+
 
     private void Start()
     {
@@ -70,7 +74,7 @@ public class FireBaseWebGLAuth : MonoBehaviour
          }
          else
          {
-             SignInWithEmailAndPassword();
+            SignInWithEmailAndPassword();
          }
        
     }
@@ -146,6 +150,8 @@ public class FireBaseWebGLAuth : MonoBehaviour
         currentOpenWindiow = methodSelect;
         //PlayerPrefs.SetString("Account", "0xD408B954A1Ec6c53BE4E181368F1A54ca434d2f3");
         gameplayView.instance.isTryout = false;
+        loginButton.interactable = false;
+        //loginButton.interactable = true;
         //change what loads when mint nft added and stuff linked
         StartCoroutine(KeyMaker.instance.GetRequest());
 
@@ -159,6 +165,7 @@ public class FireBaseWebGLAuth : MonoBehaviour
         gameplayView.instance.usingFreemint = false;
         gameplayView.instance.usingMeta = false;
         gameplayView.instance.isTryout = false;
+        loginButton.interactable = true;
         warriorGameModel.currentNFTArray = null;
         InfoDisplay.text = "";
         emailRegisterField.text = "";
@@ -284,12 +291,11 @@ public class FireBaseWebGLAuth : MonoBehaviour
     public void Skip()
     {
         //for email login
-        //gameplayView.instance.logedPlayer = ("test@test.com".ToLower(), "5uU1JCypYMT3EGWTzK3I2EhHqpC3".ToLower());
-        //DatabaseManagerRestApi._instance.getJuiceFromRestApi(gameplayView.instance.logedPlayer.Item1);
+        gameplayView.instance.logedPlayer = ("test@test.com".ToLower(), "5uU1JCypYMT3EGWTzK3I2EhHqpC3".ToLower());
 
         //for meta login
-        gameplayView.instance.usingMeta = true;
-        PlayerPrefs.SetString("Account", "0xD408B954A1Ec6c53BE4E181368F1A54ca434d2f3");
+        //gameplayView.instance.usingMeta = true;
+        //PlayerPrefs.SetString("Account", "0xD408B954A1Ec6c53BE4E181368F1A54ca434d2f3");
 
         //PlayerPrefs.SetString("Account", "0xEb1D17D5eC601dC97B098C2454D8dB114a147C3c");
 

@@ -191,7 +191,14 @@ public class gameEndView : MonoBehaviour
 
             if (n == "average-joe" || n == "billy-basic" || n == "mary-jane")
             {
-                tempEmail = gameplayView.instance.chosenNFT.id.Split('$')[0].ToUpper();
+                if (gameplayView.instance.usingFreemint)
+                {
+                    tempEmail = gameplayView.instance.GetLoggedPlayerString().Split('$')[0].ToUpper();
+                }
+                else
+                {
+                    tempEmail = gameplayView.instance.chosenNFT.id.Split('$')[0].ToUpper();
+                }
 
                 tempEmail = tempEmail.Split('@')[0] + "<font=\"LiberationSans SDF\">@" + "<font=\"DOCK11-Heavy-900 SDF No shadow\">" + tempEmail.Split('@')[1];
 
@@ -219,7 +226,14 @@ public class gameEndView : MonoBehaviour
 
             if (n == "average-joe" || n == "billy-basic" || n == "mary-jane")
             {
-                tempEmail = gameplayView.instance.chosenNFT.id.Split('$')[0].ToUpper();
+                if (gameplayView.instance.usingFreemint)
+                {
+                    tempEmail = gameplayView.instance.GetLoggedPlayerString().Split('$')[0].ToUpper();
+                }
+                else
+                {
+                    tempEmail = gameplayView.instance.chosenNFT.id.Split('$')[0].ToUpper();
+                }
 
                 tempEmail = tempEmail.Split('@')[0] + "<font=\"LiberationSans SDF\">@" + "<font=\"DOCK11-Heavy-900 SDF No shadow\">" + tempEmail.Split('@')[1];
 
@@ -271,7 +285,15 @@ public class gameEndView : MonoBehaviour
 
             if (n == "average-joe" || n == "billy-basic" || n == "mary-jane")
             {
-                tempEmail = gameplayView.instance.chosenNFT.id.Split('$')[0].ToUpper();
+                if(gameplayView.instance.usingFreemint)
+                {
+                    tempEmail = gameplayView.instance.GetLoggedPlayerString().Split('$')[0].ToUpper();
+                }
+                else
+                {
+                    tempEmail = gameplayView.instance.chosenNFT.id.Split('$')[0].ToUpper();
+                }
+                
 
                 tempEmail = tempEmail.Split('@')[0] + "<font=\"LiberationSans SDF\">@" + "<font=\"DOCK11-Heavy-900 SDF No shadow\">" + tempEmail.Split('@')[1];
 
@@ -300,7 +322,14 @@ public class gameEndView : MonoBehaviour
 
             if (n == "average-joe" || n == "billy-basic" || n == "mary-jane")
             {
-                tempEmail = gameplayView.instance.chosenNFT.id.Split('$')[0].ToUpper();
+                if (gameplayView.instance.usingFreemint)
+                {
+                    tempEmail = gameplayView.instance.GetLoggedPlayerString().Split('$')[0].ToUpper();
+                }
+                else
+                {
+                    tempEmail = gameplayView.instance.chosenNFT.id.Split('$')[0].ToUpper();
+                }
 
                 tempEmail = tempEmail.Split('@')[0] + "<font=\"LiberationSans SDF\">@" + "<font=\"DOCK11-Heavy-900 SDF No shadow\">" + tempEmail.Split('@')[1];
 
@@ -334,8 +363,21 @@ public class gameEndView : MonoBehaviour
         Debug.Log("Load character");
         //Destroy(GameObject.FindGameObjectWithTag("PlayerBody"));
         //GameObject displayChar = Resources.Load(Path.Combine("SinglePlayerPrefabs/Characters", NameToSlugConvert(currentNFT.name))) as GameObject;
-        //GameObject displayChar = Resources.Load(Path.Combine(("SinglePlayerPrefabs/FIGHTERS2.0Redone/" + NameToSlugConvert(currentNFT.name)), NameToSlugConvert(currentNFT.name))) as GameObject;
-        GameObject displayChar = Resources.Load(Path.Combine(("SinglePlayerPrefabs/FIGHTERS2.0Redone/" + NameToSlugConvert("santa")), NameToSlugConvert("santa"))) as GameObject;
+        GameObject displayChar = Resources.Load(Path.Combine(("SinglePlayerPrefabs/FIGHTERS2.0Redone/" + NameToSlugConvert(currentNFT.name)), NameToSlugConvert(currentNFT.name))) as GameObject;
+
+        /*
+        GameObject displayChar;
+
+        if (gameplayView.instance.isTryout)
+        {
+            displayChar = Resources.Load(Path.Combine(("SinglePlayerPrefabs/FIGHTERS2.0Redone/" + NameToSlugConvert("grane")), NameToSlugConvert("grane"))) as GameObject;
+        }
+        else
+        {
+            displayChar = Resources.Load(Path.Combine(("SinglePlayerPrefabs/FIGHTERS2.0Redone/" + NameToSlugConvert("santa")), NameToSlugConvert("santa"))) as GameObject;
+        }
+        */
+
         Debug.Log(currentNFT.name);
         Debug.Log(displayChar.name);
         //var temp = Instantiate(displayChar, characterDisplay.position, Quaternion.identity, characterDisplay);
@@ -442,7 +484,14 @@ public class gameEndView : MonoBehaviour
 
             if (n == "average-joe" || n == "billy-basic" || n == "mary-jane")
             {
-                tempEmail = gameplayView.instance.chosenNFT.id.Split('$')[0].ToUpper();
+                if (gameplayView.instance.usingFreemint)
+                {
+                    tempEmail = gameplayView.instance.GetLoggedPlayerString().Split('$')[0].ToUpper();
+                }
+                else
+                {
+                    tempEmail = gameplayView.instance.chosenNFT.id.Split('$')[0].ToUpper();
+                }
 
                 tempEmail = tempEmail.Split('@')[0] + "<font=\"LiberationSans SDF\">@" + "<font=\"DOCK11-Heavy-900 SDF No shadow\">" + tempEmail.Split('@')[1];
 
@@ -471,7 +520,14 @@ public class gameEndView : MonoBehaviour
 
             if (n == "average-joe" || n == "billy-basic" || n == "mary-jane")
             {
-                tempEmail = gameplayView.instance.chosenNFT.id.Split('$')[0].ToUpper();
+                if (gameplayView.instance.usingFreemint)
+                {
+                    tempEmail = gameplayView.instance.GetLoggedPlayerString().Split('$')[0].ToUpper();
+                }
+                else
+                {
+                    tempEmail = gameplayView.instance.chosenNFT.id.Split('$')[0].ToUpper();
+                }
 
                 tempEmail = tempEmail.Split('@')[0] + "<font=\"LiberationSans SDF\">@" + "<font=\"DOCK11-Heavy-900 SDF No shadow\">" + tempEmail.Split('@')[1];
 

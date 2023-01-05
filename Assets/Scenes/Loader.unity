@@ -718,7 +718,7 @@ MonoBehaviour:
   methodSelect: {fileID: 1014965399}
   BackgroundBlur: {fileID: 1014965400}
   InfoDisplay: {fileID: 653451171}
-  loginButton: {fileID: 8126445881496180355}
+  loginButton: {fileID: 0}
 --- !u!224 &94411086 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2910638099303821883, guid: b19bbae3265d8594f9ea9640f4c4ddcf, type: 3}
@@ -4553,7 +4553,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1286077923209006574, guid: c1b9d5fb13380894ea00e45fc3d337fa, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 327.47818
       objectReference: {fileID: 0}
     - target: {fileID: 1286077923209006574, guid: c1b9d5fb13380894ea00e45fc3d337fa, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -4601,7 +4601,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1286077924675431207, guid: c1b9d5fb13380894ea00e45fc3d337fa, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 327.47818
       objectReference: {fileID: 0}
     - target: {fileID: 1286077924675431207, guid: c1b9d5fb13380894ea00e45fc3d337fa, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -22442,6 +22442,8 @@ MonoBehaviour:
   gameOverObject: {fileID: 8126445880821038808}
   isTryout: 0
   isPaused: 0
+  usingOtherChainNft: 0
+  hasOtherChainNft: 0
   usingMeta: 0
   juiceDisplay: {fileID: 316336833}
 --- !u!114 &2470704319024881209
@@ -27891,7 +27893,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5479180407007317759, guid: dcade7979c3da534db27311c23ab15d5, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -7170917
+      value: -7177749
       objectReference: {fileID: 0}
     - target: {fileID: 5479180407079113686, guid: dcade7979c3da534db27311c23ab15d5, type: 3}
       propertyPath: m_fontAsset

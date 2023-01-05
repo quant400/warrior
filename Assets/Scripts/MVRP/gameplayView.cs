@@ -43,6 +43,10 @@ public class gameplayView : MonoBehaviour
 
     public bool isPaused = false;
 
+    public bool usingOtherChainNft = false;
+
+    public bool hasOtherChainNft = false;
+
     public (string, string) logedPlayer;
 
     public bool usingMeta;

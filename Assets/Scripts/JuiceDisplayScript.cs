@@ -23,7 +23,10 @@ public class JuiceDisplayScript : MonoBehaviour
     }
     public void SetCoinBal(string val)
     {
-        coinBal = val;
+        //val = "0.089898";
+
+        string[] breakdown = val.Split('.');
+        coinBal = breakdown[0] + "." + breakdown[1].Substring(0, 2);
         UpdateCoinBalance();
     }
     public void UpdateJuiceBalance()
@@ -36,6 +39,7 @@ public class JuiceDisplayScript : MonoBehaviour
 
     public void UpdateCoinBalance()
     {
+
         if (coinBal == "")
             CoinText.GetComponent<TMPro.TMP_Text>().text = "0";
         else

@@ -89,7 +89,7 @@ public class GameOverScript : MonoBehaviour
             currentScore.text = "SCORE : " + PlayerStats.Instance.GetScore().ToString();
             dailyScore.text = "DAILY SCORE : " + (SingleplayerGameControler.instance.GetDailyScore());
             allTimeScore.text = "ALL TIME SCORE : " + (SingleplayerGameControler.instance.GetAllTimeScore() );
-            sessionCounterText.text = "DAILY RUNS : " + (SingleplayerGameControler.instance.GetSessions()) + "/10";
+            sessionCounterText.text = "DAILY RUNS : " + (SingleplayerGameControler.instance.GetSessions()) + "/" + limit;
 
         }
         else if (SingleplayerGameControler.instance.GetSessions() >= limit)
@@ -98,7 +98,7 @@ public class GameOverScript : MonoBehaviour
             sessionsNotLeft.SetActive(true);
             dailyScore.text = "DAILY SCORE : " + (SingleplayerGameControler.instance.GetDailyScore());
             allTimeScore.text = "ALL TIME SCORE : " + (SingleplayerGameControler.instance.GetAllTimeScore());
-            sessionCounterText.text = "DAILY RUNS : " + (SingleplayerGameControler.instance.GetSessions()) + "/10";
+            sessionCounterText.text = "DAILY RUNS : " + (SingleplayerGameControler.instance.GetSessions()) + "/" + limit;
 
         }
 
@@ -166,7 +166,7 @@ public class GameOverScript : MonoBehaviour
         currentScore.text = "SCORE : " + PlayerStats.Instance.GetScore().ToString();
         dailyScore.text = "DAILY SCORE : " + (SingleplayerGameControler.instance.GetDailyScore() );
         allTimeScore.text = "ALL TIME SCORE : " + (SingleplayerGameControler.instance.GetAllTimeScore() );
-        sessionCounterText.text= "DAILY RUNS : " + (SingleplayerGameControler.instance.GetSessions())+"/10";
+        sessionCounterText.text= "DAILY RUNS : " + (SingleplayerGameControler.instance.GetSessions())+ "/" + limit;
     }
     public void TryAgain()
     {

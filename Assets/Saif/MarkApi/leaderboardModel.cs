@@ -27,6 +27,7 @@ namespace leaderboardModel
         public int allTimeScore;
         public int score;
         public int weeklyScore;
+        public int tournamentScore;
         public int longestDistance;
         public int dailySessionPlayed;
         public int totalSessionPlayed;
@@ -35,17 +36,34 @@ namespace leaderboardModel
         public string name;
     }
     [System.Serializable]
-
     public class userPostedData
     {
         public int id;
         public int score;
     }
     [System.Serializable]
-
     public class userGetDataModel
     {
         public string id;
+    }
+    [System.Serializable]
+    public class tournamentLeaderboardClass
+    {
+        public int id;
+        public int score;
+    }
+    [System.Serializable]
+    public class tournamentClass
+    {
+        public string status;
+        public string name;
+        public string guild;
+        public tournamentLeaderboardClass[] leaderboard;
+    }
+    public class userGetTournamentDataModel
+    {
+        public string id;
+        public string game;
     }
 
     public class userGetDataModelSecond

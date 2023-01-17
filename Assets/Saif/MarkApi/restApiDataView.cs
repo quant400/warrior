@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DataApi;
 using UnityEngine.Networking;
+using System.Text;
 
 
 public class restApiDataView : MonoBehaviour
@@ -14,8 +15,10 @@ public class restApiDataView : MonoBehaviour
     public leaderboardModel.assetClass[] leaderboardArray;
     public List<leaderboardModel.assetClass> dailyLeaderboadData;
     public List<leaderboardModel.assetClass> weeklyLeaderboadData;
+    public List<leaderboardModel.tournamentLeaderboardClass> tournamentLeaderboadData;
     public leaderboardModel.assetClass[] dailyLeaderboardArray;
     public leaderboardModel.assetClass[] weeklyLeaderboardArray;
+    public leaderboardModel.tournamentLeaderboardClass[] tournamentLeaderboardArray;
     [SerializeField] LeaderBoardControllerRestApi leaderboardControllerRestApi;
     private void Awake()
     {
@@ -50,6 +53,13 @@ public class restApiDataView : MonoBehaviour
         getWeeklyLeaderboardFronRestApi();
 
     }
+    public void DisplayTournamentLeaderboardRestApi()
+    {
+        //Debug.Log("DisplayWeeklyLeaderboardRestApi");
+
+        getTournamentLeaderboardFronRestApi();
+
+    }
     public  void DisplayLeaderboardRestApi()
     {
         //Debug.Log("DisplayAlltimeLeaderboardRestApi");
@@ -75,6 +85,57 @@ public class restApiDataView : MonoBehaviour
 
         StartCoroutine(getLeaderboardFromApi("https://api.cryptofightclub.io/game/sdk/warrior/leaderboard/weekly", "weekly"));
     }
+    public void getTournamentLeaderboardFronRestApi()
+    {
+        //Debug.Log("getWeeklyLeaderboardFronRestApi");
+
+        //StartCoroutine(getLeaderboardFromApi("https://staging-api.cryptofightclub.io/game/sdk/tournament", "tournament"));
+        StartCoroutine(getTournamentLeaderboardFromApi("https://staging-api.cryptofightclub.io/game/sdk/tournament", "1", "warrior"));
+    }
+
+    public IEnumerator getTournamentLeaderboardFromApi(string url, string assetId, string game)
+    {
+        leaderboardModel.userGetTournamentDataModel idData = new leaderboardModel.userGetTournamentDataModel();
+        idData.id = assetId;
+        idData.game = game;
+        string idJsonData = JsonUtility.ToJson(idData);
+        using (UnityWebRequest request = UnityWebRequest.Post(url.ToString(), idJsonData))
+        {
+            request.method = UnityWebRequest.kHttpVerbPOST;
+            request.downloadHandler = new DownloadHandlerBuffer();
+            request.uploadHandler = new UploadHandlerRaw(string.IsNullOrEmpty(idJsonData) ? null : Encoding.UTF8.GetBytes(idJsonData));
+            request.SetRequestHeader("Accept", "application/json");
+            request.SetRequestHeader("Content-Type", "application/json");
+            yield return request.SendWebRequest();
+            if (request.error == null)
+            {
+                //setScoreInLeaderBoard(score);
+                Debug.Log("tournament:");
+
+                string temp = Encoding.UTF8.GetString(request.downloadHandler.data);
+
+                Debug.Log(temp);
+
+                leaderboardModel.tournamentClass leaderboardData = JsonUtil.fromJson<leaderboardModel.tournamentClass>(temp);
+
+                /*
+                Debug.Log(leaderboardData.status);
+                Debug.Log(leaderboardData.name);
+                Debug.Log(leaderboardData.guild);
+                Debug.Log(leaderboardData.leaderboard[0].id);
+                Debug.Log(leaderboardData.leaderboard[0].score);
+                */
+
+                checkLeadboardTournament(leaderboardData.leaderboard);
+
+            }
+            else
+            {
+                Debug.Log("error in server");
+            }
+        }
+    }
+
     public IEnumerator getLeaderboardFromApi(string url,string type)
     {
         using (UnityWebRequest request = UnityWebRequest.Get(url))
@@ -93,7 +154,14 @@ public class restApiDataView : MonoBehaviour
                 {
                     //Debug.Log("getLeaderboardFromApi");
 
+                    Debug.Log("weekly:");
+                    Debug.Log(Encoding.UTF8.GetString(request.downloadHandler.data));
+
                     checkLeadboardWeekly(request.downloadHandler.text);
+                }
+                else if (type == "tournament")
+                {
+                    //checkLeadboardTournament(request.downloadHandler.text);
                 }
                 else
                 {
@@ -178,6 +246,31 @@ public class restApiDataView : MonoBehaviour
             leaderboardControllerRestApi.UpDateLeaderBoardWeeklyRestApi(weeklyLeaderboardArray, "Weekly LEADERBOARD");
 
     }
+    public void checkLeadboardTournament(leaderboardModel.tournamentLeaderboardClass[] url)
+    {
+        //Debug.Log("checkLeadboardWeekly");
+
+        //string MatchData = fixJsonName(url);
+        //Debug.Log(MatchData);
+        //tournamentLeaderboardArray = JsonUtil.fromJson<leaderboardModel.tournamentLeaderboardClass[]>(url);
+
+        tournamentLeaderboardArray = url;
+        if (tournamentLeaderboardArray != null)
+        {
+            if (tournamentLeaderboardArray.Length > 0)
+            {
+                tournamentLeaderboadData.Clear();
+                for (int i = 0; i < tournamentLeaderboardArray.Length; i++)
+                {
+                    tournamentLeaderboadData.Add(tournamentLeaderboardArray[i]);
+                }
+            }
+        }
+        //displayLeaderBoard("Daily LEADERBOARD");
+        if (leaderboardControllerRestApi != null)
+            leaderboardControllerRestApi.UpDateLeaderBoardTournamentRestApi(tournamentLeaderboardArray, "Tournament LEADERBOARD");
+
+    }
     public void displayLeaderBoard(string type)
     {
         _spawnedLoadingIcon = Instantiate(loadingIconPrefab, GameObject.Find("Canvas").transform);
@@ -224,6 +317,8 @@ public class restApiDataView : MonoBehaviour
     */
     string fixJsonName(string value)
     {
+        Debug.Log("value.Length = " + value.Length);
+
         value = value.Substring(0, value.Length - 1);
         value = value.Remove(0, 1);
 

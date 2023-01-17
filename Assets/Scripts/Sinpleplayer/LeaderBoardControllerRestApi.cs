@@ -25,9 +25,10 @@ public class LeaderBoardControllerRestApi : MonoBehaviour
             //restApiView.DisplayDailyLeaderboardRestApi();
 
             //Debug.Log("Called DisplayWeeklyLeaderboardRestApi");
-            restApiView.DisplayWeeklyLeaderboardRestApi();
+            //restApiView.DisplayWeeklyLeaderboardRestApi();
             //Debug.Log("Called DisplayAlltimeLeaderboardRestApi");
             restApiView.DisplayLeaderboardRestApi();
+            //restApiView.DisplayTournamentLeaderboardRestApi();
             leaderBoard.GetComponent<LeaderBoardScript>().Activate();
         }
         else
@@ -65,6 +66,10 @@ public class LeaderBoardControllerRestApi : MonoBehaviour
             {
                 score = _user.weeklyScore;
             }
+            else if (_leaderboardHeader == "Tournament LEADERBOARD")
+            {
+                score = _user.tournamentScore;
+            }
             else
             {
                 score = _user.allTimeScore;
@@ -94,6 +99,10 @@ public class LeaderBoardControllerRestApi : MonoBehaviour
             else if(_leaderboardHeader == "Weekly LEADERBOARD")
             {
                 score = _user.weeklyScore;
+            }
+            else if (_leaderboardHeader == "Tournament LEADERBOARD")
+            {
+                score = _user.tournamentScore;
             }
             else
             {
@@ -125,6 +134,10 @@ public class LeaderBoardControllerRestApi : MonoBehaviour
             {
                 score = _user.weeklyScore;
             }
+            else if (_leaderboardHeader == "Tournament LEADERBOARD")
+            {
+                score = _user.tournamentScore;
+            }
             else
             {
                 score = _user.allTimeScore;
@@ -133,6 +146,28 @@ public class LeaderBoardControllerRestApi : MonoBehaviour
             var temp = Instantiate(leaderboardEntryPrefab, layoutGroup);
                 temp.GetComponent<LeaderBoardEntry>().Set(rank.ToString(), _user.name, _user.id.ToString(), _user.allTimeScore.ToString());
             
+            rank++;
+        }
+    }
+    public void UpDateLeaderBoardTournamentRestApi(leaderboardModel.tournamentLeaderboardClass[] _leaderboardObject, string _leaderboardHeader)
+    {
+        Clean();
+
+        var query = new Dictionary<string, object>();
+        query.Add("NumResults", 15);
+        Clean();
+        int score;
+        int rank = 1;
+        foreach (leaderboardModel.tournamentLeaderboardClass _user in _leaderboardObject)
+        {
+            if (_leaderboardHeader == "Tournament LEADERBOARD")
+            {
+                score = _user.score;
+            }
+
+            var temp = Instantiate(leaderboardEntryPrefab, layoutGroup);
+            temp.GetComponent<LeaderBoardEntry>().Set(rank.ToString(), _user.id.ToString(), _user.id.ToString(), _user.score.ToString());
+
             rank++;
         }
     }

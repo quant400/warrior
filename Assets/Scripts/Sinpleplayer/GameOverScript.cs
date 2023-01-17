@@ -31,7 +31,7 @@ public class GameOverScript : MonoBehaviour
     // [SerializeField]
     //SinglePlayerSpawner spawner;
 
-    private int limit = 10;
+    private int limit = 7;
 
     public void Start()
     {

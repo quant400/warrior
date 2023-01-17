@@ -151,7 +151,7 @@ public class SingleplayerGameControler : MonoBehaviour
     void observeReactiveSession()
     {
         dailysessionReactive
-            .Where(_ => _ >= 10)
+            .Where(_ => _ >= 7)
             .Do(_ => endGameDirectly())
             .Subscribe()
             .AddTo(this);

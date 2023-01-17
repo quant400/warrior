@@ -32,7 +32,7 @@ public class gameEndView : MonoBehaviour
     GameObject localDisplay;
     [SerializeField] private RuntimeAnimatorController playerAnimatorController;
 
-    private int limit = 10;
+    private int limit = 7;
 
     // [SerializeField]
     //SinglePlayerSpawner spawner;
@@ -259,7 +259,7 @@ public class gameEndView : MonoBehaviour
         weeklyScore.text = "WEEKLY SCORE : " + (gameplayView.instance.GetWeeklyScore());
         allTimeScore.text = "ALL TIME SCORE : " + (gameplayView.instance.GetAllTimeScore());
         longestDistance.text = "BEST SCORE : " + (gameplayView.instance.GetLongestDistanceScore());
-        sessionCounterText.text = "DAILY RUNS : " + (gameplayView.instance.GetSessions()) + "/10";
+        sessionCounterText.text = "DAILY RUNS : " + (gameplayView.instance.GetSessions()) + "/7";
         //sessionCounterText.text = "DAILY RUNS : " + (gameplayView.instance.GetSessions());
         */
     }
@@ -355,7 +355,7 @@ public class gameEndView : MonoBehaviour
         weeklyScore.text = "WEEKLY SCORE : " + (gameplayView.instance.GetWeeklyScore());
         allTimeScore.text = "ALL TIME SCORE : " + (gameplayView.instance.GetAllTimeScore());
         longestDistance.text = "BEST SCORE : " + (gameplayView.instance.GetLongestDistanceScore());
-        sessionCounterText.text = "DAILY RUNS : " + (gameplayView.instance.GetSessions()) + "/10";
+        sessionCounterText.text = "DAILY RUNS : " + (gameplayView.instance.GetSessions()) + "/7";
         //sessionCounterText.text = "DAILY RUNS : " + (gameplayView.instance.GetSessions());
         */
 
@@ -553,7 +553,7 @@ public class gameEndView : MonoBehaviour
         weeklyScore.text = "WEEKLY SCORE : " + (gameplayView.instance.GetWeeklyScore());
         allTimeScore.text = "ALL TIME SCORE : " + (gameplayView.instance.GetAllTimeScore());
         longestDistance.text = "BEST SCORE : " + (gameplayView.instance.GetLongestDistanceScore());
-        //sessionCounterText.text = "DAILY RUNS : " + (gameplayView.instance.GetSessions()) + "/10";
+        //sessionCounterText.text = "DAILY RUNS : " + (gameplayView.instance.GetSessions()) + "/7";
         sessionCounterText.text = "DAILY RUNS : " + (gameplayView.instance.GetSessions());
         */
     }

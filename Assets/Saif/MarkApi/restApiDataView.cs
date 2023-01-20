@@ -109,22 +109,9 @@ public class restApiDataView : MonoBehaviour
             yield return request.SendWebRequest();
             if (request.error == null)
             {
-                //setScoreInLeaderBoard(score);
-                Debug.Log("tournament:");
-
                 string temp = Encoding.UTF8.GetString(request.downloadHandler.data);
 
-                Debug.Log(temp);
-
                 leaderboardModel.tournamentClass leaderboardData = JsonUtil.fromJson<leaderboardModel.tournamentClass>(temp);
-
-                /*
-                Debug.Log(leaderboardData.status);
-                Debug.Log(leaderboardData.name);
-                Debug.Log(leaderboardData.guild);
-                Debug.Log(leaderboardData.leaderboard[0].id);
-                Debug.Log(leaderboardData.leaderboard[0].score);
-                */
 
                 checkLeadboardTournament(leaderboardData.leaderboard);
 
@@ -154,8 +141,8 @@ public class restApiDataView : MonoBehaviour
                 {
                     //Debug.Log("getLeaderboardFromApi");
 
-                    Debug.Log("weekly:");
-                    Debug.Log(Encoding.UTF8.GetString(request.downloadHandler.data));
+                    //Debug.Log("weekly:");
+                    //Debug.Log(Encoding.UTF8.GetString(request.downloadHandler.data));
 
                     checkLeadboardWeekly(request.downloadHandler.text);
                 }

@@ -29,6 +29,7 @@ namespace leaderboardModel
         public int weeklyScore;
         public int tournamentScore;
         public int longestDistance;
+        public bool tournamentStatus;
         public int dailySessionPlayed;
         public int totalSessionPlayed;
         public DateTime updatedAt;
@@ -55,7 +56,7 @@ namespace leaderboardModel
     [System.Serializable]
     public class tournamentClass
     {
-        public string status;
+        public bool status;
         public string name;
         public string guild;
         public tournamentLeaderboardClass[] leaderboard;

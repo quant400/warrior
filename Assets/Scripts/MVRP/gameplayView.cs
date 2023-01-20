@@ -31,6 +31,7 @@ public class gameplayView : MonoBehaviour
     public NFTInfo chosenNFT;
 
     public int dailyScore, AlltimeScore, weeklyScore, longestDistance, sessions;
+    public bool tournamentStatus = false;
     public bool isRestApi;
     public ReactiveProperty<int> dailysessionReactive = new ReactiveProperty<int>();
     public static NFTInfo[] nftDataArray;
@@ -174,6 +175,15 @@ public class gameplayView : MonoBehaviour
         if (longestDistance == -1)
             return 0;
         return longestDistance;
+    }
+    public bool GetTournamentStatus()
+    {
+        if (tournamentStatus == false)
+        {
+            return false;
+        }
+            
+        return tournamentStatus;
     }
     public int GetSessions()
     {

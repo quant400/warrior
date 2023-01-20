@@ -9,6 +9,9 @@ public class LeaderBoardScript : MonoBehaviour
 
     [SerializeField]
     private Button[] buttons;
+
+    [SerializeField]
+    private CanvasGroup fighterCanvas;
     internal void Activate()
     {
         SetAllButtonsInteractable();
@@ -36,6 +39,15 @@ public class LeaderBoardScript : MonoBehaviour
 
         if (buttonIndex == -1)
             return;
+
+        if(clickedButton == buttons[3])
+        {
+            fighterCanvas.alpha = 0;
+        }
+        else
+        {
+            fighterCanvas.alpha = 1;
+        }
 
         SetAllButtonsInteractable();
 

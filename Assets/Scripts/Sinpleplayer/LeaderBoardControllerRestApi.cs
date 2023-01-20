@@ -166,7 +166,7 @@ public class LeaderBoardControllerRestApi : MonoBehaviour
             }
 
             var temp = Instantiate(leaderboardEntryPrefab, layoutGroup);
-            temp.GetComponent<LeaderBoardEntry>().Set(rank.ToString(), _user.id.ToString(), _user.id.ToString(), _user.score.ToString());
+            temp.GetComponent<LeaderBoardEntry>().Set(rank.ToString(), "", _user.id.ToString(), _user.score.ToString());
 
             rank++;
         }

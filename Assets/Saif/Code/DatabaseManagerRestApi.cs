@@ -114,6 +114,7 @@ public class DatabaseManagerRestApi : MonoBehaviour
 
                 checkSessionCounter(Encoding.UTF8.GetString(request.downloadHandler.data));
 
+                getTournamentLeaderboardFronRestApi(assetId);
 
                 //setScoreInLeaderBoard(score);
                 Debug.Log(Encoding.UTF8.GetString(request.downloadHandler.data));
@@ -210,6 +211,8 @@ public class DatabaseManagerRestApi : MonoBehaviour
 
                 string result = Encoding.UTF8.GetString(request.downloadHandler.data);
 
+                getTournamentLeaderboardFronRestApi(assetId);
+
                 checkSessionCounter(result);
 
                 getJuiceFromRestApi(assetId);
@@ -303,6 +306,44 @@ public class DatabaseManagerRestApi : MonoBehaviour
     }
     */
 
+    public void getTournamentLeaderboardFronRestApi(string id)
+    {
+        StartCoroutine(getTournamentLeaderboardFromApi("https://staging-api.cryptofightclub.io/game/sdk/tournament", id, "warrior"));
+    }
+
+    public IEnumerator getTournamentLeaderboardFromApi(string url, string assetId, string game)
+    {
+        leaderboardModel.userGetTournamentDataModel idData = new leaderboardModel.userGetTournamentDataModel();
+        idData.id = assetId;
+        idData.game = game;
+        string idJsonData = JsonUtility.ToJson(idData);
+        using (UnityWebRequest request = UnityWebRequest.Post(url.ToString(), idJsonData))
+        {
+            request.method = UnityWebRequest.kHttpVerbPOST;
+            request.downloadHandler = new DownloadHandlerBuffer();
+            request.uploadHandler = new UploadHandlerRaw(string.IsNullOrEmpty(idJsonData) ? null : Encoding.UTF8.GetBytes(idJsonData));
+            request.SetRequestHeader("Accept", "application/json");
+            request.SetRequestHeader("Content-Type", "application/json");
+            yield return request.SendWebRequest();
+            if (request.error == null)
+            {
+                string temp = Encoding.UTF8.GetString(request.downloadHandler.data);
+
+                //Debug.Log("temp = " + temp);
+
+                leaderboardModel.tournamentClass leaderboardData = JsonUtility.FromJson<leaderboardModel.tournamentClass>(temp);
+
+                gameplayView.instance.tournamentStatus = leaderboardData.status;
+
+                //Debug.Log("Tournament Status: " + gameplayView.instance.tournamentStatus);
+            }
+            else
+            {
+                Debug.Log("error in server");
+            }
+        }
+    }
+
     public void checkSessionCounter(string url)
     {
 
@@ -315,6 +356,9 @@ public class DatabaseManagerRestApi : MonoBehaviour
 
 
         leaderboardModel.assetClass playerData = restApiDataView.JsonUtil.fromJson<leaderboardModel.assetClass>(url);
+
+        //Debug.Log("ID: " + playerData.id);
+
         if (playerData != null)
         {
             sessionCounterReactive.Value = playerData.dailySessionPlayed;
@@ -324,6 +368,10 @@ public class DatabaseManagerRestApi : MonoBehaviour
             gameplayView.instance.weeklyScore = playerData.weeklyScore;
             gameplayView.instance.longestDistance = playerData.longestDistance;
             gameplayView.instance.dailysessionReactive.Value = playerData.dailySessionPlayed;
+            //gameplayView.instance.tournamentStatus = playerData.tournamentStatus;
+
+
+            //Debug.Log("Tournament Status: " + gameplayView.instance.tournamentStatus);
 
             //Debug.Log("weeklyScore = " + gameplayView.instance.weeklyScore);
 
@@ -342,6 +390,7 @@ public class DatabaseManagerRestApi : MonoBehaviour
         gameplayView.instance.weeklyScore = -1;
         gameplayView.instance.longestDistance = -1;
         gameplayView.instance.dailysessionReactive.Value = -1;
+        gameplayView.instance.tournamentStatus = false;
 
     }
 
@@ -445,6 +494,8 @@ public class DatabaseManagerRestApi : MonoBehaviour
 
         }
     }
+
+
 
     public void SetDemoScore(string _assetID, string _FighterName, int _score)
     {

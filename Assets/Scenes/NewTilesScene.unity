@@ -17883,6 +17883,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f84a57741a8baad489d47ca8150b482a, type: 3}
+--- !u!1 &308758277 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 308758277, guid: 300385bed0944204daa0d2b1592e14ad, type: 3}
+  m_PrefabInstance: {fileID: 1817958622}
+  m_PrefabAsset: {fileID: 0}
 --- !u!19719996 &377721260 stripped
 TilemapCollider2D:
   m_CorrespondingSourceObject: {fileID: 674585164163333886, guid: 69ec154776e5beb439f7ee40dbf47db7, type: 3}
@@ -17995,6 +18000,7 @@ MonoBehaviour:
   playerScore: 0
   longestRun: 0
   fireworks: {fileID: 1746212746}
+  tournamentUi: {fileID: 308758277}
 --- !u!1001 &1168440750
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -53046,18 +53052,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 756149751, guid: 300385bed0944204daa0d2b1592e14ad, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 756149752, guid: 300385bed0944204daa0d2b1592e14ad, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -386
-      objectReference: {fileID: 0}
-    - target: {fileID: 756149754, guid: 300385bed0944204daa0d2b1592e14ad, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 251470971922181960, guid: 300385bed0944204daa0d2b1592e14ad, type: 3}
       propertyPath: m_Name
       value: 'SinglePlayerUIController '

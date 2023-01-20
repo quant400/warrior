@@ -36362,6 +36362,7 @@ MonoBehaviour:
   playerScore: 0
   longestRun: 0
   fireworks: {fileID: 1402653897}
+  tournamentUi: {fileID: 1195932608}
 --- !u!1001 &1122603796
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -39512,6 +39513,11 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!1 &1195932608 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 308758277, guid: 300385bed0944204daa0d2b1592e14ad, type: 3}
+  m_PrefabInstance: {fileID: 1952542617}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1234053903
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -45662,6 +45668,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 308758278, guid: 300385bed0944204daa0d2b1592e14ad, type: 3}
+      propertyPath: m_RootOrder
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 308758279, guid: 300385bed0944204daa0d2b1592e14ad, type: 3}
+      propertyPath: m_Color.a
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 756149751, guid: 300385bed0944204daa0d2b1592e14ad, type: 3}
       propertyPath: m_IsActive
       value: 1

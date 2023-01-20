@@ -37,6 +37,8 @@ public class PlayerStats : MonoBehaviour
 
     private bool fireworksTimerBool;
 
+    public GameObject tournamentUi;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -60,6 +62,18 @@ public class PlayerStats : MonoBehaviour
         fireworksParticleSystem = fireworks.GetComponent<ParticleSystem>();
 
         fireworksParticleSystem.Stop();
+
+        if (gameplayView.instance)
+        {
+            if (gameplayView.instance.GetTournamentStatus())
+            {
+                tournamentUi.SetActive(true);
+            }
+            else
+            {
+                tournamentUi.SetActive(false);
+            }
+        }
     }
 
     // Update is called once per frame

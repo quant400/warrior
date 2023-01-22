@@ -105,13 +105,20 @@ public class restApiDataView : MonoBehaviour
             url = "https://api.cryptofightclub.io/game/sdk/tournament";
         }
 
-        id = gameplayView.instance.GetLoggedPlayerString();
+        //id = gameplayView.instance.GetLoggedPlayerString();
 
-        if(!gameplayView.instance.usingMeta)
+        if(warriorGameModel.currentNFTArray.Length > 0)
         {
+            id = warriorGameModel.currentNFTArray[0].id;
+            
             StartCoroutine(getTournamentLeaderboardFromApi(url, id, "warrior"));
         }
-        
+        else if(!gameplayView.instance.usingMeta)
+        {
+            id = gameplayView.instance.GetLoggedPlayerString();
+
+            StartCoroutine(getTournamentLeaderboardFromApi(url, id, "warrior"));
+        }
     }
 
     public IEnumerator getTournamentLeaderboardFromApi(string url, string assetId, string game)

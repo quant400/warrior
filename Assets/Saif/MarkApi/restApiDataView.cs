@@ -107,15 +107,16 @@ public class restApiDataView : MonoBehaviour
 
         //id = gameplayView.instance.GetLoggedPlayerString();
 
-        if(warriorGameModel.currentNFTArray.Length > 0)
-        {
-            id = warriorGameModel.currentNFTArray[0].id;
-            
-            StartCoroutine(getTournamentLeaderboardFromApi(url, id, "warrior"));
-        }
-        else if(!gameplayView.instance.usingMeta)
+
+        if(!gameplayView.instance.usingMeta)
         {
             id = gameplayView.instance.GetLoggedPlayerString();
+
+            StartCoroutine(getTournamentLeaderboardFromApi(url, id, "warrior"));
+        }
+        else if (warriorGameModel.currentNFTArray.Length > 0)
+        {
+            id = warriorGameModel.currentNFTArray[0].id;
 
             StartCoroutine(getTournamentLeaderboardFromApi(url, id, "warrior"));
         }

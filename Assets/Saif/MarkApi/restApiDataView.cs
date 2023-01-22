@@ -90,7 +90,20 @@ public class restApiDataView : MonoBehaviour
         //Debug.Log("getWeeklyLeaderboardFronRestApi");
 
         //StartCoroutine(getLeaderboardFromApi("https://staging-api.cryptofightclub.io/game/sdk/tournament", "tournament"));
-        StartCoroutine(getTournamentLeaderboardFromApi("https://staging-api.cryptofightclub.io/game/sdk/tournament", "1", "warrior"));
+        //StartCoroutine(getTournamentLeaderboardFromApi("https://staging-api.cryptofightclub.io/game/sdk/tournament", "1", "warrior"));
+
+        string url = "";
+
+        if (KeyMaker.instance.buildType == BuildType.staging)
+        {
+            url = "https://staging-api.cryptofightclub.io/game/sdk/tournament";
+        }
+        else if (KeyMaker.instance.buildType == BuildType.production)
+        {
+            url = "https://api.cryptofightclub.io/game/sdk/tournament";
+        }
+
+        StartCoroutine(getTournamentLeaderboardFromApi(url, "1", "warrior"));
     }
 
     public IEnumerator getTournamentLeaderboardFromApi(string url, string assetId, string game)
@@ -304,7 +317,7 @@ public class restApiDataView : MonoBehaviour
     */
     string fixJsonName(string value)
     {
-        Debug.Log("value.Length = " + value.Length);
+        //Debug.Log("value.Length = " + value.Length);
 
         value = value.Substring(0, value.Length - 1);
         value = value.Remove(0, 1);

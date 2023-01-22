@@ -308,7 +308,20 @@ public class DatabaseManagerRestApi : MonoBehaviour
 
     public void getTournamentLeaderboardFronRestApi(string id)
     {
-        StartCoroutine(getTournamentLeaderboardFromApi("https://staging-api.cryptofightclub.io/game/sdk/tournament", id, "warrior"));
+        //StartCoroutine(getTournamentLeaderboardFromApi("https://staging-api.cryptofightclub.io/game/sdk/tournament", id, "warrior"));
+
+        string url = "";
+
+        if (KeyMaker.instance.buildType == BuildType.staging)
+        {
+            url = "https://staging-api.cryptofightclub.io/game/sdk/tournament";
+        }
+        else if (KeyMaker.instance.buildType == BuildType.production)
+        {
+            url = "https://api.cryptofightclub.io/game/sdk/tournament";
+        }
+
+        StartCoroutine(getTournamentLeaderboardFromApi(url, id, "warrior"));
     }
 
     public IEnumerator getTournamentLeaderboardFromApi(string url, string assetId, string game)

@@ -94,6 +94,8 @@ public class restApiDataView : MonoBehaviour
 
         string url = "";
 
+        string id = "";
+
         if (KeyMaker.instance.buildType == BuildType.staging)
         {
             url = "https://staging-api.cryptofightclub.io/game/sdk/tournament";
@@ -103,7 +105,13 @@ public class restApiDataView : MonoBehaviour
             url = "https://api.cryptofightclub.io/game/sdk/tournament";
         }
 
-        StartCoroutine(getTournamentLeaderboardFromApi(url, "1", "warrior"));
+        id = gameplayView.instance.GetLoggedPlayerString();
+
+        if(!gameplayView.instance.usingMeta)
+        {
+            StartCoroutine(getTournamentLeaderboardFromApi(url, id, "warrior"));
+        }
+        
     }
 
     public IEnumerator getTournamentLeaderboardFromApi(string url, string assetId, string game)
@@ -126,7 +134,13 @@ public class restApiDataView : MonoBehaviour
 
                 leaderboardModel.tournamentClass leaderboardData = JsonUtil.fromJson<leaderboardModel.tournamentClass>(temp);
 
-                checkLeadboardTournament(leaderboardData.leaderboard);
+                if (leaderboardData.leaderboard != null)
+                {
+                    checkLeadboardTournament(leaderboardData.leaderboard);
+                }
+                
+
+                //checkLeadboardTournament(leaderboardData.leaderboard);
 
             }
             else

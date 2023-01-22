@@ -178,7 +178,6 @@ public class DatabaseManagerRestApi : MonoBehaviour
         idData.id = assetId;
         localID = assetId;
         string idJsonData = JsonUtility.ToJson(idData);
-        Debug.Log(idData);
 
         string url = "";
 

@@ -617,12 +617,13 @@ public class FireBaseWebGLAuth : MonoBehaviour
         //for email login
         //gameplayView.instance.logedPlayer = ("test@test.com".ToLower(), "5uU1JCypYMT3EGWTzK3I2EhHqpC3".ToLower());
 
-        //gameplayView.instance.logedPlayer = ("hassan.iqbal@quids.tech".ToLower(), "0tuICf75vGOsrhtbpYWaLKeTugg2".ToLower());
+        gameplayView.instance.logedPlayer = ("hassan.iqbal@quids.tech".ToLower(), "0tuICf75vGOsrhtbpYWaLKeTugg2".ToLower());
 
         //for meta login
+        /*
         gameplayView.instance.usingMeta = true;
         PlayerPrefs.SetString("Account", "0xD408B954A1Ec6c53BE4E181368F1A54ca434d2f3");
-
+        */
 
         StartCoroutine(KeyMaker.instance.GetRequest());
     }

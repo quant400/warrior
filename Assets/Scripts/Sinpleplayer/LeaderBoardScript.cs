@@ -17,6 +17,7 @@ public class LeaderBoardScript : MonoBehaviour
         SetAllButtonsInteractable();
         transform.DOScale(Vector3.one, 1f);
         defaultButton.interactable=false;
+        fighterCanvas.alpha = 1;
     }
 
     internal void Deactivate()

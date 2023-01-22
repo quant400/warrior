@@ -50,7 +50,7 @@ namespace leaderboardModel
     [System.Serializable]
     public class tournamentLeaderboardClass
     {
-        public int id;
+        public string id;
         public int score;
     }
     [System.Serializable]

@@ -19315,8 +19315,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'NOTE: YOU MUST CONNECT YOUR EMAIL TO YOUR METAMASK ACCOUNT TO ACCESS YOUR
-    METAMASK NFTS IN EMAIL OR GOOGLE LOGIN'
+  m_text: 'NOTE: THOSE WHO DO NOT OWN A CFC GEN 1 NFT, CONNECT ONLY WITH EMAIL/GOOGLE.
+    THOSE WITH A GEN 1 NFT, LINK YOUR MM TO YOUR EMAIL ACCOUNT.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f39ba4e089f3b5e4babf1ea656a1402d, type: 2}
   m_sharedMaterial: {fileID: -7393962115032257950, guid: f39ba4e089f3b5e4babf1ea656a1402d, type: 2}
@@ -28385,7 +28385,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5479180407007317759, guid: dcade7979c3da534db27311c23ab15d5, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -115558.086
+      value: -119025.24
       objectReference: {fileID: 0}
     - target: {fileID: 5479180407079113686, guid: dcade7979c3da534db27311c23ab15d5, type: 3}
       propertyPath: m_fontAsset

@@ -12522,7 +12522,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1155008459
 RectTransform:
   m_ObjectHideFlags: 0
@@ -16109,7 +16109,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -28385,7 +28385,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5479180407007317759, guid: dcade7979c3da534db27311c23ab15d5, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -119025.24
+      value: -122045.02
       objectReference: {fileID: 0}
     - target: {fileID: 5479180407079113686, guid: dcade7979c3da534db27311c23ab15d5, type: 3}
       propertyPath: m_fontAsset

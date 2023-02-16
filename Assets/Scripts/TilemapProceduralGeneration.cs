@@ -1254,7 +1254,7 @@ public class TilemapProceduralGeneration : MonoBehaviour
 
                 checkpointText.text = PlayerStats.Instance.checkpointDistance.ToString();
 
-                checkpointSlider.value = (startingWidth - PlayerStats.Instance.checkpointDistance) / startingWidth;
+                //checkpointSlider.value = (startingWidth - PlayerStats.Instance.checkpointDistance) / startingWidth;
             }
             else
             {
@@ -1272,7 +1272,7 @@ public class TilemapProceduralGeneration : MonoBehaviour
 
                 checkpointText.text = PlayerStats.Instance.checkpointDistance.ToString();
 
-                checkpointSlider.value = (startingWidth - PlayerStats.Instance.checkpointDistance) / startingWidth;
+                //checkpointSlider.value = (startingWidth - PlayerStats.Instance.checkpointDistance) / startingWidth;
             }
             else
             {
@@ -1289,7 +1289,7 @@ public class TilemapProceduralGeneration : MonoBehaviour
 
                 checkpointText.text = PlayerStats.Instance.checkpointDistance.ToString();
 
-                checkpointSlider.value = (startingWidth - PlayerStats.Instance.checkpointDistance) / startingWidth;
+                //checkpointSlider.value = (startingWidth - PlayerStats.Instance.checkpointDistance) / startingWidth;
             }
             else
             {

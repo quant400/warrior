@@ -9,9 +9,9 @@ public class MobileInputToggle : MonoBehaviour
     void Start()
     {
 
-#if UNITY_ANDROID
+#if UNITY_WEBGL
 
-        gameObject.SetActive(true);
+        gameObject.SetActive(false);
 
 #endif
 

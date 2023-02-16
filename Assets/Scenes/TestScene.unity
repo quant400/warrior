@@ -36230,6 +36230,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5533956274132615654, guid: dd67e12126e57e3439ce5fcd855dd202, type: 3}
   m_PrefabInstance: {fileID: 967057331}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1000953758 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1862440759, guid: 300385bed0944204daa0d2b1592e14ad, type: 3}
+  m_PrefabInstance: {fileID: 1952542617}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1046122598
 GameObject:
   m_ObjectHideFlags: 0
@@ -39802,7 +39813,7 @@ MonoBehaviour:
   noOfHardSegments: 7
   checkpointPrefab: {fileID: 2216030331147064486, guid: 1e4329b827399814db71a68cae394c1a, type: 3}
   checkpointText: {fileID: 1952542619}
-  checkpointSlider: {fileID: 0}
+  checkpointSlider: {fileID: 1000953758}
   timerText: {fileID: 1952542620}
   playerScoreText: {fileID: 1952542621}
   timeCheckpointAddition: 20
@@ -45840,6 +45851,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 308758277, guid: 300385bed0944204daa0d2b1592e14ad, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 308758278, guid: 300385bed0944204daa0d2b1592e14ad, type: 3}
       propertyPath: m_RootOrder
       value: 12

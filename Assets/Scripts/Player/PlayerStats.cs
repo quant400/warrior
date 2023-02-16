@@ -18,6 +18,9 @@ public class PlayerStats : MonoBehaviour
         {
             Instance = this;
         }
+
+        //QualitySettings.vSyncCount = 0;  // VSync must be disabled
+        //Application.targetFrameRate = 120;
     }
 
     [Tooltip("Enter starting time")]
@@ -63,7 +66,7 @@ public class PlayerStats : MonoBehaviour
 
         fireworksParticleSystem.Stop();
 
-        if (gameplayView.instance)
+        if (gameplayView.instance && !gameplayView.instance.isTryout)
         {
             if (gameplayView.instance.GetTournamentStatus())
             {
@@ -73,6 +76,10 @@ public class PlayerStats : MonoBehaviour
             {
                 tournamentUi.SetActive(false);
             }
+        }
+        else
+        {
+            tournamentUi.SetActive(false);
         }
     }
 

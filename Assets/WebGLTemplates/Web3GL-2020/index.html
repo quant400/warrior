@@ -10,9 +10,14 @@
       <script src="network.js"></script>
       <link rel="manifest" href="./manifest.json"/>
       <link href="./static/css/main.1359096b.chunk.css" rel="stylesheet">
+	  <link href="3-message.css" rel="stylesheet">
    </head>
    <body>
       <noscript>You need to enable JavaScript to run this app.</noscript>
+	  <!-- (A) THIS WILL SHOW ON THE WRONG ORIENTATION -->
+	  <div id="turn">
+	  <p style="color:white">Please rotate your device!</p>
+      </div>
       <div id="root"></div>
       <div id="unity-container" class="unity-desktop" style="background-color:#0c0c23">
       	 <div id="unity-loading-bar">
@@ -29,6 +34,7 @@
             <div id="unity-fullscreen-button"></div>
          </div>
       </div>
+	  
       <script>var buildUrl = "Build";
          var loaderUrl = buildUrl + "/{{{ LOADER_FILENAME }}}";
          var config = {
@@ -63,7 +69,7 @@
            container.className = "unity-mobile";
            // Avoid draining fillrate performance on mobile devices,
            // and default/override low DPI mode on mobile browsers.
-           config.devicePixelRatio = 1;
+           config.devicePixelRatio = Math.min(config.devicePixelRatio, 2);
          } else {
              canvas.style.width = "100vw";
              canvas.style.height = "100vh";

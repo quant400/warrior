@@ -58,7 +58,7 @@ public class BearMovement : MonoBehaviour
     {
         if(playerInRange)
         {
-            if(playerBody.transform.position.x < bearBody.transform.position.x)
+            if (playerBody.transform.position.x < bearBody.transform.position.x)
             {
                 moveDirection = new Vector3(-1, 0, 0);
 

@@ -119,22 +119,6 @@ public class TilemapProceduralGeneration : MonoBehaviour
 
     //private float playerScore;
 
-    /*
-    void Awake()
-    {
-        QualitySettings.vSyncCount = 0;  // VSync must be disabled
-        Application.targetFrameRate = -1;
-    }
-    */
-
-    /*
-    void Awake()
-    {
-        QualitySettings.vSyncCount = 0;  // VSync must be disabled
-        Application.targetFrameRate = 45;
-    }
-    */
-
     private void Start()
     {
         tilemapDistance *= width;

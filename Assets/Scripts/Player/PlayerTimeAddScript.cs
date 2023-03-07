@@ -5,13 +5,6 @@ using TMPro;
 
 public class PlayerTimeAddScript : MonoBehaviour
 {
-    /*
-    void Awake()
-    {
-        QualitySettings.vSyncCount = 0;  // VSync must be disabled
-        Application.targetFrameRate = -1;
-    }
-    */
     // Start is called before the first frame update
 
     [SerializeField] GameObject timeAddPrompt;

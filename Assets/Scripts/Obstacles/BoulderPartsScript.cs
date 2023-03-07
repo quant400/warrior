@@ -21,7 +21,7 @@ public class BoulderPartsScript : MonoBehaviour
 
         Vector3 direction = objectCollider.bounds.center - gameObject.transform.parent.position;
 
-        rb2D.AddForce(direction * -50, ForceMode2D.Impulse);
+        rb2D.AddForce(direction * -20, ForceMode2D.Impulse);
     }
 
     private void OnEnable()

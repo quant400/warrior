@@ -60602,6 +60602,8 @@ MonoBehaviour:
   checkpointWidthAddition: 10
   easyObstacleSegments:
   - {fileID: 7116174288823158861, guid: 0c2254d92fd3ab148816ba368d73b298, type: 3}
+  - {fileID: 3356541885462912283, guid: 2de2fe998c7f6634e957df80a559fc96, type: 3}
+  - {fileID: 4495201099714903871, guid: 439a7be58000a67498045397959355dc, type: 3}
   - {fileID: 5533960210401535609, guid: 36d83b2f97bc153458c02e186e4750e0, type: 3}
   - {fileID: 5271512772828623072, guid: 505138ac67e894448a452436f1ec063c, type: 3}
   - {fileID: 6053363110687607502, guid: d7b5e6dc80548f7428e912bab82e947c, type: 3}
@@ -60610,9 +60612,10 @@ MonoBehaviour:
   - {fileID: 7435060164135556442, guid: 447821ce453fe0f4d94c49e248a6ea44, type: 3}
   - {fileID: 7396675049478854105, guid: 2276db0ee64c83e48ae6aa84314b7add, type: 3}
   - {fileID: 7616225896813094684, guid: 69f9de09afcdff64d939085bb2ec9eec, type: 3}
-  - {fileID: 3356541885462912283, guid: 2de2fe998c7f6634e957df80a559fc96, type: 3}
   noOfEasySegments: 6
   mediumObstacleSegments:
+  - {fileID: 4190442251296166545, guid: f0e7bfafa73db1c4b9b04e9bfb7c11a4, type: 3}
+  - {fileID: 964389021202380220, guid: 87d428a29a9a34e42a7277e83c42e619, type: 3}
   - {fileID: 2612304960351246799, guid: da77b1413aa8bb547955541bfdb402d7, type: 3}
   - {fileID: 251035281725598661, guid: e583a5ce7153c714f850c5522eb1eaa6, type: 3}
   - {fileID: 7294742894293691739, guid: 304b49e332ceda84783611f01f4d60da, type: 3}
@@ -60624,9 +60627,9 @@ MonoBehaviour:
   - {fileID: 2937971106288465201, guid: bdfc5c874feaf8544b97ccfea8b7beb6, type: 3}
   - {fileID: 4747911136825767382, guid: 8324f670f0c814541b197bce9b4d418a, type: 3}
   - {fileID: 6918677133388985511, guid: 6ac50d3e09ed73147bf05b0ec0418560, type: 3}
-  - {fileID: 4190442251296166545, guid: f0e7bfafa73db1c4b9b04e9bfb7c11a4, type: 3}
   noOfMediumSegments: 6
   hardObstacleSegments:
+  - {fileID: 8894098801193252133, guid: 86b89cda51d8001438a58d34d3ff1549, type: 3}
   - {fileID: 2521521325776999616, guid: a41aa2fefc278474db16a1c43a87b5de, type: 3}
   - {fileID: 4564453818654030, guid: cf4aec1c581e3b641a3a539642a9c08e, type: 3}
   - {fileID: 8467024350792315958, guid: e87fade519e38b24b998b33e75b76579, type: 3}
@@ -61945,6 +61948,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d6cddaba34db3a49ae5ad1e19ad952f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  screenRotationImage: {fileID: 0}
 --- !u!1 &1824305129
 GameObject:
   m_ObjectHideFlags: 0
@@ -71183,14 +71187,6 @@ PrefabInstance:
     - target: {fileID: 8894098801682098760, guid: 86b89cda51d8001438a58d34d3ff1549, type: 3}
       propertyPath: m_ColliderPaths.Array.size
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8894098801682098763, guid: 86b89cda51d8001438a58d34d3ff1549, type: 3}
-      propertyPath: m_AnimatedTiles.Array.data[22].second.m_AnimationSpeed
-      value: 10.000001
-      objectReference: {fileID: 0}
-    - target: {fileID: 8894098801682098763, guid: 86b89cda51d8001438a58d34d3ff1549, type: 3}
-      propertyPath: m_AnimatedTiles.Array.data[24].second.m_AnimationSpeed
-      value: 10.000001
       objectReference: {fileID: 0}
     - target: {fileID: 8894098802534933212, guid: 86b89cda51d8001438a58d34d3ff1549, type: 3}
       propertyPath: m_ColliderPaths.Array.size

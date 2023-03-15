@@ -10,11 +10,15 @@ public class BoulderBreatApartScript : MonoBehaviour
 
     [SerializeField] GameObject boulderParts;
 
+    [SerializeField] AudioClip boulderBreakSound;
+
     private Vector3 position;
 
     private Quaternion rotation;
 
     private Collider2D boulderCollider;
+
+    public AudioSource audioSource;
 
     void Start()
     {
@@ -57,6 +61,8 @@ public class BoulderBreatApartScript : MonoBehaviour
             boulderSprite.SetActive(false);
 
             boulderCollider.enabled = false;
+
+            audioSource.PlayOneShot(boulderBreakSound);
         }
     }
 }

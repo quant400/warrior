@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class BoulderDitchCollisionIgnore : MonoBehaviour
 {
+    Collider2D collider2DComp;
+
+    private void Awake()
+    {
+        collider2DComp = gameObject.GetComponent<Collider2D>();
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -15,12 +22,13 @@ public class BoulderDitchCollisionIgnore : MonoBehaviour
     {
         
     }
-
+    
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.transform.CompareTag("PlayerBody") || collision.transform.CompareTag("GroundCheck"))
         {
-            Physics2D.IgnoreCollision(collision.collider, gameObject.GetComponent<Collider2D>());
+            Physics2D.IgnoreCollision(collision.collider, collider2DComp);
         }
     }
+    
 }

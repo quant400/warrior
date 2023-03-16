@@ -70979,6 +70979,10 @@ PrefabInstance:
       propertyPath: mapNo
       value: 
       objectReference: {fileID: 669740522}
+    - target: {fileID: 2367226467042209198, guid: 3f310d4e21035d74b8722da693aa8585, type: 3}
+      propertyPath: GroundLayers.m_Bits
+      value: 2176
+      objectReference: {fileID: 0}
     - target: {fileID: 3114095610268794748, guid: 3f310d4e21035d74b8722da693aa8585, type: 3}
       propertyPath: m_Camera
       value: 
@@ -71179,18 +71183,6 @@ PrefabInstance:
     - target: {fileID: 8894098801193252133, guid: 86b89cda51d8001438a58d34d3ff1549, type: 3}
       propertyPath: m_Name
       value: Map32
-      objectReference: {fileID: 0}
-    - target: {fileID: 8894098801193252133, guid: 86b89cda51d8001438a58d34d3ff1549, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8894098801682098760, guid: 86b89cda51d8001438a58d34d3ff1549, type: 3}
-      propertyPath: m_ColliderPaths.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8894098802534933212, guid: 86b89cda51d8001438a58d34d3ff1549, type: 3}
-      propertyPath: m_ColliderPaths.Array.size
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 86b89cda51d8001438a58d34d3ff1549, type: 3}

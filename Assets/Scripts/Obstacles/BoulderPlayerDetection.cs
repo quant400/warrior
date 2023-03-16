@@ -22,7 +22,11 @@ public class BoulderPlayerDetection : MonoBehaviour
     {
         if(collision.CompareTag("PlayerBody"))
         {
-            boulder.SetActive(true);
+            if(!boulder.activeSelf)
+            {
+                boulder.SetActive(true);
+            }
+            
         }
     }
 }

@@ -88,7 +88,7 @@ public class PlayerStats : MonoBehaviour
     {
         if(timeLeft == 0)
         {
-            warriorGameModel.gameCurrentStep.Value = warriorGameModel.GameSteps.OnGameEnded;
+            EndGame();
         }
 
         if(!highscoreChanged)
@@ -111,6 +111,11 @@ public class PlayerStats : MonoBehaviour
     public int GetScore()
     {
         return (int)playerScore;
+    }
+
+    public void EndGame()
+    {
+        warriorGameModel.gameCurrentStep.Value = warriorGameModel.GameSteps.OnGameEnded;
     }
 
     IEnumerator fireworksTimer(float secs)

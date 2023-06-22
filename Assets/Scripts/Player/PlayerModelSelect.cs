@@ -8,6 +8,10 @@ public class PlayerModelSelect : MonoBehaviour
 {
     public GameObject playerModelFBX;
 
+    private SkinnedMeshRenderer[] _meshRenderer;
+
+    private Transform rootBone;
+
     //Dictionary<string, GameObject> playerModelFBX = new Dictionary<string, GameObject>();
 
     /*
@@ -40,7 +44,9 @@ public class PlayerModelSelect : MonoBehaviour
         parentCollider = gameObject.transform.parent.gameObject.GetComponent<PolygonCollider2D>();
 
         groundCheck = GameObject.FindGameObjectWithTag("GroundCheck");
-        
+
+        _meshRenderer = gameObject.GetComponentsInChildren<SkinnedMeshRenderer>();
+
         /*
         defaultNFTName = "a-rod";
 
@@ -110,7 +116,7 @@ public class PlayerModelSelect : MonoBehaviour
 
         //playerModelFBX = Resources.Load(Path.Combine("SinglePlayerPrefabs/DisplayModels", chosenNFTName)) as GameObject;
 
-        playerModelFBX = Resources.Load(Path.Combine(("SinglePlayerPrefabs/FIGHTERS2.0Redone/" + chosenNFTName), chosenNFTName)) as GameObject;
+        playerModelFBX = Resources.Load(Path.Combine(("SinglePlayerPrefabs/FIGHTERS2.0Redone/"), chosenNFTName)) as GameObject;
 
         /*
         int randomNum;
@@ -131,6 +137,7 @@ public class PlayerModelSelect : MonoBehaviour
 
     private void SpawnModel()
     {
+        /*
         playerModelFBX.transform.localScale = new Vector3(gameObject.transform.parent.transform.localScale.y / 10, gameObject.transform.parent.transform.localScale.y / 10, gameObject.transform.parent.transform.localScale.z / 10);
 
         playerModelFBX.transform.position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.x, gameObject.transform.position.x);
@@ -184,11 +191,12 @@ public class PlayerModelSelect : MonoBehaviour
 
         geometry.transform.SetParent(gameObject.transform);
 
-        playerAnimator.avatar = playerModelFBX.GetComponent<Animator>().avatar;
+        
 
         //Debug.Log(gameObject.transform.GetChild(0).name + "position: " + gameObject.transform.GetChild(0).transform.position);
 
         Destroy(playerModel);
+        */
         /*
         if(gameObject.transform.GetChild(0).transform.localPosition.z != 0)
         {
@@ -201,6 +209,45 @@ public class PlayerModelSelect : MonoBehaviour
             Debug.Log(playerModelFBX.name + " pivot centered");
         }
         */
+
+
+        SkinnedMeshRenderer[] newMeshRenderers = playerModelFBX.GetComponentsInChildren<SkinnedMeshRenderer>();
+
+        for (int i = 0; i < newMeshRenderers.Length; i++)
+        {
+            // update mesh
+            //_meshRenderer.sharedMesh = newMeshRenderer.sharedMesh;
+            if (newMeshRenderers[i].sharedMaterials.Length > 1)
+            {
+                _meshRenderer[i].sharedMaterials = newMeshRenderers[i].sharedMaterials;
+
+            }
+            else
+            {
+                _meshRenderer[i].material.mainTexture = newMeshRenderers[i].sharedMaterial.mainTexture;
+            }
+
+
+            _meshRenderer[i].sharedMesh = newMeshRenderers[i].sharedMesh;
+
+            Transform[] childrens = transform.GetComponentsInChildren<Transform>(true);
+
+            // sort bones.
+            Transform[] bones = new Transform[newMeshRenderers[i].bones.Length];
+            for (int boneOrder = 0; boneOrder < newMeshRenderers[i].bones.Length; boneOrder++)
+            {
+                bones[boneOrder] = Array.Find<Transform>(childrens, c => c.name == newMeshRenderers[i].bones[boneOrder].name);
+            }
+            _meshRenderer[i].bones = bones;
+
+            rootBone = _meshRenderer[i].rootBone;
+
+            _meshRenderer[i].gameObject.name = newMeshRenderers[i].gameObject.name;
+        }
+
+
+        //playerAnimator = gameObject.GetComponent<Animator>();
+        //playerAnimator.avatar = playerModelFBX.GetComponent<Animator>().avatar;
     }
 
     string NameToSlugConvert(string name)
@@ -209,6 +256,27 @@ public class PlayerModelSelect : MonoBehaviour
         slug = name.ToLower().Replace(".", "").Replace("'", "").Replace(" ", "-");
         return slug;
 
+    }
+
+    private int GetIndex(string wearableType)
+    {
+        switch (wearableType)
+        {
+            case "Gloves":
+                return 3;
+            case "Shorts":
+                return 5;
+            case "Shoes":
+                return 6;
+            case "Belts":
+                return 8;
+            case "masks":
+                return 9;
+            case "glasses":
+                return 10;
+        }
+
+        return -1;
     }
 
     private void HeightAdjuster()

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 170c906ecc0213c47ab1322d2e0d1e65
+guid: a0436137cd2cf6a4e98d56fc23dfa5c8
 ModelImporter:
   serializedVersion: 21202
   internalIDToNameTable: []
@@ -91,7 +91,7 @@ ModelImporter:
     globalScale: 1
     rootMotionBoneName: 
     hasTranslationDoF: 0
-    hasExtraRoot: 0
+    hasExtraRoot: 1
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   autoGenerateAvatarMappingIfUnspecified: 1

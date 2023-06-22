@@ -10,10 +10,12 @@ using System.IO;
 using UniRx;
 using UniRx.Triggers;
 using UniRx.Operators;
+using System;
+
 public class gameEndView : MonoBehaviour
 {
     [SerializeField]
-    Transform characterDisplay;
+    Transform characterModel;
     GameObject[] characters;
     [SerializeField]
     TMP_Text currentScore, dailyScore, allTimeScore, weeklyScore, longestDistance, sessionCounterText, ntfID, email;
@@ -344,44 +346,18 @@ public class gameEndView : MonoBehaviour
         }
         
 
-        //Debug.Log("2");
-
-        /*
-        sessionsLeft.SetActive(true);
-        sessionsNotLeft.SetActive(false);
-        //currentScore.text = "CHICKENS CAUGHT : " + SinglePlayerScoreBoardScript.instance.GetScore().ToString();
-        currentScore.text = "SCORE : " + PlayerStats.Instance.GetScore().ToString();
-        dailyScore.text = "DAILY SCORE : " + (gameplayView.instance.GetDailyScore());
-        weeklyScore.text = "WEEKLY SCORE : " + (gameplayView.instance.GetWeeklyScore());
-        allTimeScore.text = "ALL TIME SCORE : " + (gameplayView.instance.GetAllTimeScore());
-        longestDistance.text = "BEST SCORE : " + (gameplayView.instance.GetLongestDistanceScore());
-        sessionCounterText.text = "DAILY RUNS : " + (gameplayView.instance.GetSessions()) + "/7";
-        //sessionCounterText.text = "DAILY RUNS : " + (gameplayView.instance.GetSessions());
-        */
 
         //characters = spawner.GetCharacterList();
         Debug.Log("Load character");
         //Destroy(GameObject.FindGameObjectWithTag("PlayerBody"));
         //GameObject displayChar = Resources.Load(Path.Combine("SinglePlayerPrefabs/Characters", NameToSlugConvert(currentNFT.name))) as GameObject;
-        GameObject displayChar = Resources.Load(Path.Combine(("SinglePlayerPrefabs/FIGHTERS2.0Redone/" + NameToSlugConvert(currentNFT.name)), NameToSlugConvert(currentNFT.name))) as GameObject;
+        GameObject displayChar = Resources.Load(Path.Combine("SinglePlayerPrefabs/FIGHTERS2.0Redone/", NameToSlugConvert(currentNFT.name))) as GameObject;
 
-        /*
-        GameObject displayChar;
-
-        if (gameplayView.instance.isTryout)
-        {
-            displayChar = Resources.Load(Path.Combine(("SinglePlayerPrefabs/FIGHTERS2.0Redone/" + NameToSlugConvert("grane")), NameToSlugConvert("grane"))) as GameObject;
-        }
-        else
-        {
-            displayChar = Resources.Load(Path.Combine(("SinglePlayerPrefabs/FIGHTERS2.0Redone/" + NameToSlugConvert("santa")), NameToSlugConvert("santa"))) as GameObject;
-        }
-        */
 
         Debug.Log(currentNFT.name);
         Debug.Log(displayChar.name);
         //var temp = Instantiate(displayChar, characterDisplay.position, Quaternion.identity, characterDisplay);
-
+        /*
         foreach (Transform child in characterDisplay.transform)
         {
             Destroy(child.gameObject);
@@ -391,20 +367,6 @@ public class gameEndView : MonoBehaviour
 
         temp.gameObject.transform.SetParent(characterDisplay.transform);
 
-        //destroying all player related components
-
-        //temp.transform.GetChild(0).gameObject.SetActive(false);
-
-        //Destroy(temp.transform.GetChild(0).gameObject);
-        /*
-        Destroy(temp.transform.GetChild(1).gameObject);
-        Destroy(temp.transform.GetChild(2).gameObject);
-        Destroy(temp.transform.GetChild(3).gameObject);
-        Destroy(temp.GetComponent<StarterAssetsInputs>());
-        Destroy(temp.GetComponent<ThirdPersonController>());
-        Destroy(temp.GetComponent<CharacterController>());
-        Destroy(temp.GetComponent<PlayerInput>());
-        */
 
         temp.GetComponent<Animator>().runtimeAnimatorController = playerAnimatorController;
 
@@ -413,7 +375,49 @@ public class gameEndView : MonoBehaviour
         temp.transform.localPosition = Vector3.zero;
         temp.transform.localRotation = Quaternion.identity;
         temp.transform.localScale = Vector3.one * (0.2f);
-        localDisplay = temp;
+        */
+
+        SkinnedMeshRenderer[] _meshRenderer = characterModel.GetComponentsInChildren<SkinnedMeshRenderer>();
+
+        SkinnedMeshRenderer[] newMeshRenderers = displayChar.GetComponentsInChildren<SkinnedMeshRenderer>();
+
+        for (int i = 0; i < newMeshRenderers.Length; i++)
+        {
+            // update mesh
+            //_meshRenderer.sharedMesh = newMeshRenderer.sharedMesh;
+            if (newMeshRenderers[i].sharedMaterials.Length > 1)
+            {
+                _meshRenderer[i].sharedMaterials = newMeshRenderers[i].sharedMaterials;
+
+            }
+            else
+            {
+                _meshRenderer[i].material.mainTexture = newMeshRenderers[i].sharedMaterial.mainTexture;
+            }
+
+
+            _meshRenderer[i].sharedMesh = newMeshRenderers[i].sharedMesh;
+
+            
+
+            Transform[] childrens = characterModel.transform.GetComponentsInChildren<Transform>(true);
+
+            // sort bones.
+            Transform[] bones = new Transform[newMeshRenderers[i].bones.Length];
+            for (int boneOrder = 0; boneOrder < newMeshRenderers[i].bones.Length; boneOrder++)
+            {
+                bones[boneOrder] = Array.Find<Transform>(childrens, c => c.name == newMeshRenderers[i].bones[boneOrder].name);
+            }
+            _meshRenderer[i].bones = bones;
+
+            //rootBone = _meshRenderer[i].rootBone;
+
+            _meshRenderer[i].gameObject.name = newMeshRenderers[i].gameObject.name;
+        }
+
+        characterModel.GetComponent<Animator>().SetBool("Ended", true);
+
+        localDisplay = characterModel.gameObject;
         //upddate other values here form leaderboard
         //SinglePlayerScoreBoardScript.instance.gameObject.transform.GetChild(0).gameObject.SetActive(false);
     }

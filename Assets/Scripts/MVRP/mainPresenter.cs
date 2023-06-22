@@ -96,7 +96,7 @@ using UnityEngine.SceneManagement;
                     break;
                 case warriorGameModel.GameSteps.OnCharacterSelected:
                     uiView.goToMenu("characterSelected");
-                    gameEndView.resetDisplay();
+                    //gameEndView.resetDisplay();
                     scenesView.loadSinglePlayerScene();
 
                     break;
@@ -121,7 +121,7 @@ using UnityEngine.SceneManagement;
                     break;
                 case warriorGameModel.GameSteps.OnBackToCharacterSelection:
                     gameEndView.initializeValues();
-                    gameEndView.resetDisplay();
+                    //gameEndView.resetDisplay();
                     dataView.initilizeValues();
                     scenesView.LoadScene(warriorGameModel.mainSceneLoadname.sceneName);
                     Observable.Timer(TimeSpan.Zero)

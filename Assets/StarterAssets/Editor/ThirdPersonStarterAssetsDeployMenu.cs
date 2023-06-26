@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using UnityEditor;
 using UnityEngine;
+using Warrior;
 
 namespace StarterAssets
 {

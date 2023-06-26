@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using StarterAssets;
 using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -10,187 +9,191 @@ using System.IO;
 using UniRx;
 using UniRx.Triggers;
 using UniRx.Operators;
-public class GameOverScript : MonoBehaviour
+
+namespace Warrior
 {
-    [SerializeField]
-    Transform characterDisplay;
-    GameObject[] characters;
-    [SerializeField]
-    TMP_Text currentScore, dailyScore, allTimeScore , sessionCounterText;
-    [SerializeField]
-    GameObject canvasToDisable;
-    [SerializeField]
-    AudioClip gameOverClip;
-    NFTInfo currentNFT;
-    [SerializeField]
-    GameObject sessionsLeft, sessionsNotLeft;
-    ReactiveProperty<int> scorereactive = new ReactiveProperty<int>();
-    ReactiveProperty<int> sessions = new ReactiveProperty<int>();
-    ReactiveProperty<bool> gameEnded = new ReactiveProperty<bool>();
-    [SerializeField] Button tryAgain, back;
-    // [SerializeField]
-    //SinglePlayerSpawner spawner;
-
-    private int limit = 7;
-
-    public void Start()
+    public class GameOverScript : MonoBehaviour
     {
-        observeScoreChange();
-        endGameAfterValueChange();
-    }
-    private void OnEnable()
-    {
-        if (canvasToDisable == null)
+        [SerializeField]
+        Transform characterDisplay;
+        GameObject[] characters;
+        [SerializeField]
+        TMP_Text currentScore, dailyScore, allTimeScore, sessionCounterText;
+        [SerializeField]
+        GameObject canvasToDisable;
+        [SerializeField]
+        AudioClip gameOverClip;
+        NFTInfo currentNFT;
+        [SerializeField]
+        GameObject sessionsLeft, sessionsNotLeft;
+        ReactiveProperty<int> scorereactive = new ReactiveProperty<int>();
+        ReactiveProperty<int> sessions = new ReactiveProperty<int>();
+        ReactiveProperty<bool> gameEnded = new ReactiveProperty<bool>();
+        [SerializeField] Button tryAgain, back;
+        // [SerializeField]
+        //SinglePlayerSpawner spawner;
+
+        private int limit = 7;
+
+        public void Start()
         {
-            canvasToDisable = SinglePlayerScoreBoardScript.instance.gameObject.transform.GetChild(0).gameObject;
+            observeScoreChange();
+            endGameAfterValueChange();
         }
-        currentNFT = SingleplayerGameControler.instance.chosenNFT;
-        if (SingleplayerGameControler.instance.GetSessions() <= limit && !gameplayView.instance.isTryout)
+        private void OnEnable()
         {
-            if (SingleplayerGameControler.instance.isRestApi)
+            if (canvasToDisable == null)
             {
-                DatabaseManagerRestApi._instance.setScoreRestApiMain(currentNFT.id.ToString(), PlayerStats.Instance.GetScore());
+                canvasToDisable = SinglePlayerScoreBoardScript.instance.gameObject.transform.GetChild(0).gameObject;
+            }
+            currentNFT = SingleplayerGameControler.instance.chosenNFT;
+            if (SingleplayerGameControler.instance.GetSessions() <= limit && !gameplayView.instance.isTryout)
+            {
+                if (SingleplayerGameControler.instance.isRestApi)
+                {
+                    DatabaseManagerRestApi._instance.setScoreRestApiMain(currentNFT.id.ToString(), PlayerStats.Instance.GetScore());
+
+                }
+                else
+                {
+                    // DatabaseManager._instance.setScore(currentNFT.id.ToString(), currentNFT.name, SinglePlayerScoreBoardScript.instance.GetScore());
+
+                }
+            }
+            SingleplayerGameControler.instance.GetScores();
+
+
+        }
+        public void ObserveGameObverBtns()
+        {
+
+            tryAgain.OnClickAsObservable()
+                .Do(_ => TryAgain())
+                .Where(_ => PlaySounds.instance != null)
+                .Do(_ => PlaySounds.instance.Play())
+                .Subscribe()
+                .AddTo(this);
+            back.OnClickAsObservable()
+               .Do(_ => warriorGameModel.gameCurrentStep.Value = warriorGameModel.GameSteps.OnPlayMenu)
+               .Where(_ => PlaySounds.instance != null)
+               .Do(_ => PlaySounds.instance.Play())
+               .Subscribe()
+               .AddTo(this);
+        }
+        public void setScoreResutls()
+        {
+
+            if (SingleplayerGameControler.instance.GetSessions() < limit)
+            {
+
+                sessionsLeft.SetActive(true);
+                sessionsNotLeft.SetActive(false);
+                currentScore.text = "SCORE : " + PlayerStats.Instance.GetScore().ToString();
+                dailyScore.text = "DAILY SCORE : " + (SingleplayerGameControler.instance.GetDailyScore());
+                allTimeScore.text = "ALL TIME SCORE : " + (SingleplayerGameControler.instance.GetAllTimeScore());
+                sessionCounterText.text = "DAILY RUNS : " + (SingleplayerGameControler.instance.GetSessions()) + "/" + limit;
 
             }
-            else
+            else if (SingleplayerGameControler.instance.GetSessions() >= limit)
             {
-               // DatabaseManager._instance.setScore(currentNFT.id.ToString(), currentNFT.name, SinglePlayerScoreBoardScript.instance.GetScore());
+                sessionsLeft.SetActive(false);
+                sessionsNotLeft.SetActive(true);
+                dailyScore.text = "DAILY SCORE : " + (SingleplayerGameControler.instance.GetDailyScore());
+                allTimeScore.text = "ALL TIME SCORE : " + (SingleplayerGameControler.instance.GetAllTimeScore());
+                sessionCounterText.text = "DAILY RUNS : " + (SingleplayerGameControler.instance.GetSessions()) + "/" + limit;
 
             }
+
+
+            AudioSource ad = GameObject.FindGameObjectWithTag("SFXPlayer").GetComponent<AudioSource>();
+            ad.clip = gameOverClip;
+            ad.loop = false;
+            ad.volume = 0.2f;
+            ad.Play();
+            //characters = spawner.GetCharacterList();
+            Destroy(GameObject.FindGameObjectWithTag("Player"));
+            GameObject displayChar = Resources.Load(Path.Combine("SinglePlayerPrefabs/FIGHTERS2.0Redone/" + currentNFT.name, NameToSlugConvert(currentNFT.name))) as GameObject;
+            var temp = Instantiate(displayChar, characterDisplay.position, Quaternion.identity, characterDisplay);
+
+            //destroying all player related components
+            Destroy(temp.transform.GetChild(1).gameObject);
+            Destroy(temp.transform.GetChild(0).gameObject);
+            Destroy(temp.transform.GetChild(2).gameObject);
+            Destroy(temp.transform.GetChild(3).gameObject);
+            Destroy(temp.GetComponent<StarterAssetsInputs>());
+            Destroy(temp.GetComponent<ThirdPersonController>());
+            Destroy(temp.GetComponent<CharacterController>());
+            Destroy(temp.GetComponent<PlayerInput>());
+            temp.GetComponent<Animator>().SetBool("Ended", true);
+
+            temp.transform.localPosition = Vector3.zero;
+            temp.transform.localRotation = Quaternion.identity;
+            temp.transform.localScale = Vector3.one * 2;
+
+            //upddate other values here form leaderboard
+            SinglePlayerScoreBoardScript.instance.gameObject.transform.GetChild(0).gameObject.SetActive(false);
         }
-        SingleplayerGameControler.instance.GetScores();
-      
-
-    }
-    public void ObserveGameObverBtns()
-    {
-
-        tryAgain.OnClickAsObservable()
-            .Do(_ => TryAgain())
-            .Where(_ => PlaySounds.instance != null)
-            .Do(_ => PlaySounds.instance.Play())
-            .Subscribe()
-            .AddTo(this);
-        back.OnClickAsObservable()
-           .Do(_ => warriorGameModel.gameCurrentStep.Value = warriorGameModel.GameSteps.OnPlayMenu)
-           .Where(_ => PlaySounds.instance != null)
-           .Do(_ => PlaySounds.instance.Play())
-           .Subscribe()
-           .AddTo(this);
-    }
-    public void setScoreResutls()
-    {
-       
-        if (SingleplayerGameControler.instance.GetSessions() < limit)
+        public void endGameAfterValueChange()
         {
-            
-            sessionsLeft.SetActive(true);
-            sessionsNotLeft.SetActive(false);
+            gameEnded
+                .Where(_ => _ == true)
+                .Do(_ => setScoreResutls())
+                .Subscribe()
+                .AddTo(this);
+        }
+        public void observeScoreChange()
+        {
+            scorereactive
+                .Do(_ => setScoreToUI())
+                .Subscribe()
+                .AddTo(this);
+
+            sessions
+                .Do(_ => setScoreToUI())
+                .Subscribe()
+                .AddTo(this);
+
+        }
+        private void Update()
+        {
+            if (warriorGameModel.gameCurrentStep.Value == warriorGameModel.GameSteps.OnGameEnded)
+            {
+                scorereactive.Value = SingleplayerGameControler.instance.dailyScore;
+                sessions.Value = SingleplayerGameControler.instance.sessions;
+            }
+        }
+        public void setScoreToUI()
+        {
+            gameEnded.Value = true;
             currentScore.text = "SCORE : " + PlayerStats.Instance.GetScore().ToString();
-            dailyScore.text = "DAILY SCORE : " + (SingleplayerGameControler.instance.GetDailyScore());
-            allTimeScore.text = "ALL TIME SCORE : " + (SingleplayerGameControler.instance.GetAllTimeScore() );
-            sessionCounterText.text = "DAILY RUNS : " + (SingleplayerGameControler.instance.GetSessions()) + "/" + limit;
-
-        }
-        else if (SingleplayerGameControler.instance.GetSessions() >= limit)
-        {
-            sessionsLeft.SetActive(false);
-            sessionsNotLeft.SetActive(true);
             dailyScore.text = "DAILY SCORE : " + (SingleplayerGameControler.instance.GetDailyScore());
             allTimeScore.text = "ALL TIME SCORE : " + (SingleplayerGameControler.instance.GetAllTimeScore());
             sessionCounterText.text = "DAILY RUNS : " + (SingleplayerGameControler.instance.GetSessions()) + "/" + limit;
-
         }
-
-
-        AudioSource ad = GameObject.FindGameObjectWithTag("SFXPlayer").GetComponent<AudioSource>();
-        ad.clip = gameOverClip;
-        ad.loop = false;
-        ad.volume = 0.2f;
-        ad.Play();
-        //characters = spawner.GetCharacterList();
-        Destroy(GameObject.FindGameObjectWithTag("Player"));
-        GameObject displayChar = Resources.Load(Path.Combine("SinglePlayerPrefabs/FIGHTERS2.0Redone/" + currentNFT.name, NameToSlugConvert(currentNFT.name))) as GameObject;
-        var temp = Instantiate(displayChar, characterDisplay.position, Quaternion.identity, characterDisplay);
-
-        //destroying all player related components
-        Destroy(temp.transform.GetChild(1).gameObject);
-        Destroy(temp.transform.GetChild(0).gameObject);
-        Destroy(temp.transform.GetChild(2).gameObject);
-        Destroy(temp.transform.GetChild(3).gameObject);
-        Destroy(temp.GetComponent<StarterAssetsInputs>());
-        Destroy(temp.GetComponent<ThirdPersonController>());
-        Destroy(temp.GetComponent<CharacterController>());
-        Destroy(temp.GetComponent<PlayerInput>());
-        temp.GetComponent<Animator>().SetBool("Ended", true);
-
-        temp.transform.localPosition = Vector3.zero;
-        temp.transform.localRotation = Quaternion.identity;
-        temp.transform.localScale = Vector3.one * 2;
-
-        //upddate other values here form leaderboard
-        SinglePlayerScoreBoardScript.instance.gameObject.transform.GetChild(0).gameObject.SetActive(false);
-    }
-    public void endGameAfterValueChange()
-    {
-        gameEnded
-            .Where(_ => _ == true)
-            .Do(_ => setScoreResutls())
-            .Subscribe()
-            .AddTo(this);
-    }
-    public void observeScoreChange()
-    {
-        scorereactive
-            .Do(_ => setScoreToUI())
-            .Subscribe()
-            .AddTo(this);
-
-        sessions
-            .Do(_ => setScoreToUI())
-            .Subscribe()
-            .AddTo(this);
-
-    }
-    private void Update()
-    {
-        if (warriorGameModel.gameCurrentStep.Value == warriorGameModel.GameSteps.OnGameEnded)
+        public void TryAgain()
         {
-            scorereactive.Value = SingleplayerGameControler.instance.dailyScore;
-            sessions.Value = SingleplayerGameControler.instance.sessions;
+            scenesView.loadSinglePlayerScene();
+
         }
-    }
-    public void setScoreToUI()
-    {
-        gameEnded.Value = true;
-        currentScore.text = "SCORE : " + PlayerStats.Instance.GetScore().ToString();
-        dailyScore.text = "DAILY SCORE : " + (SingleplayerGameControler.instance.GetDailyScore() );
-        allTimeScore.text = "ALL TIME SCORE : " + (SingleplayerGameControler.instance.GetAllTimeScore() );
-        sessionCounterText.text= "DAILY RUNS : " + (SingleplayerGameControler.instance.GetSessions())+ "/" + limit;
-    }
-    public void TryAgain()
-    {
-        scenesView.loadSinglePlayerScene();
+        public void goToMain()
+        {
+            scenesView.LoadScene(warriorGameModel.mainSceneLoadname.sceneName);
+            warriorGameModel.gameCurrentStep.Value = warriorGameModel.GameSteps.OnBackToMenu;
 
-    }
-    public void goToMain()
-    {
-        scenesView.LoadScene(warriorGameModel.mainSceneLoadname.sceneName);
-        warriorGameModel.gameCurrentStep.Value = warriorGameModel.GameSteps.OnBackToMenu;
-       
-    }
+        }
 
-    string NameToSlugConvert(string name)
-    {
-        string slug;
-        slug = name.ToLower().Replace(".", "").Replace("'", "").Replace(" ", "-");
+        string NameToSlugConvert(string name)
+        {
+            string slug;
+            slug = name.ToLower().Replace(".", "").Replace("'", "").Replace(" ", "-");
 
-        if (name == "Red Velvet")
-            slug = "neurotica";
-        if (name == "Mañana")
-            slug = "manana";
-        if (name == "Horatio’d")
-            slug = "horatiod";
-        return slug;
+            if (name == "Red Velvet")
+                slug = "neurotica";
+            if (name == "Mañana")
+                slug = "manana";
+            if (name == "Horatio’d")
+                slug = "horatiod";
+            return slug;
+        }
     }
 }

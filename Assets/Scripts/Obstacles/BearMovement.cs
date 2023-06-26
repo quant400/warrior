@@ -2,138 +2,142 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BearMovement : MonoBehaviour
+namespace Warrior
 {
-    private GameObject playerBody;
 
-    private GameObject bearBody;
-
-    private Rigidbody2D bearRBody2D;
-
-    SpriteRenderer bearSpriteRenderer;
-
-    private Animator bearAnimator;
-
-    private bool playerInRange;
-
-    [SerializeField]
-    private float speed = 5.0f;
-
-    private Vector3 moveDirection;
-
-    Vector2 origVelocity;
-
-    // Start is called before the first frame update
-    void Start()
+    public class BearMovement : MonoBehaviour
     {
-        playerBody = GameObject.FindGameObjectWithTag("PlayerBody");
+        private GameObject playerBody;
 
-        bearBody = gameObject.transform.GetChild(0).gameObject;
+        private GameObject bearBody;
 
-        bearAnimator = bearBody.GetComponent<Animator>();
+        private Rigidbody2D bearRBody2D;
 
-        bearRBody2D = bearBody.GetComponent<Rigidbody2D>();
+        SpriteRenderer bearSpriteRenderer;
 
-        bearSpriteRenderer = bearBody.GetComponent<SpriteRenderer>();
+        private Animator bearAnimator;
 
-        playerInRange = false;
+        private bool playerInRange;
 
-        moveDirection = Vector3.zero;
-    }
+        [SerializeField]
+        private float speed = 5.0f;
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (playerInRange)
+        private Vector3 moveDirection;
+
+        Vector2 origVelocity;
+
+        // Start is called before the first frame update
+        void Start()
         {
-            bearAnimator.SetBool("bearStill", false);
+            playerBody = GameObject.FindGameObjectWithTag("PlayerBody");
+
+            bearBody = gameObject.transform.GetChild(0).gameObject;
+
+            bearAnimator = bearBody.GetComponent<Animator>();
+
+            bearRBody2D = bearBody.GetComponent<Rigidbody2D>();
+
+            bearSpriteRenderer = bearBody.GetComponent<SpriteRenderer>();
+
+            playerInRange = false;
+
+            moveDirection = Vector3.zero;
         }
-        else if(!playerInRange && origVelocity.x == 0)
-        {
-            bearAnimator.SetBool("bearStill", true);
-        }
-    }
 
-    private void FixedUpdate()
-    {
-        if(playerInRange)
+        // Update is called once per frame
+        void Update()
         {
-            if (playerBody.transform.position.x < bearBody.transform.position.x)
+            if (playerInRange)
             {
-                moveDirection = new Vector3(-1, 0, 0);
-
-                bearSpriteRenderer.flipX = true;
+                bearAnimator.SetBool("bearStill", false);
             }
-            else
+            else if (!playerInRange && origVelocity.x == 0)
             {
-                moveDirection = new Vector3(1, 0, 0);
-
-                bearSpriteRenderer.flipX = false;
+                bearAnimator.SetBool("bearStill", true);
             }
-
-            bearRBody2D.AddForce(moveDirection * speed * 100, ForceMode2D.Force);
-
-            origVelocity = bearRBody2D.velocity;
-
-            origVelocity.x = Vector2.ClampMagnitude(bearRBody2D.velocity, speed).x;
         }
-        else
+
+        private void FixedUpdate()
         {
-            origVelocity = bearRBody2D.velocity;
-
-            //Debug.Log("bear position = " + bearBody.transform.position.x);
-
-            //Debug.Log("gameObject position = " + gameObject.transform.position.x);
-
-            if(Mathf.Abs(bearBody.transform.position.x - gameObject.transform.position.x) > 0.01)
+            if (playerInRange)
             {
-                if (bearBody.transform.position.x > gameObject.transform.position.x)
+                if (playerBody.transform.position.x < bearBody.transform.position.x)
                 {
                     moveDirection = new Vector3(-1, 0, 0);
 
                     bearSpriteRenderer.flipX = true;
-
-                    bearRBody2D.AddForce(moveDirection * speed * 100, ForceMode2D.Force);
-
-                    origVelocity = bearRBody2D.velocity;
-
-                    origVelocity.x = Vector2.ClampMagnitude(bearRBody2D.velocity, speed).x;
                 }
-                else if (bearBody.transform.position.x < gameObject.transform.position.x)
+                else
                 {
                     moveDirection = new Vector3(1, 0, 0);
 
                     bearSpriteRenderer.flipX = false;
-
-                    bearRBody2D.AddForce(moveDirection * speed * 100, ForceMode2D.Force);
-
-                    origVelocity = bearRBody2D.velocity;
-
-                    origVelocity.x = Vector2.ClampMagnitude(bearRBody2D.velocity, speed).x;
                 }
+
+                bearRBody2D.AddForce(moveDirection * speed * 100, ForceMode2D.Force);
+
+                origVelocity = bearRBody2D.velocity;
+
+                origVelocity.x = Vector2.ClampMagnitude(bearRBody2D.velocity, speed).x;
             }
             else
             {
-                origVelocity.x = Vector2.ClampMagnitude(bearRBody2D.velocity, 0.0f).x;
-            }    
+                origVelocity = bearRBody2D.velocity;
+
+                //Debug.Log("bear position = " + bearBody.transform.position.x);
+
+                //Debug.Log("gameObject position = " + gameObject.transform.position.x);
+
+                if (Mathf.Abs(bearBody.transform.position.x - gameObject.transform.position.x) > 0.01)
+                {
+                    if (bearBody.transform.position.x > gameObject.transform.position.x)
+                    {
+                        moveDirection = new Vector3(-1, 0, 0);
+
+                        bearSpriteRenderer.flipX = true;
+
+                        bearRBody2D.AddForce(moveDirection * speed * 100, ForceMode2D.Force);
+
+                        origVelocity = bearRBody2D.velocity;
+
+                        origVelocity.x = Vector2.ClampMagnitude(bearRBody2D.velocity, speed).x;
+                    }
+                    else if (bearBody.transform.position.x < gameObject.transform.position.x)
+                    {
+                        moveDirection = new Vector3(1, 0, 0);
+
+                        bearSpriteRenderer.flipX = false;
+
+                        bearRBody2D.AddForce(moveDirection * speed * 100, ForceMode2D.Force);
+
+                        origVelocity = bearRBody2D.velocity;
+
+                        origVelocity.x = Vector2.ClampMagnitude(bearRBody2D.velocity, speed).x;
+                    }
+                }
+                else
+                {
+                    origVelocity.x = Vector2.ClampMagnitude(bearRBody2D.velocity, 0.0f).x;
+                }
+            }
+
+            bearRBody2D.velocity = origVelocity;
         }
 
-        bearRBody2D.velocity = origVelocity;
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag("PlayerBody"))
+        private void OnTriggerEnter2D(Collider2D collision)
         {
-            playerInRange = true;
+            if (collision.gameObject.CompareTag("PlayerBody"))
+            {
+                playerInRange = true;
+            }
         }
-    }
 
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag("PlayerBody"))
+        private void OnTriggerExit2D(Collider2D collision)
         {
-            playerInRange = false;
+            if (collision.gameObject.CompareTag("PlayerBody"))
+            {
+                playerInRange = false;
+            }
         }
     }
 }

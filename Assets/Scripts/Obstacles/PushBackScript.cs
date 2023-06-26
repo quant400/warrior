@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-namespace StarterAssets
+namespace Warrior
 {
     public class PushBackScript : MonoBehaviour
     {

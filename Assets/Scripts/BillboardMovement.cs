@@ -2,121 +2,124 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BillboardMovement : MonoBehaviour
+namespace Warrior
 {
-    private GameObject playerBody;
-
-    private Vector3 playerPos;
-
-    Vector3 gameObjectPos;
-
-    public int updateLocationTimes = 1;
-
-    private Collider objectCollider;
-
-    private bool objectInCollision;
-
-    public Sprite[] billboardAds;
-
-    private SpriteRenderer billboardSprite;
-
-
-
-    // Start is called before the first frame update
-    void Start()
+    public class BillboardMovement : MonoBehaviour
     {
-        int rand = 0;
+        private GameObject playerBody;
 
-        playerBody = GameObject.FindGameObjectWithTag("PlayerBody");
+        private Vector3 playerPos;
 
-        playerPos = playerBody.transform.position;
+        Vector3 gameObjectPos;
 
-        gameObjectPos = gameObject.transform.position;
+        public int updateLocationTimes = 1;
 
-        objectCollider = gameObject.GetComponent<Collider>();
+        private Collider objectCollider;
 
-        objectInCollision = false;
+        private bool objectInCollision;
 
-        billboardSprite = gameObject.transform.GetChild(1).transform.GetComponent<SpriteRenderer>();
-        
-        rand = UnityEngine.Random.Range(0, billboardAds.Length);
+        public Sprite[] billboardAds;
 
-        billboardSprite.sprite = billboardAds[rand];
+        private SpriteRenderer billboardSprite;
 
-        /*
 
-        gameObjectPos.x = UnityEngine.Random.Range(playerPos.x + 100, playerPos.x + 200);
 
-        gameObject.transform.position = gameObjectPos;
-        */
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        gameObjectPos = gameObject.transform.position;
-
-        playerPos = playerBody.transform.position;
-
-        if(updateLocationTimes > 0)
+        // Start is called before the first frame update
+        void Start()
         {
-            if (playerPos.x > gameObject.transform.position.x + 100)
+            int rand = 0;
+
+            playerBody = GameObject.FindGameObjectWithTag("PlayerBody");
+
+            playerPos = playerBody.transform.position;
+
+            gameObjectPos = gameObject.transform.position;
+
+            objectCollider = gameObject.GetComponent<Collider>();
+
+            objectInCollision = false;
+
+            billboardSprite = gameObject.transform.GetChild(1).transform.GetComponent<SpriteRenderer>();
+
+            rand = UnityEngine.Random.Range(0, billboardAds.Length);
+
+            billboardSprite.sprite = billboardAds[rand];
+
+            /*
+
+            gameObjectPos.x = UnityEngine.Random.Range(playerPos.x + 100, playerPos.x + 200);
+
+            gameObject.transform.position = gameObjectPos;
+            */
+        }
+
+        // Update is called once per frame
+        void Update()
+        {
+            gameObjectPos = gameObject.transform.position;
+
+            playerPos = playerBody.transform.position;
+
+            if (updateLocationTimes > 0)
             {
-                gameObjectPos.x = UnityEngine.Random.Range(playerPos.x + 300, playerPos.x + 500);
-
-                gameObject.transform.position = gameObjectPos;
-
-                if(objectInCollision)
+                if (playerPos.x > gameObject.transform.position.x + 100)
                 {
                     gameObjectPos.x = UnityEngine.Random.Range(playerPos.x + 300, playerPos.x + 500);
 
                     gameObject.transform.position = gameObjectPos;
+
+                    if (objectInCollision)
+                    {
+                        gameObjectPos.x = UnityEngine.Random.Range(playerPos.x + 300, playerPos.x + 500);
+
+                        gameObject.transform.position = gameObjectPos;
+                    }
+
+                    billboardSprite.sprite = billboardAds[UnityEngine.Random.Range(0, billboardAds.Length)];
+
+                    updateLocationTimes--;
                 }
+            }
 
-                billboardSprite.sprite = billboardAds[UnityEngine.Random.Range(0, billboardAds.Length)];
 
-                updateLocationTimes--;
+            if (objectInCollision && playerPos.x < gameObject.transform.position.x - 200)
+            {
+                gameObjectPos.x = UnityEngine.Random.Range(playerPos.x + 300, playerPos.x + 500);
+
+                gameObject.transform.position = gameObjectPos;
             }
         }
 
-
-        if(objectInCollision && playerPos.x < gameObject.transform.position.x - 200)
+        private void OnTriggerEnter2D(Collider2D collision)
         {
-            gameObjectPos.x = UnityEngine.Random.Range(playerPos.x + 300, playerPos.x + 500);
-
-            gameObject.transform.position = gameObjectPos;
+            if (collision.transform.CompareTag("Ground"))
+            {
+                objectInCollision = true;
+            }
         }
-    }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.transform.CompareTag("Ground"))
+        private void OnTriggerExit2D(Collider2D collision)
         {
-            objectInCollision = true;
+            if (collision.transform.CompareTag("Ground"))
+            {
+                objectInCollision = false;
+            }
         }
-    }
 
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.transform.CompareTag("Ground"))
+        private void OnCollisionEnter2D(Collision2D collision)
         {
-            objectInCollision = false;
+            if (collision.transform.CompareTag("Ground"))
+            {
+                objectInCollision = true;
+            }
         }
-    }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.transform.CompareTag("Ground"))
+        private void OnCollisionExit2D(Collision2D collision)
         {
-            objectInCollision = true;
-        }
-    }
-
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        if (collision.transform.CompareTag("Ground"))
-        {
-            objectInCollision = false;
+            if (collision.transform.CompareTag("Ground"))
+            {
+                objectInCollision = false;
+            }
         }
     }
 }

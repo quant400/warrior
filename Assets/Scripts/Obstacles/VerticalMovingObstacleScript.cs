@@ -4,7 +4,7 @@ using UnityEngine;
 using DG.Tweening;
 
 
-namespace StarterAssets
+namespace Warrior
 {
     public class VerticalMovingObstacleScript : MonoBehaviour
     {

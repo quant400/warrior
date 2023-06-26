@@ -9,7 +9,7 @@ using UniRx;
 using UniRx.Triggers;
 using UniRx.Operators;
 
-namespace StarterAssets
+namespace Warrior
 {
     public class SinglePlayerScoreBoardScript : MonoBehaviour
     {

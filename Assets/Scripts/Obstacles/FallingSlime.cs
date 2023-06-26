@@ -3,87 +3,90 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
-public class FallingSlime : MonoBehaviour
+namespace Warrior
 {
-    //SpriteRenderer childSprite;
-
-    Rigidbody2D rBody;
-
-    //[SerializeField] float fadeInTime = 1f;
-
-    [SerializeField] float fadeOutTime = 1f;
-
-    private Vector3 origPosition;
-
-    // Start is called before the first frame update
-    void Start()
+    public class FallingSlime : MonoBehaviour
     {
-        origPosition = gameObject.transform.localPosition;
+        //SpriteRenderer childSprite;
 
-        //childSprite = gameObject.transform.GetChild(0).transform.GetComponent<SpriteRenderer>();
+        Rigidbody2D rBody;
 
-        rBody = gameObject.transform.GetComponent<Rigidbody2D>();
+        //[SerializeField] float fadeInTime = 1f;
 
-        //Color origChildColor = childSprite.color;
+        [SerializeField] float fadeOutTime = 1f;
 
-        //origChildColor.a = 0.0f;
+        private Vector3 origPosition;
 
-        //childSprite.color = origChildColor;
-
-        //childSprite.DOFade(59, fadeInTime);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    private void OnEnable()
-    {
-        //transform.DOMoveX(transform.position.x + distance, duration).SetLoops(-1, LoopType.Yoyo);
-
-        DOTween.Play(gameObject.transform);
-    }
-
-    private void OnDisable()
-    {
-        //DOTween.Kill(gameObject.transform);
-
-        DOTween.Pause(gameObject.transform);
-
-        //DOTween.Kill(gameObject.transform);
-
-        //transform.localPosition = startPosition;
-    }
-
-    void OnDestroy()
-    {
-        //DOTween.Kill(childSprite);
-
-        //DOTween.Kill(gameObject.transform);
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Slime"))
+        // Start is called before the first frame update
+        void Start()
         {
-            StartCoroutine(PositionChange(fadeOutTime));
+            origPosition = gameObject.transform.localPosition;
+
+            //childSprite = gameObject.transform.GetChild(0).transform.GetComponent<SpriteRenderer>();
+
+            rBody = gameObject.transform.GetComponent<Rigidbody2D>();
+
+            //Color origChildColor = childSprite.color;
+
+            //origChildColor.a = 0.0f;
+
+            //childSprite.color = origChildColor;
+
+            //childSprite.DOFade(59, fadeInTime);
         }
-    }
 
-    IEnumerator PositionChange(float secs)
-    {
-        //childSprite.DOFade(0, fadeOutTime);
+        // Update is called once per frame
+        void Update()
+        {
 
-        yield return new WaitForSeconds(secs);
+        }
 
-        gameObject.transform.localPosition = origPosition;
+        private void OnEnable()
+        {
+            //transform.DOMoveX(transform.position.x + distance, duration).SetLoops(-1, LoopType.Yoyo);
 
-        //Debug.Log(origPosition);
+            DOTween.Play(gameObject.transform);
+        }
 
-        rBody.velocity = Vector3.zero;
+        private void OnDisable()
+        {
+            //DOTween.Kill(gameObject.transform);
 
-        //childSprite.DOFade(59, fadeInTime);
+            DOTween.Pause(gameObject.transform);
+
+            //DOTween.Kill(gameObject.transform);
+
+            //transform.localPosition = startPosition;
+        }
+
+        void OnDestroy()
+        {
+            //DOTween.Kill(childSprite);
+
+            //DOTween.Kill(gameObject.transform);
+        }
+
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            if (collision.CompareTag("Slime"))
+            {
+                StartCoroutine(PositionChange(fadeOutTime));
+            }
+        }
+
+        IEnumerator PositionChange(float secs)
+        {
+            //childSprite.DOFade(0, fadeOutTime);
+
+            yield return new WaitForSeconds(secs);
+
+            gameObject.transform.localPosition = origPosition;
+
+            //Debug.Log(origPosition);
+
+            rBody.velocity = Vector3.zero;
+
+            //childSprite.DOFade(59, fadeInTime);
+        }
     }
 }

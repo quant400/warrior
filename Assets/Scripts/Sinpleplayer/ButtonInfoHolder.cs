@@ -5,119 +5,122 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class ButtonInfoHolder : MonoBehaviour
+namespace Warrior
 {
-    [SerializeField]
-    Sprite [] bg, selectedCharBG;
-    Image background;
-    Image charPic;
-    int bgIndex;
-    string charName;
-    [SerializeField]
-    Image display;
-    Image displayBG;
-    [SerializeField]
-    Sprite defaultImg;
-    [SerializeField]
-    TMP_Text nameText, info;
-    characterSelectionView CSV;
-    [SerializeField]
-    ButtonInfoHolder currentSelected;
-    private void Awake()
+    public class ButtonInfoHolder : MonoBehaviour
     {
-        //bgIndex = Random.Range(0, bg.Length);
-        background = gameObject.GetComponent<Image>();
-        charPic = transform.GetChild(0).GetChild(0).GetComponent<Image>();
-        displayBG=display.transform.parent.GetComponent<Image>();
-        CSV = transform.GetComponentInParent<characterSelectionView>();
-        ResetSlot();
-    }
-
-    public void SetCurrent(Sprite img, int index)
-    {
-        //background.sprite = bg[index];
-        //charPic.sprite = img;
-        //charPic.color = new Color(225, 225, 225, 225);
-    }
-    public void SetChar(string name)
-    {
-        charName = name;
-        if (charName == "null")
+        [SerializeField]
+        Sprite[] bg, selectedCharBG;
+        Image background;
+        Image charPic;
+        int bgIndex;
+        string charName;
+        [SerializeField]
+        Image display;
+        Image displayBG;
+        [SerializeField]
+        Sprite defaultImg;
+        [SerializeField]
+        TMP_Text nameText, info;
+        characterSelectionView CSV;
+        [SerializeField]
+        ButtonInfoHolder currentSelected;
+        private void Awake()
         {
-            background.sprite = defaultImg;
-            charPic.color = new Color(225, 225, 225, 0);
+            //bgIndex = Random.Range(0, bg.Length);
+            background = gameObject.GetComponent<Image>();
+            charPic = transform.GetChild(0).GetChild(0).GetComponent<Image>();
+            displayBG = display.transform.parent.GetComponent<Image>();
+            CSV = transform.GetComponentInParent<characterSelectionView>();
+            ResetSlot();
         }
-        else
+
+        public void SetCurrent(Sprite img, int index)
         {
-            bgIndex = Random.Range(0, bg.Length);
-            background.sprite = bg[CSV.GetavaliableColor()];
-            if (gameplayView.instance.usingFreemint)
+            //background.sprite = bg[index];
+            //charPic.sprite = img;
+            //charPic.color = new Color(225, 225, 225, 225);
+        }
+        public void SetChar(string name)
+        {
+            charName = name;
+            if (charName == "null")
             {
-                charPic.sprite = Resources.Load(Path.Combine("SinglePlayerPrefabs/DisplaySprites/FreeMint/HeadShots", name), typeof(Sprite)) as Sprite;
+                background.sprite = defaultImg;
+                charPic.color = new Color(225, 225, 225, 0);
             }
             else
             {
-                charPic.sprite = Resources.Load(Path.Combine("SinglePlayerPrefabs/DisplaySprites/HeadShots", name), typeof(Sprite)) as Sprite;
+                bgIndex = Random.Range(0, bg.Length);
+                background.sprite = bg[CSV.GetavaliableColor()];
+                if (gameplayView.instance.usingFreemint)
+                {
+                    charPic.sprite = Resources.Load(Path.Combine("SinglePlayerPrefabs/DisplaySprites/FreeMint/HeadShots", name), typeof(Sprite)) as Sprite;
+                }
+                else
+                {
+                    charPic.sprite = Resources.Load(Path.Combine("SinglePlayerPrefabs/DisplaySprites/HeadShots", name), typeof(Sprite)) as Sprite;
+                }
+
+                charPic.color = new Color(225, 225, 225, 225);
             }
-                
-            charPic.color = new Color(225, 225, 225, 225);
+
+
+
+
+
         }
-        
 
-
-
-
-    }
-
-    public void OnClick()
-    {
-        if(charName=="null")
+        public void OnClick()
         {
-            Application.OpenURL("https://app.cryptofightclub.io/mint");
+            if (charName == "null")
+            {
+                Application.OpenURL("https://app.cryptofightclub.io/mint");
+            }
+            else
+            {
+                display.sprite = Resources.Load(Path.Combine("SinglePlayerPrefabs/DisplaySprites/Display", charName), typeof(Sprite)) as Sprite;
+                display.color = new Color(225, 225, 225, 225);
+                displayBG.sprite = selectedCharBG[int.Parse(background.sprite.name)];
+                //CSV.DisablePlay();
+                CSV.UpdateSelected(transform.GetSiblingIndex());
+                UpdateInfo();
+                //currentSelected.SetCurrent(charPic.sprite, bgIndex);
+            }
+
         }
-        else
+
+        private void ResetSlot()
         {
-            display.sprite = Resources.Load(Path.Combine("SinglePlayerPrefabs/DisplaySprites/Display", charName), typeof(Sprite)) as Sprite;
-            display.color = new Color(225, 225, 225, 225);
-            displayBG.sprite = selectedCharBG[int.Parse(background.sprite.name)];
-            //CSV.DisablePlay();
-            CSV.UpdateSelected(transform.GetSiblingIndex());
-            UpdateInfo();
-            //currentSelected.SetCurrent(charPic.sprite, bgIndex);
+            charPic.sprite = defaultImg;
+            charPic.color = new Color(225, 225, 225, 0);
         }
-       
-    }
-
-    private void ResetSlot()
-    {
-        charPic.sprite = defaultImg;
-        charPic.color = new Color(225, 225, 225, 0);
-    }
 
 
-    void UpdateInfo()
-    {
-
-        nameText.text = charName.ToUpper();
-
-        if (charName == "neurotica")
-            nameText.text = "RED-VELVET";
-
-        Invoke("UpdateSessionInfo", 1.5f);
-       
-    }
-
-    void UpdateSessionInfo()
-    {
-        //CSV.EnablePlay();
-
-        
-        if (warriorGameModel.currentNFTSession < 7)
+        void UpdateInfo()
         {
-            CSV.EnablePlay();
+
+            nameText.text = charName.ToUpper();
+
+            if (charName == "neurotica")
+                nameText.text = "RED-VELVET";
+
+            Invoke("UpdateSessionInfo", 1.5f);
+
         }
-            
-        info.text = "PLAYED " + warriorGameModel.currentNFTSession + " OUT OF 7 DAILY GAMES";
-        
+
+        void UpdateSessionInfo()
+        {
+            //CSV.EnablePlay();
+
+
+            if (warriorGameModel.currentNFTSession < 7)
+            {
+                CSV.EnablePlay();
+            }
+
+            info.text = "PLAYED " + warriorGameModel.currentNFTSession + " OUT OF 7 DAILY GAMES";
+
+        }
     }
 }

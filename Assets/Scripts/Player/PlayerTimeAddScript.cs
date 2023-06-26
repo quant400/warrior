@@ -3,81 +3,84 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class PlayerTimeAddScript : MonoBehaviour
+namespace Warrior
 {
-    // Start is called before the first frame update
-
-    [SerializeField] GameObject timeAddPrompt;
-
-    private bool timeAdditionPromptCoroutine;
-
-    void Start()
+    public class PlayerTimeAddScript : MonoBehaviour
     {
-        timeAdditionPromptCoroutine = false;
-    }
+        // Start is called before the first frame update
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+        [SerializeField] GameObject timeAddPrompt;
 
+        private bool timeAdditionPromptCoroutine;
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Chicken"))
+        void Start()
         {
-            PlayerStats.Instance.timeLeft += 15;
-
-            timeAddPrompt.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = "+" + (15).ToString() + " SECONDS";
-            timeAddPrompt.transform.GetChild(3).GetComponent<TextMeshProUGUI>().text = "+" + (15).ToString() + " SECONDS";
-
-            Destroy(collision.gameObject);
-
-            if(!timeAdditionPromptCoroutine)
-            {
-                StartCoroutine(TimeAdditionPrompt(1.5f));
-            }
-            
+            timeAdditionPromptCoroutine = false;
         }
-    }
 
-    IEnumerator TimeAdditionPrompt(float secs)
-    {
-        timeAdditionPromptCoroutine = true;
+        // Update is called once per frame
+        void Update()
+        {
 
-        GameObject parentObject;
-
-        Vector3 parentPosition;
-
-        GameObject playerObject;
-
-        Vector3 playerObjectPosition;
-
-        playerObject = GameObject.FindGameObjectWithTag("PlayerBody");
-
-        parentObject = timeAddPrompt.transform.parent.gameObject;
-
-        parentPosition = parentObject.transform.localPosition;
-
-        playerObjectPosition = parentObject.transform.position;
-
-        parentObject.transform.SetParent(null);
-
-        parentObject.transform.position = playerObjectPosition + parentPosition;
-
-        timeAddPrompt.SetActive(true);
+        }
 
 
-        yield return new WaitForSeconds(secs);
+        private void OnCollisionEnter2D(Collision2D collision)
+        {
+            if (collision.gameObject.CompareTag("Chicken"))
+            {
+                PlayerStats.Instance.timeLeft += 15;
+
+                timeAddPrompt.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = "+" + (15).ToString() + " SECONDS";
+                timeAddPrompt.transform.GetChild(3).GetComponent<TextMeshProUGUI>().text = "+" + (15).ToString() + " SECONDS";
+
+                Destroy(collision.gameObject);
+
+                if (!timeAdditionPromptCoroutine)
+                {
+                    StartCoroutine(TimeAdditionPrompt(1.5f));
+                }
+
+            }
+        }
+
+        IEnumerator TimeAdditionPrompt(float secs)
+        {
+            timeAdditionPromptCoroutine = true;
+
+            GameObject parentObject;
+
+            Vector3 parentPosition;
+
+            GameObject playerObject;
+
+            Vector3 playerObjectPosition;
+
+            playerObject = GameObject.FindGameObjectWithTag("PlayerBody");
+
+            parentObject = timeAddPrompt.transform.parent.gameObject;
+
+            parentPosition = parentObject.transform.localPosition;
+
+            playerObjectPosition = parentObject.transform.position;
+
+            parentObject.transform.SetParent(null);
+
+            parentObject.transform.position = playerObjectPosition + parentPosition;
+
+            timeAddPrompt.SetActive(true);
 
 
-        parentObject.transform.SetParent(playerObject.transform);
+            yield return new WaitForSeconds(secs);
 
-        parentObject.transform.localPosition = parentPosition;
 
-        timeAddPrompt.SetActive(false);
+            parentObject.transform.SetParent(playerObject.transform);
 
-        timeAdditionPromptCoroutine = false;
+            parentObject.transform.localPosition = parentPosition;
+
+            timeAddPrompt.SetActive(false);
+
+            timeAdditionPromptCoroutine = false;
+        }
     }
 }

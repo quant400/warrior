@@ -2,32 +2,35 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TournamentCheck : MonoBehaviour
+namespace Warrior
 {
-    public GameObject tournamentUi;
-
-    private bool currentStatus = false;
-
-    private bool newStatus;
-
-    // Start is called before the first frame update
-    void Start()
+    public class TournamentCheck : MonoBehaviour
     {
-        
-    }
+        public GameObject tournamentUi;
 
-    // Update is called once per frame
-    void Update()
-    {
-        if(gameplayView.instance)
+        private bool currentStatus = false;
+
+        private bool newStatus;
+
+        // Start is called before the first frame update
+        void Start()
         {
-            newStatus = gameplayView.instance.GetTournamentStatus();
 
-            if (currentStatus != newStatus)
+        }
+
+        // Update is called once per frame
+        void Update()
+        {
+            if (gameplayView.instance)
             {
-                tournamentUi.SetActive(newStatus);
+                newStatus = gameplayView.instance.GetTournamentStatus();
 
-                currentStatus = newStatus;
+                if (currentStatus != newStatus)
+                {
+                    tournamentUi.SetActive(newStatus);
+
+                    currentStatus = newStatus;
+                }
             }
         }
     }

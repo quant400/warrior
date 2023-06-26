@@ -4,658 +4,661 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 
-public class PlayerModelSelect : MonoBehaviour
+namespace Warrior
 {
-    public GameObject playerModelFBX;
-
-    private SkinnedMeshRenderer[] _meshRenderer;
-
-    private Transform rootBone;
-
-    //Dictionary<string, GameObject> playerModelFBX = new Dictionary<string, GameObject>();
-
-    /*
-    [SerializeField]
-    private GameObject[] playerModelFBX;
-    */
-
-
-    private Animator playerAnimator;
-
-    public string chosenNFTName;
-
-    private string defaultNFTName;
-
-    private PolygonCollider2D parentCollider;
-
-    private GameObject geometry;
-
-    private SkinnedMeshRenderer defaultModelSMR;
-
-    private GameObject groundCheck;
-
-    private GameObject armature;
-
-    //private int selectedModel;
-
-    // Start is called before the first frame update
-    void Start()
+    public class PlayerModelSelect : MonoBehaviour
     {
-        parentCollider = gameObject.transform.parent.gameObject.GetComponent<PolygonCollider2D>();
+        public GameObject playerModelFBX;
 
-        groundCheck = GameObject.FindGameObjectWithTag("GroundCheck");
+        private SkinnedMeshRenderer[] _meshRenderer;
 
-        _meshRenderer = gameObject.GetComponentsInChildren<SkinnedMeshRenderer>();
+        private Transform rootBone;
+
+        //Dictionary<string, GameObject> playerModelFBX = new Dictionary<string, GameObject>();
 
         /*
-        defaultNFTName = "a-rod";
-
-        GameObject defaultGameObject = (Resources.Load(Path.Combine(("SinglePlayerPrefabs/FIGHTERS2.0Redone/" + chosenNFTName), chosenNFTName)) as GameObject);
-
-        defaultGameObject.transform.localScale = new Vector3(gameObject.transform.parent.transform.localScale.y / 10, gameObject.transform.parent.transform.localScale.y / 10, gameObject.transform.parent.transform.localScale.z / 10);
-
-        armature = Instantiate(defaultGameObject.transform.GetChild(0).gameObject);
-        armature.name = "Armature";
+        [SerializeField]
+        private GameObject[] playerModelFBX;
         */
 
-        //defaultModelSMR = defaultGameObject.transform.GetChild(1).gameObject.transform.GetChild(0).gameObject.GetComponent<SkinnedMeshRenderer>();
 
+        private Animator playerAnimator;
 
-        try
+        public string chosenNFTName;
+
+        private string defaultNFTName;
+
+        private PolygonCollider2D parentCollider;
+
+        private GameObject geometry;
+
+        private SkinnedMeshRenderer defaultModelSMR;
+
+        private GameObject groundCheck;
+
+        private GameObject armature;
+
+        //private int selectedModel;
+
+        // Start is called before the first frame update
+        void Start()
         {
-            chosenNFTName = NameToSlugConvert(gameplayView.instance.chosenNFT.name);
+            parentCollider = gameObject.transform.parent.gameObject.GetComponent<PolygonCollider2D>();
+
+            groundCheck = GameObject.FindGameObjectWithTag("GroundCheck");
+
+            _meshRenderer = gameObject.GetComponentsInChildren<SkinnedMeshRenderer>();
 
             /*
-            if (gameplayView.instance.isTryout)
+            defaultNFTName = "a-rod";
+
+            GameObject defaultGameObject = (Resources.Load(Path.Combine(("SinglePlayerPrefabs/FIGHTERS2.0Redone/" + chosenNFTName), chosenNFTName)) as GameObject);
+
+            defaultGameObject.transform.localScale = new Vector3(gameObject.transform.parent.transform.localScale.y / 10, gameObject.transform.parent.transform.localScale.y / 10, gameObject.transform.parent.transform.localScale.z / 10);
+
+            armature = Instantiate(defaultGameObject.transform.GetChild(0).gameObject);
+            armature.name = "Armature";
+            */
+
+            //defaultModelSMR = defaultGameObject.transform.GetChild(1).gameObject.transform.GetChild(0).gameObject.GetComponent<SkinnedMeshRenderer>();
+
+
+            try
             {
-                chosenNFTName = NameToSlugConvert("grane");
+                chosenNFTName = NameToSlugConvert(gameplayView.instance.chosenNFT.name);
+
+                /*
+                if (gameplayView.instance.isTryout)
+                {
+                    chosenNFTName = NameToSlugConvert("grane");
+                }
+                else
+                {
+                    chosenNFTName = NameToSlugConvert("santa");
+                }
+                */
+
+            }
+            catch (Exception e)
+            {
+                //chosenNFTName = "a-rod";
+
+
+                //Smaller
+
+                //chosenNFTName = "big-bite";
+
+                //chosenNFTName = "crisp-right";
+
+                //chosenNFTName = "arachnid";
+
+                //chosenNFTName = "bad-man";
+
+
+                //Bigger
+
+                //chosenNFTName = "android";
+
+                //chosenNFTName = "alpha-cat";
+
+                //chosenNFTName = "aegis";
+
+                //chosenNFTName = "awoken-one";
+
+                //chosenNFTName = "bad-news";
+
+                //chosenNFTName = "bandit";
+
+                //chosenNFTName = "barista";
+
+
+            }
+
+
+
+            //playerModelFBX = Resources.Load(Path.Combine("SinglePlayerPrefabs/DisplayModels", chosenNFTName)) as GameObject;
+
+            playerModelFBX = Resources.Load(Path.Combine(("SinglePlayerPrefabs/FIGHTERS2.0Redone/"), chosenNFTName)) as GameObject;
+
+            /*
+            int randomNum;
+
+            randomNum = UnityEngine.Random.Range(0, playerModelFBX.Length - 1);
+            */
+
+            SpawnModel();
+
+            //HeightAdjuster();
+        }
+
+        // Update is called once per frame
+        void Update()
+        {
+
+        }
+
+        private void SpawnModel()
+        {
+            /*
+            playerModelFBX.transform.localScale = new Vector3(gameObject.transform.parent.transform.localScale.y / 10, gameObject.transform.parent.transform.localScale.y / 10, gameObject.transform.parent.transform.localScale.z / 10);
+
+            playerModelFBX.transform.position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.x, gameObject.transform.position.x);
+
+
+            GameObject playerModel = Instantiate(playerModelFBX);
+
+
+            playerModel.transform.position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z);
+
+            playerAnimator = gameObject.GetComponent<Animator>();
+
+
+            //playerModel.gameObject.transform.GetChild(0).transform.position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z);
+
+            //Debug.Log(playerModel.gameObject.transform.GetChild(0).name + "position: " + playerModel.gameObject.transform.GetChild(0).transform.position);
+
+
+
+            playerModel.gameObject.transform.GetChild(0).SetParent(gameObject.transform);
+
+
+            //armature.transform.SetParent(gameObject.transform);
+
+
+
+            //geometry = playerModel.gameObject.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject;
+
+
+            try
+            {
+                geometry = playerModel.gameObject.transform.GetChild(0).gameObject;
+            }
+            catch (Exception e)
+            {
+                geometry = gameObject.transform.GetChild(0).transform.transform.GetChild(0).gameObject;
+
+                Debug.Log(e);
+
+            }
+
+
+
+
+            //geometry = playerModel.gameObject.transform.GetChild(1).gameObject;
+
+            //geometry.GetComponent<SkinnedMeshRenderer>().rootBone = armature.transform.GetChild(0);
+
+            //geometry.transform.position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z);
+
+
+            geometry.transform.SetParent(gameObject.transform);
+
+
+
+            //Debug.Log(gameObject.transform.GetChild(0).name + "position: " + gameObject.transform.GetChild(0).transform.position);
+
+            Destroy(playerModel);
+            */
+            /*
+            if(gameObject.transform.GetChild(0).transform.localPosition.z != 0)
+            {
+                Debug.Log(playerModelFBX.name + " pivot NOT centered");
+
+                gameObject.transform.parent.transform.GetChild(5).gameObject.SetActive(true);
             }
             else
             {
-                chosenNFTName = NameToSlugConvert("santa");
+                Debug.Log(playerModelFBX.name + " pivot centered");
             }
             */
-            
-        }
-        catch (Exception e)
-        {
-            //chosenNFTName = "a-rod";
 
 
-            //Smaller
+            SkinnedMeshRenderer[] newMeshRenderers = playerModelFBX.GetComponentsInChildren<SkinnedMeshRenderer>();
 
-            //chosenNFTName = "big-bite";
-
-            //chosenNFTName = "crisp-right";
-
-            //chosenNFTName = "arachnid";
-
-            //chosenNFTName = "bad-man";
-
-
-            //Bigger
-
-            //chosenNFTName = "android";
-
-            //chosenNFTName = "alpha-cat";
-
-            //chosenNFTName = "aegis";
-
-            //chosenNFTName = "awoken-one";
-
-            //chosenNFTName = "bad-news";
-
-            //chosenNFTName = "bandit";
-
-            //chosenNFTName = "barista";
-
-
-        }
-
-
-
-        //playerModelFBX = Resources.Load(Path.Combine("SinglePlayerPrefabs/DisplayModels", chosenNFTName)) as GameObject;
-
-        playerModelFBX = Resources.Load(Path.Combine(("SinglePlayerPrefabs/FIGHTERS2.0Redone/"), chosenNFTName)) as GameObject;
-
-        /*
-        int randomNum;
-
-        randomNum = UnityEngine.Random.Range(0, playerModelFBX.Length - 1);
-        */
-
-        SpawnModel();
-
-        //HeightAdjuster();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    private void SpawnModel()
-    {
-        /*
-        playerModelFBX.transform.localScale = new Vector3(gameObject.transform.parent.transform.localScale.y / 10, gameObject.transform.parent.transform.localScale.y / 10, gameObject.transform.parent.transform.localScale.z / 10);
-
-        playerModelFBX.transform.position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.x, gameObject.transform.position.x);
-        
-        
-        GameObject playerModel = Instantiate(playerModelFBX);
-
-
-        playerModel.transform.position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z);
-
-        playerAnimator = gameObject.GetComponent<Animator>();
-
-
-        //playerModel.gameObject.transform.GetChild(0).transform.position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z);
-
-        //Debug.Log(playerModel.gameObject.transform.GetChild(0).name + "position: " + playerModel.gameObject.transform.GetChild(0).transform.position);
-
-
-
-        playerModel.gameObject.transform.GetChild(0).SetParent(gameObject.transform);
-
-
-        //armature.transform.SetParent(gameObject.transform);
-
-
-
-        //geometry = playerModel.gameObject.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject;
-
-
-        try
-        {
-            geometry = playerModel.gameObject.transform.GetChild(0).gameObject;
-        }
-        catch (Exception e)
-        {
-            geometry = gameObject.transform.GetChild(0).transform.transform.GetChild(0).gameObject;
-
-            Debug.Log(e);
-
-        }
-
-        
-
-
-        //geometry = playerModel.gameObject.transform.GetChild(1).gameObject;
-
-        //geometry.GetComponent<SkinnedMeshRenderer>().rootBone = armature.transform.GetChild(0);
-
-        //geometry.transform.position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z);
-
-
-        geometry.transform.SetParent(gameObject.transform);
-
-        
-
-        //Debug.Log(gameObject.transform.GetChild(0).name + "position: " + gameObject.transform.GetChild(0).transform.position);
-
-        Destroy(playerModel);
-        */
-        /*
-        if(gameObject.transform.GetChild(0).transform.localPosition.z != 0)
-        {
-            Debug.Log(playerModelFBX.name + " pivot NOT centered");
-
-            gameObject.transform.parent.transform.GetChild(5).gameObject.SetActive(true);
-        }
-        else
-        {
-            Debug.Log(playerModelFBX.name + " pivot centered");
-        }
-        */
-
-
-        SkinnedMeshRenderer[] newMeshRenderers = playerModelFBX.GetComponentsInChildren<SkinnedMeshRenderer>();
-
-        for (int i = 0; i < newMeshRenderers.Length; i++)
-        {
-            // update mesh
-            //_meshRenderer.sharedMesh = newMeshRenderer.sharedMesh;
-            if (newMeshRenderers[i].sharedMaterials.Length > 1)
+            for (int i = 0; i < newMeshRenderers.Length; i++)
             {
-                _meshRenderer[i].sharedMaterials = newMeshRenderers[i].sharedMaterials;
+                // update mesh
+                //_meshRenderer.sharedMesh = newMeshRenderer.sharedMesh;
+                if (newMeshRenderers[i].sharedMaterials.Length > 1)
+                {
+                    _meshRenderer[i].sharedMaterials = newMeshRenderers[i].sharedMaterials;
 
-            }
-            else
-            {
-                _meshRenderer[i].material.mainTexture = newMeshRenderers[i].sharedMaterial.mainTexture;
+                }
+                else
+                {
+                    _meshRenderer[i].material.mainTexture = newMeshRenderers[i].sharedMaterial.mainTexture;
+                }
+
+
+                _meshRenderer[i].sharedMesh = newMeshRenderers[i].sharedMesh;
+
+                Transform[] childrens = transform.GetComponentsInChildren<Transform>(true);
+
+                // sort bones.
+                Transform[] bones = new Transform[newMeshRenderers[i].bones.Length];
+                for (int boneOrder = 0; boneOrder < newMeshRenderers[i].bones.Length; boneOrder++)
+                {
+                    bones[boneOrder] = Array.Find<Transform>(childrens, c => c.name == newMeshRenderers[i].bones[boneOrder].name);
+                }
+                _meshRenderer[i].bones = bones;
+
+                rootBone = _meshRenderer[i].rootBone;
+
+                _meshRenderer[i].gameObject.name = newMeshRenderers[i].gameObject.name;
             }
 
 
-            _meshRenderer[i].sharedMesh = newMeshRenderers[i].sharedMesh;
-
-            Transform[] childrens = transform.GetComponentsInChildren<Transform>(true);
-
-            // sort bones.
-            Transform[] bones = new Transform[newMeshRenderers[i].bones.Length];
-            for (int boneOrder = 0; boneOrder < newMeshRenderers[i].bones.Length; boneOrder++)
-            {
-                bones[boneOrder] = Array.Find<Transform>(childrens, c => c.name == newMeshRenderers[i].bones[boneOrder].name);
-            }
-            _meshRenderer[i].bones = bones;
-
-            rootBone = _meshRenderer[i].rootBone;
-
-            _meshRenderer[i].gameObject.name = newMeshRenderers[i].gameObject.name;
+            //playerAnimator = gameObject.GetComponent<Animator>();
+            //playerAnimator.avatar = playerModelFBX.GetComponent<Animator>().avatar;
         }
 
-
-        //playerAnimator = gameObject.GetComponent<Animator>();
-        //playerAnimator.avatar = playerModelFBX.GetComponent<Animator>().avatar;
-    }
-
-    string NameToSlugConvert(string name)
-    {
-        string slug;
-        slug = name.ToLower().Replace(".", "").Replace("'", "").Replace(" ", "-");
-
-        if (name == "Red Velvet")
-            slug = "neurotica";
-        if (name == "Mañana")
-            slug = "manana";
-        if (name == "Horatio’d")
-            slug = "horatiod";
-        return slug;
-
-    }
-
-    private int GetIndex(string wearableType)
-    {
-        switch (wearableType)
+        string NameToSlugConvert(string name)
         {
-            case "Gloves":
-                return 3;
-            case "Shorts":
-                return 5;
-            case "Shoes":
-                return 6;
-            case "Belts":
-                return 8;
-            case "masks":
-                return 9;
-            case "glasses":
-                return 10;
+            string slug;
+            slug = name.ToLower().Replace(".", "").Replace("'", "").Replace(" ", "-");
+
+            if (name == "Red Velvet")
+                slug = "neurotica";
+            if (name == "Mañana")
+                slug = "manana";
+            if (name == "Horatio’d")
+                slug = "horatiod";
+            return slug;
+
         }
 
-        return -1;
-    }
-
-    private void HeightAdjuster()
-    {
-
-        SkinnedMeshRenderer modelSMR = geometry.GetComponent<SkinnedMeshRenderer>();
-
-        float defaultHeight = defaultModelSMR.bounds.size.y;
-
-        Vector3 modelSize = modelSMR.bounds.size;
-
-
-        float heightRatio = modelSize.y / defaultHeight;
-
-        //Debug.Log("heightRatio = " + heightRatio);
-
-        float centerOffsetCalculation;
-
-        float groundCheckCenterOffsetCalculation;
-
-        float pointOffsetCalculation;
-
-        float heightCenterOffsetRatio;
-
-        centerOffsetCalculation = (modelSMR.bounds.center.y - defaultModelSMR.bounds.center.y);
-
-        centerOffsetCalculation = Mathf.Round(centerOffsetCalculation * 10000f) / 10000f;
-
-        groundCheckCenterOffsetCalculation = centerOffsetCalculation;
-
-        //Debug.Log("centerOffsetCalculation = " + centerOffsetCalculation);
-
-        if (centerOffsetCalculation == 0)
+        private int GetIndex(string wearableType)
         {
-            //Debug.Log("Same");
-            /*
-            Vector2[] modelPaths = new Vector2[parentCollider.GetPath(0).Length];
-
-            for (int i = 0; i < parentCollider.GetPath(0).Length; i++)
+            switch (wearableType)
             {
-                modelPaths[i] = parentCollider.GetPath(0)[i];
-
-                modelPaths[i].y += 0.005f;
+                case "Gloves":
+                    return 3;
+                case "Shorts":
+                    return 5;
+                case "Shoes":
+                    return 6;
+                case "Belts":
+                    return 8;
+                case "masks":
+                    return 9;
+                case "glasses":
+                    return 10;
             }
 
-            parentCollider.SetPath(0, modelPaths);
-            */
+            return -1;
         }
-        else
+
+        private void HeightAdjuster()
         {
-            heightCenterOffsetRatio = heightRatio / centerOffsetCalculation;
 
-            //Debug.Log("hCOffsetRatio = " + heightCenterOffsetRatio);
+            SkinnedMeshRenderer modelSMR = geometry.GetComponent<SkinnedMeshRenderer>();
+
+            float defaultHeight = defaultModelSMR.bounds.size.y;
+
+            Vector3 modelSize = modelSMR.bounds.size;
 
 
-            if ((heightRatio < 0.98f || heightRatio > 1.04f) || (centerOffsetCalculation > 0.04f))
+            float heightRatio = modelSize.y / defaultHeight;
+
+            //Debug.Log("heightRatio = " + heightRatio);
+
+            float centerOffsetCalculation;
+
+            float groundCheckCenterOffsetCalculation;
+
+            float pointOffsetCalculation;
+
+            float heightCenterOffsetRatio;
+
+            centerOffsetCalculation = (modelSMR.bounds.center.y - defaultModelSMR.bounds.center.y);
+
+            centerOffsetCalculation = Mathf.Round(centerOffsetCalculation * 10000f) / 10000f;
+
+            groundCheckCenterOffsetCalculation = centerOffsetCalculation;
+
+            //Debug.Log("centerOffsetCalculation = " + centerOffsetCalculation);
+
+            if (centerOffsetCalculation == 0)
             {
+                //Debug.Log("Same");
+                /*
                 Vector2[] modelPaths = new Vector2[parentCollider.GetPath(0).Length];
 
-                if (heightRatio < 1)
+                for (int i = 0; i < parentCollider.GetPath(0).Length; i++)
                 {
-                    //Debug.Log("Smaller");
+                    modelPaths[i] = parentCollider.GetPath(0)[i];
 
-                    for (int i = 0; i < parentCollider.GetPath(0).Length; i++)
+                    modelPaths[i].y += 0.005f;
+                }
+
+                parentCollider.SetPath(0, modelPaths);
+                */
+            }
+            else
+            {
+                heightCenterOffsetRatio = heightRatio / centerOffsetCalculation;
+
+                //Debug.Log("hCOffsetRatio = " + heightCenterOffsetRatio);
+
+
+                if ((heightRatio < 0.98f || heightRatio > 1.04f) || (centerOffsetCalculation > 0.04f))
+                {
+                    Vector2[] modelPaths = new Vector2[parentCollider.GetPath(0).Length];
+
+                    if (heightRatio < 1)
                     {
-                        modelPaths[i] = parentCollider.GetPath(0)[i];
+                        //Debug.Log("Smaller");
 
-                        if(centerOffsetCalculation < 0.1f)
+                        for (int i = 0; i < parentCollider.GetPath(0).Length; i++)
                         {
-                            /*
-                            if (heightCenterOffsetRatio < 25)
-                            {
-                                groundCheckCenterOffsetCalculation = centerOffsetCalculation / ((heightCenterOffsetRatio * 2) / 15);
+                            modelPaths[i] = parentCollider.GetPath(0)[i];
 
-                                modelPaths[i].y += groundCheckCenterOffsetCalculation;
-                            }
-                            else if (heightCenterOffsetRatio > 50)
+                            if (centerOffsetCalculation < 0.1f)
                             {
-                                groundCheckCenterOffsetCalculation = centerOffsetCalculation / 1.5f;
-
-                                modelPaths[i].y += groundCheckCenterOffsetCalculation;
-                            }
-                            else
-                            {
-                                groundCheckCenterOffsetCalculation = centerOffsetCalculation / 1.85f;
-
-                                modelPaths[i].y += groundCheckCenterOffsetCalculation;
-                            }
-                            */
-
-                            if (heightCenterOffsetRatio < 13 && heightCenterOffsetRatio > 12)
-                            {
-                                groundCheckCenterOffsetCalculation = centerOffsetCalculation / 2f;
-
-                                modelPaths[i].y += groundCheckCenterOffsetCalculation;
-                            }
-                            else if (heightCenterOffsetRatio < 14 && heightCenterOffsetRatio > 13)
-                            {
-                                groundCheckCenterOffsetCalculation = centerOffsetCalculation / 1.5f;
-
-                                modelPaths[i].y += groundCheckCenterOffsetCalculation;
-                            }
-                            else if (heightCenterOffsetRatio < 15)
-                            {
-                                groundCheckCenterOffsetCalculation = centerOffsetCalculation / 6f;
-
-                                modelPaths[i].y += groundCheckCenterOffsetCalculation;
-                                
-                            }
-                            else if (heightCenterOffsetRatio < 20)
-                            {
-                                groundCheckCenterOffsetCalculation = centerOffsetCalculation / 2.3f;
-
-                                modelPaths[i].y += groundCheckCenterOffsetCalculation;
-                            }
-                            else if (heightCenterOffsetRatio < 25)
-                            {
-                                groundCheckCenterOffsetCalculation = centerOffsetCalculation / 1.5f;
-
-                                modelPaths[i].y += groundCheckCenterOffsetCalculation;
-                            }
-                            else if (heightCenterOffsetRatio > 50)
-                            {
-                                if (heightRatio > 0.97 && heightCenterOffsetRatio > 195)
+                                /*
+                                if (heightCenterOffsetRatio < 25)
                                 {
-                                    groundCheckCenterOffsetCalculation = 0.01f;
+                                    groundCheckCenterOffsetCalculation = centerOffsetCalculation / ((heightCenterOffsetRatio * 2) / 15);
 
                                     modelPaths[i].y += groundCheckCenterOffsetCalculation;
                                 }
-                                else
+                                else if (heightCenterOffsetRatio > 50)
                                 {
                                     groundCheckCenterOffsetCalculation = centerOffsetCalculation / 1.5f;
 
                                     modelPaths[i].y += groundCheckCenterOffsetCalculation;
                                 }
+                                else
+                                {
+                                    groundCheckCenterOffsetCalculation = centerOffsetCalculation / 1.85f;
+
+                                    modelPaths[i].y += groundCheckCenterOffsetCalculation;
+                                }
+                                */
+
+                                if (heightCenterOffsetRatio < 13 && heightCenterOffsetRatio > 12)
+                                {
+                                    groundCheckCenterOffsetCalculation = centerOffsetCalculation / 2f;
+
+                                    modelPaths[i].y += groundCheckCenterOffsetCalculation;
+                                }
+                                else if (heightCenterOffsetRatio < 14 && heightCenterOffsetRatio > 13)
+                                {
+                                    groundCheckCenterOffsetCalculation = centerOffsetCalculation / 1.5f;
+
+                                    modelPaths[i].y += groundCheckCenterOffsetCalculation;
+                                }
+                                else if (heightCenterOffsetRatio < 15)
+                                {
+                                    groundCheckCenterOffsetCalculation = centerOffsetCalculation / 6f;
+
+                                    modelPaths[i].y += groundCheckCenterOffsetCalculation;
+
+                                }
+                                else if (heightCenterOffsetRatio < 20)
+                                {
+                                    groundCheckCenterOffsetCalculation = centerOffsetCalculation / 2.3f;
+
+                                    modelPaths[i].y += groundCheckCenterOffsetCalculation;
+                                }
+                                else if (heightCenterOffsetRatio < 25)
+                                {
+                                    groundCheckCenterOffsetCalculation = centerOffsetCalculation / 1.5f;
+
+                                    modelPaths[i].y += groundCheckCenterOffsetCalculation;
+                                }
+                                else if (heightCenterOffsetRatio > 50)
+                                {
+                                    if (heightRatio > 0.97 && heightCenterOffsetRatio > 195)
+                                    {
+                                        groundCheckCenterOffsetCalculation = 0.01f;
+
+                                        modelPaths[i].y += groundCheckCenterOffsetCalculation;
+                                    }
+                                    else
+                                    {
+                                        groundCheckCenterOffsetCalculation = centerOffsetCalculation / 1.5f;
+
+                                        modelPaths[i].y += groundCheckCenterOffsetCalculation;
+                                    }
+
+                                }
+                                else
+                                {
+                                    groundCheckCenterOffsetCalculation = centerOffsetCalculation / 1.85f;
+
+                                    modelPaths[i].y += groundCheckCenterOffsetCalculation;
+
+                                }
 
                             }
                             else
                             {
-                                groundCheckCenterOffsetCalculation = centerOffsetCalculation / 1.85f;
+                                centerOffsetCalculation = 0;
 
-                                modelPaths[i].y += groundCheckCenterOffsetCalculation;
-
+                                //modelPaths[i].y -= centerOffsetCalculation;
                             }
-                            
-                        }
-                        else
-                        {
-                            centerOffsetCalculation = 0;
 
-                            //modelPaths[i].y -= centerOffsetCalculation;
+
+
                         }
 
+                        //Debug.Log((modelPaths[3].y - (modelPaths[3].y * heightRatio)));
 
+                        //Debug.Log("Before = " + modelPaths[3].y);
 
-                    }
+                        pointOffsetCalculation = (modelPaths[3].y - (modelPaths[3].y * heightRatio));
 
-                    //Debug.Log((modelPaths[3].y - (modelPaths[3].y * heightRatio)));
+                        pointOffsetCalculation = Mathf.Round(pointOffsetCalculation * 10000f) / 10000f;
 
-                    //Debug.Log("Before = " + modelPaths[3].y);
-
-                    pointOffsetCalculation = (modelPaths[3].y - (modelPaths[3].y * heightRatio));
-
-                    pointOffsetCalculation = Mathf.Round(pointOffsetCalculation * 10000f) / 10000f;
-
-                    if((centerOffsetCalculation > 0.065 && centerOffsetCalculation < 0.07) && (heightCenterOffsetRatio < 15))
-                    {
-                        if (pointOffsetCalculation < -0.005 && pointOffsetCalculation > -0.006)
+                        if ((centerOffsetCalculation > 0.065 && centerOffsetCalculation < 0.07) && (heightCenterOffsetRatio < 15))
                         {
-                            for (int i = 0; i < parentCollider.GetPath(0).Length; i++)
+                            if (pointOffsetCalculation < -0.005 && pointOffsetCalculation > -0.006)
                             {
-                                modelPaths[i].y += 0.03f;
+                                for (int i = 0; i < parentCollider.GetPath(0).Length; i++)
+                                {
+                                    modelPaths[i].y += 0.03f;
+                                }
                             }
-                        }
-                        else if (pointOffsetCalculation < -0.01 && pointOffsetCalculation > -0.011)
-                        {
-                            for (int i = 0; i < parentCollider.GetPath(0).Length; i++)
+                            else if (pointOffsetCalculation < -0.01 && pointOffsetCalculation > -0.011)
                             {
-                                modelPaths[i].y += 0.02f;
+                                for (int i = 0; i < parentCollider.GetPath(0).Length; i++)
+                                {
+                                    modelPaths[i].y += 0.02f;
+                                }
                             }
                         }
+
+                        //Debug.Log("pointOffsetCalculation = " + pointOffsetCalculation);
+
+                        modelPaths[2].y -= pointOffsetCalculation;
+
+                        modelPaths[3].y -= pointOffsetCalculation;
+
+                        modelPaths[4].y -= pointOffsetCalculation;
                     }
-
-                    //Debug.Log("pointOffsetCalculation = " + pointOffsetCalculation);
-
-                    modelPaths[2].y -= pointOffsetCalculation;
-
-                    modelPaths[3].y -= pointOffsetCalculation;
-
-                    modelPaths[4].y -= pointOffsetCalculation;
-                }
-                else
-                {
-                    //Debug.Log("Bigger");
-
-                    for (int i = 0; i < parentCollider.GetPath(0).Length; i++)
+                    else
                     {
-                        modelPaths[i] = parentCollider.GetPath(0)[i];
+                        //Debug.Log("Bigger");
 
-                        /*
-                        if (centerOffsetCalculation > 0.08)
+                        for (int i = 0; i < parentCollider.GetPath(0).Length; i++)
                         {
-                            modelPaths[i].y += centerOffsetCalculation / 3f;
-                        }
-                        */
-                        if (centerOffsetCalculation > 0.04)
-                        {
+                            modelPaths[i] = parentCollider.GetPath(0)[i];
+
                             /*
-                            if (heightCenterOffsetRatio > 20)
+                            if (centerOffsetCalculation > 0.08)
                             {
                                 modelPaths[i].y += centerOffsetCalculation / 3f;
                             }
                             */
-
-                            if (heightCenterOffsetRatio > 18 && heightCenterOffsetRatio < 19)
-                            {
-                                groundCheckCenterOffsetCalculation = centerOffsetCalculation / 5.5f;
-
-                                modelPaths[i].y -= groundCheckCenterOffsetCalculation;
-
-                                groundCheckCenterOffsetCalculation *= -1;
-                            }
-                            else if (heightCenterOffsetRatio > 14 && heightCenterOffsetRatio < 15)
+                            if (centerOffsetCalculation > 0.04)
                             {
                                 /*
-                                groundCheckCenterOffsetCalculation = centerOffsetCalculation / 3.4f;
-
-                                modelPaths[i].y -= groundCheckCenterOffsetCalculation;
-
-                                groundCheckCenterOffsetCalculation *= -1;
+                                if (heightCenterOffsetRatio > 20)
+                                {
+                                    modelPaths[i].y += centerOffsetCalculation / 3f;
+                                }
                                 */
-                                if(heightRatio > 1.03)
-                                {
-                                    groundCheckCenterOffsetCalculation = centerOffsetCalculation / 3f;
 
-                                    modelPaths[i].y += groundCheckCenterOffsetCalculation;
+                                if (heightCenterOffsetRatio > 18 && heightCenterOffsetRatio < 19)
+                                {
+                                    groundCheckCenterOffsetCalculation = centerOffsetCalculation / 5.5f;
+
+                                    modelPaths[i].y -= groundCheckCenterOffsetCalculation;
+
+                                    groundCheckCenterOffsetCalculation *= -1;
                                 }
-                                else
+                                else if (heightCenterOffsetRatio > 14 && heightCenterOffsetRatio < 15)
                                 {
-                                    //Debug.Log("Changed");
+                                    /*
+                                    groundCheckCenterOffsetCalculation = centerOffsetCalculation / 3.4f;
 
-                                    groundCheckCenterOffsetCalculation = 0.005f;
+                                    modelPaths[i].y -= groundCheckCenterOffsetCalculation;
 
-                                    modelPaths[i].y += groundCheckCenterOffsetCalculation;
-
-                                    //centerOffsetCalculation = 0;
-                                }
-                                
-                            }
-                            else if ((heightCenterOffsetRatio > 12 && heightCenterOffsetRatio < 13) && ((centerOffsetCalculation > 0.085) && (centerOffsetCalculation < 0.09)))
-                            {
-                                centerOffsetCalculation = 0;
-                            }
-                            else
-                            {
-                                if(heightRatio > 1.1f && centerOffsetCalculation > 0.1)
-                                {
-                                    //groundCheckCenterOffsetCalculation = (centerOffsetCalculation / 3f) * -1;
-
-                                    groundCheckCenterOffsetCalculation = (centerOffsetCalculation / 8f);
-                                }
-                                else
-                                {
-   
-                                    if((heightRatio - 1) < 0.0001)
+                                    groundCheckCenterOffsetCalculation *= -1;
+                                    */
+                                    if (heightRatio > 1.03)
                                     {
-                                        //Debug.Log("Changed");
+                                        groundCheckCenterOffsetCalculation = centerOffsetCalculation / 3f;
 
-                                        groundCheckCenterOffsetCalculation = 0.02f;
+                                        modelPaths[i].y += groundCheckCenterOffsetCalculation;
                                     }
                                     else
                                     {
-                                        groundCheckCenterOffsetCalculation = centerOffsetCalculation / 3f;
+                                        //Debug.Log("Changed");
+
+                                        groundCheckCenterOffsetCalculation = 0.005f;
+
+                                        modelPaths[i].y += groundCheckCenterOffsetCalculation;
+
+                                        //centerOffsetCalculation = 0;
                                     }
-                                    
+
                                 }
-                                
+                                else if ((heightCenterOffsetRatio > 12 && heightCenterOffsetRatio < 13) && ((centerOffsetCalculation > 0.085) && (centerOffsetCalculation < 0.09)))
+                                {
+                                    centerOffsetCalculation = 0;
+                                }
+                                else
+                                {
+                                    if (heightRatio > 1.1f && centerOffsetCalculation > 0.1)
+                                    {
+                                        //groundCheckCenterOffsetCalculation = (centerOffsetCalculation / 3f) * -1;
 
-                                modelPaths[i].y += groundCheckCenterOffsetCalculation;
+                                        groundCheckCenterOffsetCalculation = (centerOffsetCalculation / 8f);
+                                    }
+                                    else
+                                    {
+
+                                        if ((heightRatio - 1) < 0.0001)
+                                        {
+                                            //Debug.Log("Changed");
+
+                                            groundCheckCenterOffsetCalculation = 0.02f;
+                                        }
+                                        else
+                                        {
+                                            groundCheckCenterOffsetCalculation = centerOffsetCalculation / 3f;
+                                        }
+
+                                    }
+
+
+                                    modelPaths[i].y += groundCheckCenterOffsetCalculation;
+                                }
+
                             }
-                            
                         }
-                    }
 
-                    //centerOffsetCalculation = 0;
+                        //centerOffsetCalculation = 0;
 
-                    pointOffsetCalculation = 0;
-
-                }
-
-                groundCheck.transform.position = new Vector3(groundCheck.transform.position.x, groundCheck.transform.position.y + ((groundCheckCenterOffsetCalculation + (-1 * pointOffsetCalculation)) * 2), groundCheck.transform.position.z);
-
-
-                parentCollider.SetPath(0, modelPaths);
-            }
-            else
-            {
-                //Debug.Log("Similar");
-
-                Vector2[] modelPaths = new Vector2[parentCollider.GetPath(0).Length];
-
-                if (heightCenterOffsetRatio > 50)
-                {
-                    for (int i = 0; i < parentCollider.GetPath(0).Length; i++)
-                    {
-                        modelPaths[i] = parentCollider.GetPath(0)[i];
-                        
-                        if(heightCenterOffsetRatio > 55)
-                        {
-                            modelPaths[i].y += 0.01f;
-                        }
-                        else
-                        {
-                            modelPaths[i].y += 0.02f;
-                        }
+                        pointOffsetCalculation = 0;
 
                     }
 
-                }
-                else if (heightCenterOffsetRatio < 30)
-                {
-                    
-                    for (int i = 0; i < parentCollider.GetPath(0).Length; i++)
-                    {
-                        modelPaths[i] = parentCollider.GetPath(0)[i];
+                    groundCheck.transform.position = new Vector3(groundCheck.transform.position.x, groundCheck.transform.position.y + ((groundCheckCenterOffsetCalculation + (-1 * pointOffsetCalculation)) * 2), groundCheck.transform.position.z);
 
-                        if(heightRatio < 1)
-                        {
-                            modelPaths[i].y += 0.02f;
-                        }
-                        else if (heightCenterOffsetRatio > 25.68 && heightCenterOffsetRatio < 25.7)
-                        {
-                            modelPaths[i].y += 0.02f;
-                        }
-                        else if(heightCenterOffsetRatio > 26)
-                        {
-                            modelPaths[i].y += 0.02f;
-                        }
-                        //modelPaths[i].y -= 0.01f;
 
-                    }
-                    
+                    parentCollider.SetPath(0, modelPaths);
                 }
                 else
                 {
-                    for (int i = 0; i < parentCollider.GetPath(0).Length; i++)
+                    //Debug.Log("Similar");
+
+                    Vector2[] modelPaths = new Vector2[parentCollider.GetPath(0).Length];
+
+                    if (heightCenterOffsetRatio > 50)
                     {
-                        modelPaths[i] = parentCollider.GetPath(0)[i];
+                        for (int i = 0; i < parentCollider.GetPath(0).Length; i++)
+                        {
+                            modelPaths[i] = parentCollider.GetPath(0)[i];
 
-                        if(heightCenterOffsetRatio < 35)
-                        {
-                            modelPaths[i].y += 0.02f;
+                            if (heightCenterOffsetRatio > 55)
+                            {
+                                modelPaths[i].y += 0.01f;
+                            }
+                            else
+                            {
+                                modelPaths[i].y += 0.02f;
+                            }
+
                         }
-                        else if (heightCenterOffsetRatio > 39)
-                        {
-                            modelPaths[i].y += 0.02f;
-                        }
-                        else if (heightCenterOffsetRatio > 38)
-                        {
-                            modelPaths[i].y += 0.02f;
-                        }
-                        else
-                        {
-                            modelPaths[i].y -= 0.01f;
-                        }
- 
+
                     }
+                    else if (heightCenterOffsetRatio < 30)
+                    {
+
+                        for (int i = 0; i < parentCollider.GetPath(0).Length; i++)
+                        {
+                            modelPaths[i] = parentCollider.GetPath(0)[i];
+
+                            if (heightRatio < 1)
+                            {
+                                modelPaths[i].y += 0.02f;
+                            }
+                            else if (heightCenterOffsetRatio > 25.68 && heightCenterOffsetRatio < 25.7)
+                            {
+                                modelPaths[i].y += 0.02f;
+                            }
+                            else if (heightCenterOffsetRatio > 26)
+                            {
+                                modelPaths[i].y += 0.02f;
+                            }
+                            //modelPaths[i].y -= 0.01f;
+
+                        }
+
+                    }
+                    else
+                    {
+                        for (int i = 0; i < parentCollider.GetPath(0).Length; i++)
+                        {
+                            modelPaths[i] = parentCollider.GetPath(0)[i];
+
+                            if (heightCenterOffsetRatio < 35)
+                            {
+                                modelPaths[i].y += 0.02f;
+                            }
+                            else if (heightCenterOffsetRatio > 39)
+                            {
+                                modelPaths[i].y += 0.02f;
+                            }
+                            else if (heightCenterOffsetRatio > 38)
+                            {
+                                modelPaths[i].y += 0.02f;
+                            }
+                            else
+                            {
+                                modelPaths[i].y -= 0.01f;
+                            }
+
+                        }
+                    }
+
+                    parentCollider.SetPath(0, modelPaths);
                 }
-
-                parentCollider.SetPath(0, modelPaths);
             }
-        }
 
+        }
     }
 }

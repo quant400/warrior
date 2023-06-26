@@ -2,32 +2,35 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RopeSegment : MonoBehaviour
+namespace Warrior
 {
-    public GameObject connectedAbove, connectedBelow;
-
-    // Start is called before the first frame update
-    void Start()
+    public class RopeSegment : MonoBehaviour
     {
-        connectedAbove = GetComponent<HingeJoint2D>().connectedBody.gameObject;
+        public GameObject connectedAbove, connectedBelow;
 
-        RopeSegment aboveSegment = connectedAbove.GetComponent<RopeSegment>();
-
-        if(aboveSegment != null)
+        // Start is called before the first frame update
+        void Start()
         {
-            aboveSegment.connectedBelow = gameObject;
-            float spriteBottom = connectedBelow.GetComponent<SpriteRenderer>().bounds.size.y;
-            GetComponent<HingeJoint2D>().connectedAnchor = new Vector2(0, spriteBottom * -1);
-        }
-        else
-        {
-            GetComponent<HingeJoint2D>().connectedAnchor = new Vector2(0, gameObject.transform.position.y);
-        }
-    }
+            connectedAbove = GetComponent<HingeJoint2D>().connectedBody.gameObject;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+            RopeSegment aboveSegment = connectedAbove.GetComponent<RopeSegment>();
+
+            if (aboveSegment != null)
+            {
+                aboveSegment.connectedBelow = gameObject;
+                float spriteBottom = connectedBelow.GetComponent<SpriteRenderer>().bounds.size.y;
+                GetComponent<HingeJoint2D>().connectedAnchor = new Vector2(0, spriteBottom * -1);
+            }
+            else
+            {
+                GetComponent<HingeJoint2D>().connectedAnchor = new Vector2(0, gameObject.transform.position.y);
+            }
+        }
+
+        // Update is called once per frame
+        void Update()
+        {
+
+        }
     }
 }

@@ -2,31 +2,34 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BoulderPlayerDetection : MonoBehaviour
+namespace Warrior
 {
-    public GameObject boulder;
-
-    // Start is called before the first frame update
-    void Start()
+    public class BoulderPlayerDetection : MonoBehaviour
     {
-        
-    }
+        public GameObject boulder;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if(collision.CompareTag("PlayerBody"))
+        // Start is called before the first frame update
+        void Start()
         {
-            if(!boulder.activeSelf)
+
+        }
+
+        // Update is called once per frame
+        void Update()
+        {
+
+        }
+
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            if (collision.CompareTag("PlayerBody"))
             {
-                boulder.SetActive(true);
+                if (!boulder.activeSelf)
+                {
+                    boulder.SetActive(true);
+                }
+
             }
-            
         }
     }
 }

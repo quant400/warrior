@@ -2,88 +2,91 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ChickenMoveScript : MonoBehaviour
+namespace Warrior
 {
-    Rigidbody2D rbody2D;
-    SpriteRenderer spriteRenderer;
-    private Vector3 inputDirection;
-
-    [SerializeField]
-    private bool moveRight;
-    [SerializeField]
-    private bool moveRightAnLeft;
-    [SerializeField]
-    private float _speed = 5.0f;
-
-    private Vector3 leftDirection;
-
-    private Vector3 rightDirection;
-
-    Vector2 origVelocity;
-
-    // Start is called before the first frame update
-    void Start()
+    public class ChickenMoveScript : MonoBehaviour
     {
-        leftDirection = new Vector3(-1, 0, 0);
+        Rigidbody2D rbody2D;
+        SpriteRenderer spriteRenderer;
+        private Vector3 inputDirection;
 
-        rightDirection = new Vector3(1, 0, 0);
+        [SerializeField]
+        private bool moveRight;
+        [SerializeField]
+        private bool moveRightAnLeft;
+        [SerializeField]
+        private float _speed = 5.0f;
 
-        rbody2D = gameObject.GetComponent<Rigidbody2D>();
+        private Vector3 leftDirection;
 
-        spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+        private Vector3 rightDirection;
 
-        if (moveRight)
+        Vector2 origVelocity;
+
+        // Start is called before the first frame update
+        void Start()
         {
-            inputDirection = rightDirection;
-        }
-        else if (moveRightAnLeft)
-        {
-            StartCoroutine(MoveLeftAndRight(5f));
-        }
-        else
-        {
-            inputDirection = leftDirection;
-        }
-    }
+            leftDirection = new Vector3(-1, 0, 0);
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+            rightDirection = new Vector3(1, 0, 0);
 
-    private void FixedUpdate()
-    {
-        if(inputDirection == leftDirection)
-        {
-            spriteRenderer.flipX = true;
-        }
-        else
-        {
-            spriteRenderer.flipX = false;
-        }
+            rbody2D = gameObject.GetComponent<Rigidbody2D>();
 
-        rbody2D.AddForce(inputDirection * _speed, ForceMode2D.Force);
+            spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
 
-        origVelocity = rbody2D.velocity;
-
-        origVelocity.x = Vector2.ClampMagnitude(rbody2D.velocity, _speed).x;
-
-        rbody2D.velocity = origVelocity;
-    }
-
-    IEnumerator MoveLeftAndRight(float secs)
-    {
-        while(true)
-        {
-            inputDirection = rightDirection;
-
-            yield return new WaitForSeconds(secs);
-
-            inputDirection = leftDirection;
-
-            yield return new WaitForSeconds(secs);
+            if (moveRight)
+            {
+                inputDirection = rightDirection;
+            }
+            else if (moveRightAnLeft)
+            {
+                StartCoroutine(MoveLeftAndRight(5f));
+            }
+            else
+            {
+                inputDirection = leftDirection;
+            }
         }
 
+        // Update is called once per frame
+        void Update()
+        {
+
+        }
+
+        private void FixedUpdate()
+        {
+            if (inputDirection == leftDirection)
+            {
+                spriteRenderer.flipX = true;
+            }
+            else
+            {
+                spriteRenderer.flipX = false;
+            }
+
+            rbody2D.AddForce(inputDirection * _speed, ForceMode2D.Force);
+
+            origVelocity = rbody2D.velocity;
+
+            origVelocity.x = Vector2.ClampMagnitude(rbody2D.velocity, _speed).x;
+
+            rbody2D.velocity = origVelocity;
+        }
+
+        IEnumerator MoveLeftAndRight(float secs)
+        {
+            while (true)
+            {
+                inputDirection = rightDirection;
+
+                yield return new WaitForSeconds(secs);
+
+                inputDirection = leftDirection;
+
+                yield return new WaitForSeconds(secs);
+            }
+
+        }
     }
 }

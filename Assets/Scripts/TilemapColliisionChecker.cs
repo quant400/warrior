@@ -2,57 +2,60 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TilemapColliisionChecker : MonoBehaviour
+namespace Warrior
 {
-    private bool isColliding;
-
-    // Start is called before the first frame update
-    void Start()
+    public class TilemapColliisionChecker : MonoBehaviour
     {
-        isColliding = false;
-    }
+        private bool isColliding;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    public bool IsCollidingWithPlayer()
-    {
-        return isColliding;
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.transform.CompareTag("PlayerBody"))
-        {
-            isColliding = true;
-        }
-
-    }
-
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        if (collision.transform.CompareTag("PlayerBody"))
+        // Start is called before the first frame update
+        void Start()
         {
             isColliding = false;
         }
-    }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.transform.CompareTag("PlayerBody"))
+        // Update is called once per frame
+        void Update()
         {
-            isColliding = true;
+
         }
-    }
 
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.transform.CompareTag("PlayerBody"))
+        public bool IsCollidingWithPlayer()
         {
-            isColliding = false;
+            return isColliding;
+        }
+
+        private void OnCollisionEnter2D(Collision2D collision)
+        {
+            if (collision.transform.CompareTag("PlayerBody"))
+            {
+                isColliding = true;
+            }
+
+        }
+
+        private void OnCollisionExit2D(Collision2D collision)
+        {
+            if (collision.transform.CompareTag("PlayerBody"))
+            {
+                isColliding = false;
+            }
+        }
+
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            if (collision.transform.CompareTag("PlayerBody"))
+            {
+                isColliding = true;
+            }
+        }
+
+        private void OnTriggerExit2D(Collider2D collision)
+        {
+            if (collision.transform.CompareTag("PlayerBody"))
+            {
+                isColliding = false;
+            }
         }
     }
 }

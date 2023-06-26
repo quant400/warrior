@@ -3,31 +3,34 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
-public class ScreenRotationFade : MonoBehaviour
+namespace Warrior
 {
-    private CanvasGroup canvasGroup;
-
-    // Start is called before the first frame update
-    void Start()
+    public class ScreenRotationFade : MonoBehaviour
     {
-        canvasGroup = gameObject.GetComponent<CanvasGroup>();
+        private CanvasGroup canvasGroup;
 
-        canvasGroup.DOFade(0.5f, 1).SetLoops(-1, LoopType.Yoyo);
-    }
+        // Start is called before the first frame update
+        void Start()
+        {
+            canvasGroup = gameObject.GetComponent<CanvasGroup>();
 
-    private void OnEnable()
-    {
-        DOTween.Play(canvasGroup);
-    }
+            canvasGroup.DOFade(0.5f, 1).SetLoops(-1, LoopType.Yoyo);
+        }
 
-    private void OnDisable()
-    {
-        DOTween.Pause(canvasGroup);
-    }
+        private void OnEnable()
+        {
+            DOTween.Play(canvasGroup);
+        }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        private void OnDisable()
+        {
+            DOTween.Pause(canvasGroup);
+        }
+
+        // Update is called once per frame
+        void Update()
+        {
+
+        }
     }
 }

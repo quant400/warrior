@@ -2,67 +2,70 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BoulderBreatApartScript : MonoBehaviour
+namespace Warrior
 {
-    // Start is called before the first frame update
-
-    [SerializeField] GameObject boulderSprite;
-
-    [SerializeField] GameObject boulderParts;
-
-    [SerializeField] AudioClip boulderBreakSound;
-
-    private Vector3 position;
-
-    private Quaternion rotation;
-
-    private Collider2D boulderCollider;
-
-    public AudioSource audioSource;
-
-    void Start()
+    public class BoulderBreatApartScript : MonoBehaviour
     {
-        boulderCollider = gameObject.GetComponent<Collider2D>();
-    }
+        // Start is called before the first frame update
 
-    private void OnEnable()
-    {
-        position = gameObject.transform.position;
+        [SerializeField] GameObject boulderSprite;
 
-        rotation = gameObject.transform.rotation;
-    }
+        [SerializeField] GameObject boulderParts;
 
-    private void OnDisable()
-    {
-        gameObject.transform.position = position;
+        [SerializeField] AudioClip boulderBreakSound;
 
-        gameObject.transform.rotation = rotation;
+        private Vector3 position;
 
-        boulderParts.SetActive(false);
+        private Quaternion rotation;
 
-        boulderSprite.SetActive(true);
+        private Collider2D boulderCollider;
 
-        boulderCollider.enabled = true;
-    }
+        public AudioSource audioSource;
 
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.transform.CompareTag("BoulderBreak"))
+        void Start()
         {
-            boulderParts.SetActive(true);
+            boulderCollider = gameObject.GetComponent<Collider2D>();
+        }
 
-            boulderSprite.SetActive(false);
+        private void OnEnable()
+        {
+            position = gameObject.transform.position;
 
-            boulderCollider.enabled = false;
+            rotation = gameObject.transform.rotation;
+        }
 
-            audioSource.PlayOneShot(boulderBreakSound);
+        private void OnDisable()
+        {
+            gameObject.transform.position = position;
+
+            gameObject.transform.rotation = rotation;
+
+            boulderParts.SetActive(false);
+
+            boulderSprite.SetActive(true);
+
+            boulderCollider.enabled = true;
+        }
+
+
+        // Update is called once per frame
+        void Update()
+        {
+
+        }
+
+        private void OnCollisionEnter2D(Collision2D collision)
+        {
+            if (collision.transform.CompareTag("BoulderBreak"))
+            {
+                boulderParts.SetActive(true);
+
+                boulderSprite.SetActive(false);
+
+                boulderCollider.enabled = false;
+
+                audioSource.PlayOneShot(boulderBreakSound);
+            }
         }
     }
 }

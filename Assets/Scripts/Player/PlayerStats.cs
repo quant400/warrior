@@ -2,132 +2,135 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerStats : MonoBehaviour
+namespace Warrior
 {
-    public static PlayerStats Instance { get; private set; }
-
-    private void Awake()
+    public class PlayerStats : MonoBehaviour
     {
-        // If there is an instance, and it's not me, delete myself.
+        public static PlayerStats Instance { get; private set; }
 
-        if (Instance != null && Instance != this)
+        private void Awake()
         {
-            Destroy(this);
-        }
-        else
-        {
-            Instance = this;
-        }
+            // If there is an instance, and it's not me, delete myself.
 
-        //QualitySettings.vSyncCount = 0;  // VSync must be disabled
-        //Application.targetFrameRate = 120;
-    }
-
-    [Tooltip("Enter starting time")]
-    public float timeLeft;
-
-    public float checkpointDistance = 0.0f;
-
-    public float playerScore = 0.0f;
-
-    public int longestRun = 100000;
-
-    private bool highscoreChanged;
-
-    public GameObject fireworks;
-
-    private ParticleSystem fireworksParticleSystem;
-
-    private bool fireworksTimerBool;
-
-    public GameObject tournamentUi;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        //playerScore = 0.0f;
-
-        checkpointDistance = 0.0f;
-
-        try
-        {
-            longestRun = gameplayView.instance.GetLongestDistanceScore();
-        }
-        catch
-        {
-            longestRun = 100000;
-        }
-
-        highscoreChanged = false;
-
-        fireworksTimerBool = false;
-
-        fireworksParticleSystem = fireworks.GetComponent<ParticleSystem>();
-
-        fireworksParticleSystem.Stop();
-
-        if (gameplayView.instance && !gameplayView.instance.isTryout)
-        {
-            if (gameplayView.instance.GetTournamentStatus())
+            if (Instance != null && Instance != this)
             {
-                tournamentUi.SetActive(true);
+                Destroy(this);
+            }
+            else
+            {
+                Instance = this;
+            }
+
+            //QualitySettings.vSyncCount = 0;  // VSync must be disabled
+            //Application.targetFrameRate = 120;
+        }
+
+        [Tooltip("Enter starting time")]
+        public float timeLeft;
+
+        public float checkpointDistance = 0.0f;
+
+        public float playerScore = 0.0f;
+
+        public int longestRun = 100000;
+
+        private bool highscoreChanged;
+
+        public GameObject fireworks;
+
+        private ParticleSystem fireworksParticleSystem;
+
+        private bool fireworksTimerBool;
+
+        public GameObject tournamentUi;
+
+        // Start is called before the first frame update
+        void Start()
+        {
+            //playerScore = 0.0f;
+
+            checkpointDistance = 0.0f;
+
+            try
+            {
+                longestRun = gameplayView.instance.GetLongestDistanceScore();
+            }
+            catch
+            {
+                longestRun = 100000;
+            }
+
+            highscoreChanged = false;
+
+            fireworksTimerBool = false;
+
+            fireworksParticleSystem = fireworks.GetComponent<ParticleSystem>();
+
+            fireworksParticleSystem.Stop();
+
+            if (gameplayView.instance && !gameplayView.instance.isTryout)
+            {
+                if (gameplayView.instance.GetTournamentStatus())
+                {
+                    tournamentUi.SetActive(true);
+                }
+                else
+                {
+                    tournamentUi.SetActive(false);
+                }
             }
             else
             {
                 tournamentUi.SetActive(false);
             }
         }
-        else
-        {
-            tournamentUi.SetActive(false);
-        }
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if(timeLeft == 0)
+        // Update is called once per frame
+        void Update()
         {
-            EndGame();
-        }
-
-        if(!highscoreChanged)
-        {
-            if (playerScore > longestRun)
+            if (timeLeft == 0)
             {
-                Debug.Log("New Highscore");
-
-                if(!fireworksTimerBool)
-                {
-                    StartCoroutine(fireworksTimer(5f));
-                }
-
-                highscoreChanged = true;
+                EndGame();
             }
+
+            if (!highscoreChanged)
+            {
+                if (playerScore > longestRun)
+                {
+                    Debug.Log("New Highscore");
+
+                    if (!fireworksTimerBool)
+                    {
+                        StartCoroutine(fireworksTimer(5f));
+                    }
+
+                    highscoreChanged = true;
+                }
+            }
+
         }
 
-    }
+        public int GetScore()
+        {
+            return (int)playerScore;
+        }
 
-    public int GetScore()
-    {
-        return (int)playerScore;
-    }
+        public void EndGame()
+        {
+            warriorGameModel.gameCurrentStep.Value = warriorGameModel.GameSteps.OnGameEnded;
+        }
 
-    public void EndGame()
-    {
-        warriorGameModel.gameCurrentStep.Value = warriorGameModel.GameSteps.OnGameEnded;
-    }
+        IEnumerator fireworksTimer(float secs)
+        {
+            fireworksTimerBool = true;
 
-    IEnumerator fireworksTimer(float secs)
-    {
-        fireworksTimerBool = true;
+            fireworksParticleSystem.Play();
 
-        fireworksParticleSystem.Play();
+            yield return new WaitForSeconds(secs);
 
-        yield return new WaitForSeconds(secs);
+            fireworksParticleSystem.Stop();
 
-        fireworksParticleSystem.Stop();
-
-        fireworksTimerBool = false;
+            fireworksTimerBool = false;
+        }
     }
 }

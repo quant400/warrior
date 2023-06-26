@@ -2,55 +2,58 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StopCollisionsScript : MonoBehaviour
+namespace Warrior
 {
-    private bool stopCollisonsCoroutine;
-
-    private Collider2D[] childColliders;
-
-    // Start is called before the first frame update
-    void Start()
+    public class StopCollisionsScript : MonoBehaviour
     {
-        stopCollisonsCoroutine = false;
+        private bool stopCollisonsCoroutine;
 
-        childColliders = new Collider2D[gameObject.transform.childCount];
+        private Collider2D[] childColliders;
 
-        for (int i = 0; i < gameObject.transform.childCount; i++)
+        // Start is called before the first frame update
+        void Start()
         {
-            childColliders[i] = gameObject.transform.GetChild(i).gameObject.GetComponent<Collider2D>();
-        }
-    }
+            stopCollisonsCoroutine = false;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+            childColliders = new Collider2D[gameObject.transform.childCount];
 
-    public void stopColliders()
-    {
-        if(!stopCollisonsCoroutine)
-        {
-            StartCoroutine(stopCollisons(0.2f));
-        }
-    }
-
-    IEnumerator stopCollisons(float secs)
-    {
-        stopCollisonsCoroutine = true;
-
-        for (int i = 0; i < childColliders.Length; i++)
-        {
-            childColliders[i].enabled = false;
+            for (int i = 0; i < gameObject.transform.childCount; i++)
+            {
+                childColliders[i] = gameObject.transform.GetChild(i).gameObject.GetComponent<Collider2D>();
+            }
         }
 
-        yield return new WaitForSeconds(secs);
-
-        for (int i = 0; i < childColliders.Length; i++)
+        // Update is called once per frame
+        void Update()
         {
-            childColliders[i].enabled = true;
+
         }
 
-        stopCollisonsCoroutine = false;
+        public void stopColliders()
+        {
+            if (!stopCollisonsCoroutine)
+            {
+                StartCoroutine(stopCollisons(0.2f));
+            }
+        }
+
+        IEnumerator stopCollisons(float secs)
+        {
+            stopCollisonsCoroutine = true;
+
+            for (int i = 0; i < childColliders.Length; i++)
+            {
+                childColliders[i].enabled = false;
+            }
+
+            yield return new WaitForSeconds(secs);
+
+            for (int i = 0; i < childColliders.Length; i++)
+            {
+                childColliders[i].enabled = true;
+            }
+
+            stopCollisonsCoroutine = false;
+        }
     }
 }

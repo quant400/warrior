@@ -2,14 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class onSceneLoad : MonoBehaviour
+namespace Warrior
 {
-    
-    void Start()
+    public class onSceneLoad : MonoBehaviour
     {
-        warriorGameModel.lastSavedStep = warriorGameModel.gameCurrentStep.Value;
-        warriorGameModel.gameCurrentStep.Value = warriorGameModel.GameSteps.onSceneLoaded;
-        warriorGameModel.gameCurrentStep.Value = warriorGameModel.lastSavedStep;
 
+        void Start()
+        {
+            warriorGameModel.lastSavedStep = warriorGameModel.gameCurrentStep.Value;
+            warriorGameModel.gameCurrentStep.Value = warriorGameModel.GameSteps.onSceneLoaded;
+            warriorGameModel.gameCurrentStep.Value = warriorGameModel.lastSavedStep;
+
+        }
     }
 }
